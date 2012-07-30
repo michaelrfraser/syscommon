@@ -1,6 +1,4 @@
-              =============================================
-              ===   Welcome to the SysCommon Project!   ===
-              =============================================
+#Welcome to the SysCommon Project!#
 
 SysCommon is an extremely lightweight set of utility classes that encapsulate
 commonly used systems programming tools such as Sockets, Threads, Locks etc.
@@ -25,3 +23,5 @@ SysCommon currently provides:
 
 NOTE: Currently only the Windows implementation is complete. I will be actively
 working on Linux/Mac implementations shortly.
+
+SysCommon is provided under the Common Development and Distribution License (CDDL).
