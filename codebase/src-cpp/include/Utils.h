@@ -136,7 +136,7 @@ namespace SysCommon
 			 * @return true if the character sequence represented by the prefix argument is a 
 			 * prefix of the character sequence represented by the provided string.
 			 */
-			static bool stringStartsWith( const String& prefix, const String& test );
+			static bool stringStartsWith( const String& string, const String& prefix );
 
 			/**
 			 * Tests if the provided string ends with the specified suffix.
@@ -146,7 +146,7 @@ namespace SysCommon
 			 * @return true if the character sequence represented by the suffix argument is a 
 			 * suffix of the character sequence represented by the provided string.
 			 */
-			static bool stringEndsWith( const String& suffix, const String& test );
+			static bool stringEndsWith( const String& string, const String& suffix );
 
 			/**
 		     * Converts all of the characters in this String to upper case

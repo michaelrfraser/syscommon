@@ -81,5 +81,7 @@ namespace SysCommon
 		//----------------------------------------------------------
 		//                     STATIC METHODS
 		//----------------------------------------------------------
+		public:
+			static Level getLevelFromString( const tchar* level );
 	};
 }

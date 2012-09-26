@@ -141,9 +141,9 @@ void Properties::loadFromFile( const tchar* filename, Logger* logger ) throw ( I
 						logger->warn( TEXT("Ignoring malformed property statement [%s]"), asString.c_str() );
 				}
 			}
-
-			::fclose( file );
 		}
+
+		::fclose( file );
 	}
 	else
 	{

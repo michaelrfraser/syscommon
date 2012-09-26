@@ -13,6 +13,7 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "Logger.h"
+#include "Utils.h"
 
 #pragma warning( disable : 4996 )
 
@@ -197,4 +198,29 @@ bool Logger::checkLevel( Level messageLevel )
 {
 	bool levelEnabled = messageLevel <= this->level;
 	return levelEnabled;
+}
+
+//----------------------------------------------------------
+//                     STATIC METHODS
+//----------------------------------------------------------
+Logger::Level Logger::getLevelFromString( const tchar* string )
+{
+	Logger::Level level = Logger::LL_INFO;
+	std::string asStdString( string );
+	if( Utils::stringEquals(asStdString, "OFF") )
+		level = Logger::LL_OFF;
+	else if( Utils::stringEquals(asStdString, "FATAL") )
+		level = Logger::LL_FATAL;
+	else if( Utils::stringEquals(asStdString, "ERROR") )
+		level = Logger::LL_ERROR;
+	else if( Utils::stringEquals(asStdString, "WARN") )
+		level = Logger::LL_WARN;
+	else if( Utils::stringEquals(asStdString, "INFO") )
+		level = Logger::LL_INFO;
+	else if( Utils::stringEquals(asStdString, "DEBUG") )
+		level = Logger::LL_DEBUG;
+	else if( Utils::stringEquals(asStdString, "TRACE") )
+		level = Logger::LL_TRACE;
+
+	return level;
 }
