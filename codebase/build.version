@@ -1,0 +1,6 @@
+# The application used on archives and installers
+app.shortname=syscommon
+
+# The current version number
+app.version=0.2-dev
+
