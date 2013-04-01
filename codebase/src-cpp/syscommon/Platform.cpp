@@ -294,7 +294,7 @@ int Platform::lookupHostName( NATIVE_IP_ADDRESS address,
 		if( host )
 		{
 			const char* name = host->h_name;
-			returnSize = Platform::toPlatformChars( name, strlen(name), outBuffer, outBufferSize );
+			returnSize = Platform::toPlatformChars( name, (int)strlen(name), outBuffer, outBufferSize );
 		}
 
 		Platform::cleanupSocketFramework();
@@ -317,7 +317,7 @@ int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 		if( ansiAddress )
 		{
 			returnSize = Platform::toPlatformChars( ansiAddress, 
-													strlen(ansiAddress), 
+													(int)strlen(ansiAddress), 
 													outBuffer, 
 													outBufferSize );
 		}
@@ -560,17 +560,17 @@ std::string Platform::toAnsiString( const char* string )
 	return std::string( string );
 }
 
-std::string Platform::toAnsiString( const char* string, size_t length )
+std::string Platform::toAnsiString( const char* string, int length )
 {
 	return std::string( string, length );
 }
 
 std::string Platform::toAnsiString( const wchar_t* string )
 {
-	return toAnsiString( string, ::wcslen(string) );
+	return toAnsiString( string, (int)::wcslen(string) );
 }
 
-std::string Platform::toAnsiString( const wchar_t* string, size_t length )
+std::string Platform::toAnsiString( const wchar_t* string, int length )
 {
 	std::string result;
 
@@ -598,10 +598,10 @@ int Platform::toUnicodeChars( const char* string,
 
 std::wstring Platform::toUnicodeString( const char* string )
 {
-	return Platform::toUnicodeString( string, strlen(string) );
+	return Platform::toUnicodeString( string, (int)::strlen(string) );
 }
 
-std::wstring Platform::toUnicodeString( const char* string, size_t length )
+std::wstring Platform::toUnicodeString( const char* string, int length )
 {
 	std::wstring result;
 	
@@ -623,7 +623,7 @@ std::wstring Platform::toUnicodeString( const wchar_t* string )
 	return std::wstring( string );
 }
 
-std::wstring Platform::toUnicodeString( const wchar_t* string, size_t length )
+std::wstring Platform::toUnicodeString( const wchar_t* string, int length )
 {
 	return std::wstring( string, length );
 }
@@ -659,7 +659,7 @@ String Platform::toPlatformString( const char* string )
 #endif
 }
 
-String Platform::toPlatformString( const char* string, size_t length )
+String Platform::toPlatformString( const char* string, int length )
 {
 #ifndef UNICODE
 	return Platform::toAnsiString( string, length );

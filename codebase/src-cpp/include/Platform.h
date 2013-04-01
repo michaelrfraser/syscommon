@@ -166,25 +166,25 @@ namespace SysCommon
 									char* outBuffer, 
 									int outBufferSize );
 			static std::string toAnsiString( const char* string );
-			static std::string toAnsiString( const char* string, size_t length );
+			static std::string toAnsiString( const char* string, int length );
 			static std::string toAnsiString( const wchar_t* string );
-			static std::string toAnsiString( const wchar_t* string, size_t length );
+			static std::string toAnsiString( const wchar_t* string, int length );
 
 			static int toUnicodeChars( const char* string, 
 									   int stringLength, 
 									   wchar_t* outBuffer, 
 									   int outBufferSize );
 			static std::wstring toUnicodeString( const char* string );
-			static std::wstring toUnicodeString( const char* string, size_t length );
+			static std::wstring toUnicodeString( const char* string, int length );
 			static std::wstring toUnicodeString( const wchar_t* string );
-			static std::wstring toUnicodeString( const wchar_t* string, size_t length );
+			static std::wstring toUnicodeString( const wchar_t* string, int length );
 
 			static int toPlatformChars( const char* string, 
 										int stringLength, 
 										tchar* outBuffer, 
 										int outBufferSize );
 			static String toPlatformString( const char* string,
-											size_t length );
+											int length );
 			static String toPlatformString( const char* string );
 			static String toPlatformString( const wchar_t* string );
 
