@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<!--
+                  Welcome to the Portico Build System
+
+       The Portico build system is an artefact-driven, modular, Ant
+       based system. The base framework is split up over a number of
+       different build files (base structure, macros, etc...) and is
+       designed to be extended rather than modified. The full system
+       is introduced and described in the online documentation:
+       
+       http://porticoproject.org/index.php?title=Building_Portico
+-->
+<project name="cpp">
+
+	<!-- ================================================================================= -->
+	<!--                                 General Settings                                  -->
+	<!-- ================================================================================= -->
+	<description>
+		C++ build profile for the SysCommon utility library on Mac OS X
+	</description>
+
+	<!-- ==== Basic Properties ==== -->
+	<property name="cpp.build.dir"             location="${build.dir}/cpp/macosx"/>
+
+	<!-- ============================================ -->
+	<!-- ====         SysCommon Properties       ==== -->
+	<!-- ============================================ -->
+	<!-- source -->
+	<property name="syscommon.src.dir"             location="${cpp.src.dir}/syscommon/src"/>
+	<property name="syscommon.include.dir"         location="${cpp.src.dir}/syscommon/include"/>
+	<property name="test.src.dir"            	   location="${cpp.src.dir}/test"/>
+	
+	<!-- ansiD build -->
+	<property name="ansiD.build.dir"             location="${cpp.build.dir}/ansiD"/>
+	<property name="ansiD.complete.dir"			 location="${ansiD.build.dir}/complete"/>
+	<property name="testansiD.build.dir"         location="${cpp.build.dir}/testansiD"/>
+	<property name="testansiD.complete.dir"      location="${testansiD.build.dir}/complete"/>
+
+	<!-- ansiR build -->
+	<property name="ansiR.build.dir"             location="${cpp.build.dir}/ansiR"/>
+	<property name="ansiR.complete.dir"			 location="${ansiR.build.dir}/complete"/>
+	<property name="testansiR.build.dir"         location="${cpp.build.dir}/testansiR"/>
+	<property name="testansiR.complete.dir"      location="${testansiR.build.dir}/complete"/>
+	
+	<!-- =========================================================== -->
+	<!--                     Project Libraries                       -->
+	<!-- =========================================================== -->
+	<!-- ==== Library Path Definitions ==== -->
+	<!-- These properties are set so that any information relating to a specific path
+	     for a library can be changed in a single spot. The properties should be used
+	     when defining paths and the like later in the build file -->
+	<property name="cppunit.dir"           location="${lib.dir}/cppunit/cppunit-1.12.1"/>
+	<property name="cppunit.include"       location="${cppunit.dir}/include"/>
+	<property name="cppunit.lib"           location="${cppunit.dir}/macosx"/>
+
+	<!-- ================================================================================= -->
+	<!--                                   Clean Targets                                   -->
+	<!-- ================================================================================= -->
+	<target name="clean" extensionOf="master.clean">
+		<delete dir="${cpp.build.dir}"/>
+	</target>
+
+	<!-- ================================================================================= -->
+	<!--                                  Compile Targets                                  -->
+	<!-- ================================================================================= -->
+	<!-- 
+	     The parent compilation target. This will compile all the core Portico C++
+	     interface and the associated unit test suite code.
+	-->
+	<target name="compile"
+	        extensionOf="master.compile"
+	        description="Compile the Portico C++ interfaces and Testing Suite for Mac OS X"
+	        depends="compile.ansiD,compile.ansiR,compile.unicodeD,compile.unicodeR"/>
+
+	<!-- ==================================== -->
+	<!--            ANSI Interface            -->
+	<!-- ==================================== -->
+	<target name="compile.ansiD">
+		<cpp-unix outfile="SysCommonAD"
+		          outdir="${ansiD.build.dir}"
+		          compilerArgs="-g -fPIC -Wall -Wno-non-virtual-dtor"
+		          linkerArgs="-dynamiclib">
+			<fileset dir="${syscommon.src.dir}" includes="**/*.cpp"/>
+			<includepath path="${syscommon.include.dir}"/>
+			<includepath path="${syscommon.src.dir}"/>
+		</cpp-unix>
+	</target>
+	
+	<target name="compile.ansiD.test" depends="compile.ansiD">
+		<cpp-unix outfile="testansiD"
+		          outdir="${testansiD.build.dir}"
+		          type="executable"
+				  compilerArgs="-g -fPIC -Wall -Wno-non-virtual-dtor"
+				  linkerArgs="">
+			<fileset dir="${test.src.dir}" includes="**/*.cpp"/>
+			<includepath path="${syscommon.include.dir}"/>
+			<includepath path="${syscommon.src.dir}"/>
+			<includepath path="${cppunit.include}"/>
+			<library path="${ansiD.complete.dir}" libs="SysCommonAD"/>
+			<library path="${cppunit.lib}" libs="cppunit"/>
+		</cpp-unix>
+	</target>
+	
+	<target name="compile.ansiR">
+		<cpp-unix outfile="SysCommonA"
+		          outdir="${ansiR.build.dir}"
+		          compilerArgs="-O2 -fPIC -Wall -Wno-non-virtual-dtor"
+		          linkerArgs="-dynamiclib">
+			<fileset dir="${syscommon.src.dir}" includes="**/*.cpp"/>
+			<includepath path="${syscommon.include.dir}"/>
+			<includepath path="${syscommon.src.dir}"/>
+		</cpp-unix>
+	</target>
+	
+	<target name="compile.ansiR.test" depends="compile.ansiR">
+	</target>
+
+	<!-- ==================================== -->
+	<!--          UNICODE Interface           -->
+	<!-- ==================================== -->
+	<target name="compile.unicodeD">
+		<cpp-unix outfile="SysCommonUD"
+		          outdir="${unicodeD.build.dir}"
+		          compilerArgs="-g -O1 -fPIC -Wall -Wno-non-virtual-dtor"
+		          linkerArgs="-dynamiclib">
+			<fileset dir="${syscommon.src.dir}" includes="**/*.cpp"/>
+			<includepath path="${syscommon.include.dir}"/>
+			<includepath path="${syscommon.src.dir}"/>
+			<define name="UNICODE"/>
+		</cpp-unix>
+	</target>
+	
+	<target name="compile.unicodeR">
+		<cpp-unix outfile="SysCommonU"
+		          outdir="${unicodeR.build.dir}"
+		          compilerArgs="-O2 -fPIC -Wall -Wno-non-virtual-dtor"
+		          linkerArgs="-dynamiclib">
+			<fileset dir="${syscommon.src.dir}" includes="**/*.cpp"/>
+			<includepath path="${syscommon.include.dir}"/>
+			<includepath path="${syscommon.src.dir}"/>
+			<define name="UNICODE"/>
+		</cpp-unix>
+	</target>
+
+	<!-- ================================================================================= -->
+	<!--                                  Testing Targets                                  -->
+	<!-- ================================================================================= -->
+	<target name="test" extensionOf="master.test" depends="compile, test.ansiD"/>
+
+	<!-- ==================================== -->
+	<!--            Ansi Test Suite           -->
+	<!-- ==================================== -->
+	<target name="test.ansiD" depends="compile.ansiD.test">
+		<!-- 1. copy the testing resources into test dir (RID file etc...) -->
+		<copy todir="${testansiD.complete.dir}">
+			<fileset dir="${resources.testdata.dir}/cpptest" includes="**/*"/>
+		</copy>
+		<echo>Copied testing resources to ${testansiD.complete.dir}</echo>
+
+		<!-- 2. run the actual test application -->
+		<exec dir="${testansiD.complete.dir}"
+		      executable="${testansiD.complete.dir}/testansiD"
+		      failonerror="false"
+		      failifexecutionfails="false"
+		      resultproperty="test13.result">
+			<arg line="${testansiD.complete.dir}/test-results.xml"/>
+			<env key="TEST.GROUP" value="${test.group}"/>
+		</exec>
+		
+		<!-- 3. Generate the report. This will fail the build if any of the tests failed -->
+<!--
+		<echo>Generating the Unit Test Report</echo>
+		<cppunit-report result="${test13.result}"
+		                xmlfile="${test13.complete.dir}/test-results.xml"
+		                xslfile="${test13.complete.dir}/xsl/results.xsl"
+		                outfile="${test13.complete.dir}/test-results.html"/>-->
+	</target>
+	
+	<!-- ================================================================================= -->
+	<!--                                  Sandbox Targets                                  -->
+	<!-- ================================================================================= -->
+	<!-- 
+	     The main sandbox preparation target. This will aggregate together all the various
+	     required artefacts scattered around the build environment into the structure that
+	     should be present when installed on a users system (relative to the sandbox dir).
+	-->
+	<target name="sandbox" extensionOf="master.sandbox" depends="compile">
+		<!-- ======= -->
+		<!-- Headers -->
+		<!-- ======= -->
+		<mkdir dir="${dist.sandbox.dir}/include"/>
+
+		<!-- copy the library headers over -->
+		<copy todir="${dist.sandbox.dir}/include">
+			<fileset dir="${syscommon.include.dir}" includes="**/*"/>
+		</copy>
+
+		<!-- ========= -->
+		<!-- Libraries -->
+		<!-- ========= -->
+		<!-- copy the compiled libraries -->
+		<copy todir="${dist.lib.dir}">
+			<fileset dir="${ansi.complete.debug.dir}"
+			         includes="**/*"
+			         excludes="**/history.xml"
+			         followsymlinks="false"/>
+			<fileset dir="${ansi.complete.release.dir}"
+			         includes="**/*"
+			         excludes="**/history.xml"
+			         followsymlinks="false"/>
+			<fileset dir="${unicode.complete.debug.dir}"
+			         includes="**/*"
+			         excludes="**/history.xml"
+			         followsymlinks="false"/>
+	        <fileset dir="${unicode.complete.release.dir}"
+			         includes="**/*"
+			         excludes="**/history.xml"
+			         followsymlinks="false"/>
+		</copy>
+				
+		<!-- macosx/linux: chmod the dylib/so appropriately -->
+		<chmod dir="${dist.lib.dir}" perm="755" includes="**/*.dylib,**/*.jnilib,**/*.so"/>
+	</target>
+
+	<!-- ================================================================================= -->
+	<!--                             Installer Creation Targets                            -->
+	<!-- ================================================================================= -->
+	<!-- No special installation tasks to do for this build -->
+	<!--<target name="installer" extensionOf="master.installer"/>-->
+
+	<!-- ================================================================================= -->
+	<!--                             Release Generation Targets                            -->
+	<!-- ================================================================================= -->
+	<!-- 
+	     The parent release target. This will run a clean and then compile all code, run all
+	     tests, generate a sandbox and place all additional release artefacts inside in prep
+	     for release.
+	-->
+	<target name="release" extensionOf="master.release" depends="clean,test,sandbox"/>
+
+</project>
