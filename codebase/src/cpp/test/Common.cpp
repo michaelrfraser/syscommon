@@ -13,6 +13,9 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "Common.h"
+#ifdef WIN32
+	#pragma warning(disable: 4996)
+#endif
 
 /*
  * Fail the current test with the given message

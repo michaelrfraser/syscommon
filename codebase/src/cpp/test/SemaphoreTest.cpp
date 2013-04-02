@@ -16,7 +16,7 @@
 #include "concurrent/Thread.h"
 #include "Platform.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION( SemaphoreTest );
+//CPPUNIT_TEST_SUITE_REGISTRATION( SemaphoreTest );
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS

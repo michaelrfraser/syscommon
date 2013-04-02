@@ -53,8 +53,8 @@ void LockTest::testLock()
 	LockRunnable runnableOne( &lock );
 	LockRunnable runnableThree( &lock );
 
-	SysCommon::Thread threadOne( &runnableOne );
-	SysCommon::Thread threadThree( &runnableThree );
+	SysCommon::Thread threadOne( &runnableOne, "ThreadOne" );
+	SysCommon::Thread threadThree( &runnableThree, "ThreadThree" );
 
 	// Start the threads, they will block until we signal the acquire event on them
 	threadOne.start();

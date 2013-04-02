@@ -173,7 +173,7 @@ void IndefiniteWaitRunnable::run()
 		SysCommon::Thread* currentThread = SysCommon::Thread::currentThread();
 		currentThread->sleep( NATIVE_INFINITE_WAIT );
 	}
-	catch( SysCommon::InterruptedException& ie )
+	catch( SysCommon::InterruptedException& )
 	{
 		// We are expecting this exception
 		this->result = FR_SUCCESS;

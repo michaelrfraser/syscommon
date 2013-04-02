@@ -196,7 +196,18 @@ WaitResult Platform::joinThread( NATIVE_THREAD& nativeThread,
 
 NATIVE_THREAD Platform::getCurrentThreadHandle()
 {
-	return ::GetCurrentThread();
+	NATIVE_THREAD handle = INVALID_HANDLE_VALUE;
+	HANDLE process = ::GetCurrentProcess();
+
+	::DuplicateHandle( process,
+					   ::GetCurrentThread(),
+					   process,
+					   &handle,
+					   0,
+					   TRUE,
+					   DUPLICATE_SAME_ACCESS );
+
+	return handle;
 }
 
 bool Platform::threadHandlesEqual( NATIVE_THREAD handleOne, NATIVE_THREAD handleTwo )
@@ -216,7 +227,7 @@ bool Platform::initialiseThreadInterrupt( NATIVE_INTERRUPT& nativeInterrupt, con
 	bool result = false;
 	if ( !Platform::isThreadInterruptInitialised(nativeInterrupt) )
 	{
-		nativeInterrupt = ::CreateEvent( NULL, FALSE, FALSE, name.c_str() );
+		nativeInterrupt = ::CreateEvent( NULL, FALSE, FALSE, NULL );
 		result = Platform::isThreadInterruptInitialised( nativeInterrupt );
 	}
 
@@ -252,7 +263,7 @@ WaitResult Platform::performInterruptableSleep( NATIVE_INTERRUPT& threadInterrup
 	if ( Platform::isThreadInterruptInitialised(threadInterrupt) )
 	{
 		DWORD nativeWaitResult = ::WaitForSingleObject( threadInterrupt, timeout );
-		result = Platform::translateWaitResult( nativeWaitResult );
+		result = Platform::translateWaitResult( nativeWaitResult, true );
 	}
 
 	return result;
@@ -267,6 +278,73 @@ bool Platform::signalInterrupt( NATIVE_INTERRUPT& nativeInterrupt )
 		result = ::SetEvent( nativeInterrupt ) != FALSE;
 
 	return result;
+}
+
+NATIVE_EVENT Platform::createUninitialisedEvent()
+{
+	return INVALID_HANDLE_VALUE;
+}
+
+bool Platform::initialiseEvent( NATIVE_EVENT& event, bool initialState, const String& name )
+{
+	assert( !Platform::isEventInitialised(event) );
+
+	bool initialised = false;
+	if( !Platform::isEventInitialised(event) )
+	{
+		event = ::CreateEvent( NULL, TRUE, initialState, NULL );
+		initialised = event != INVALID_HANDLE_VALUE;
+	}
+
+	return initialised;
+}
+
+bool Platform::isEventInitialised( const NATIVE_EVENT& event )
+{
+	return event != INVALID_HANDLE_VALUE;
+}
+
+bool Platform::signalEvent( NATIVE_EVENT& event )
+{
+	assert( Platform::isEventInitialised(event) );
+
+	bool signaled = false;
+	if( Platform::isEventInitialised(event) )
+		signaled = (::SetEvent(event) != FALSE);
+
+	return signaled;
+}
+
+void Platform::clearEvent( NATIVE_EVENT& event )
+{
+	assert( Platform::isEventInitialised(event) );
+	if( Platform::isEventInitialised(event) )
+		::ResetEvent( event );
+}
+
+WaitResult Platform::waitOnEvent( NATIVE_EVENT& event, unsigned long timeout )
+{
+	assert( Platform::isEventInitialised(event) );
+	WaitResult result = WR_FAILED;
+	if( Platform::isEventInitialised(event) )
+	{
+		DWORD nativeResult = ::WaitForSingleObject( event, timeout );
+		result = Platform::translateWaitResult( nativeResult, false );
+	}
+
+	return result;
+}
+
+bool Platform::destroyEvent( NATIVE_EVENT& event )
+{
+	assert( Platform::isEventInitialised(event) );
+
+	bool destroyed = false;
+	if( Platform::isEventInitialised(event) )
+		destroyed = (::CloseHandle( event ) != FALSE);
+
+	return destroyed;
+
 }
 
 bool Platform::initialiseSocketFramework()
@@ -296,14 +374,14 @@ NATIVE_IP_ADDRESS Platform::lookupHost( const tchar* hostName )
 			const char* narrowHostNameCStr = narrowHostName.c_str();
 
 			// Check to see if it is a simple xxx.xxx.xxx.xxx
-			result = ::inet_addr( narrowHostNameCStr );
+			result = ntohl(::inet_addr(narrowHostNameCStr) );
 			if ( result == INADDR_NONE )
 			{
 				// Not in 4xOctet form, so look up the host name
 				hostent* hostEntry = ::gethostbyname( narrowHostNameCStr );
 				if ( hostEntry != NULL )
 				{
-					result = *((NATIVE_IP_ADDRESS*)hostEntry->h_addr_list[0]);
+					result = ntohl(*((NATIVE_IP_ADDRESS*)hostEntry->h_addr_list[0]));
 				}
 			}
 		}
@@ -336,7 +414,7 @@ int Platform::lookupHostName( NATIVE_IP_ADDRESS address,
 	if( frameworkInitialised )
 	{
 		in_addr addressRequest;
-		addressRequest.S_un.S_addr = address;
+		addressRequest.S_un.S_addr = htonl(address);
 		hostent* host = ::gethostbyaddr( (const char*)&addressRequest, 
 										 sizeof(in_addr), 
 										 addressType );
@@ -361,7 +439,7 @@ int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 	if( frameworkInitialised )
 	{
 		in_addr addressRequest;
-		addressRequest.S_un.S_addr = address;
+		addressRequest.S_un.S_addr = htonl(address);
 		char* ansiAddress = ::inet_ntoa( addressRequest );
 		if( ansiAddress )
 		{
@@ -731,10 +809,35 @@ String toPlatformString( const wchar_t* string )
 #endif
 }
 
+void Platform::longToChars( const long value, tchar* buffer, size_t length )
+{
+	::_ltot_s( value, buffer, length, 10 );
+}
+
 bool Platform::fileExists( const tchar* fileName )
 {
 	DWORD fileAttributes = ::GetFileAttributes( fileName );
 	return fileAttributes != INVALID_FILE_ATTRIBUTES;
+}
+
+unsigned long Platform::getCurrentTimeMilliseconds()
+{
+	unsigned long time = 0;
+
+	LARGE_INTEGER frequency;
+	if( ::QueryPerformanceFrequency( &frequency ) )
+	{
+		LARGE_INTEGER now;
+		::QueryPerformanceCounter( &now );
+
+		time = (unsigned long)((1000LL * now.QuadPart) / frequency.QuadPart);
+	}
+	else
+	{
+		time = ::GetTickCount();
+	}
+
+	return time;
 }
 
 DWORD WINAPI Platform::threadEntry( LPVOID argument )
@@ -743,14 +846,14 @@ DWORD WINAPI Platform::threadEntry( LPVOID argument )
 	return 0;
 }
 
-WaitResult Platform::translateWaitResult( DWORD nativeWaitResult )
+WaitResult Platform::translateWaitResult( DWORD nativeWaitResult, bool interruptIsFirstHandle )
 {
 	WaitResult result = WR_FAILED;
 
 	switch ( nativeWaitResult )
 	{
 		case WAIT_OBJECT_0:
-			result = WR_INTERRUPTED;
+			result = interruptIsFirstHandle ? WR_INTERRUPTED : WR_SUCCEEDED;
 			break;
 
 		case (WAIT_OBJECT_0 + 1):
@@ -789,7 +892,7 @@ WaitResult Platform::waitOnInterruptableHandle( HANDLE interruptableHandle,
 		waitHandles[1] = interruptableHandle;
 
 		DWORD nativeWaitResult = ::WaitForMultipleObjects( 2, waitHandles, FALSE, timeout );
-		result = translateWaitResult( nativeWaitResult );
+		result = translateWaitResult( nativeWaitResult, true );
 
 		if( result == WR_INTERRUPTED )
 			::ResetEvent( interruptHandle );

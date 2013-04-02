@@ -28,6 +28,10 @@
 
 #include "Common.h"
 
+#ifdef WIN32
+	#pragma warning(disable: 4996)
+#endif
+
 using namespace CPPUNIT_NS;
 using namespace std;
 

@@ -288,7 +288,7 @@ namespace SysCommon
 		// Win32 Specific
 		private:
 			static DWORD WINAPI threadEntry( LPVOID argument );
-			static WaitResult translateWaitResult( DWORD nativeWaitResult );
+			static WaitResult translateWaitResult( DWORD nativeWaitResult, bool interruptIsFirstHandle );
 			static WaitResult waitOnInterruptableHandle( HANDLE interruptableHandle, 
 														 HANDLE interruptHandle, 
 														 DWORD timeout );

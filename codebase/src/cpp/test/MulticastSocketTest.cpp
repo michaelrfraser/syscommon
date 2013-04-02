@@ -89,7 +89,7 @@ void MulticastSocketTest::testIfaceConstructorInvalid()
 		SysCommon::MulticastSocket mcastSocket( networkIface );
 		failTestMissingException( "SocketException", "binding a socket to an invalid address" );
 	}
-	catch( SysCommon::SocketException& se )
+	catch( SysCommon::SocketException& )
 	{
 
 	}
@@ -134,7 +134,7 @@ void MulticastSocketTest::testJoinOnClosedSocket()
 		mcastSocket.joinGroup( multicastAddress.getAddress() );
 		failTestMissingException( "SocketException", "joining on a closed socket" );
 	}
-	catch( SysCommon::SocketException& se )
+	catch( SysCommon::SocketException& )
 	{
 		// SUCCESS!
 	}
@@ -156,7 +156,7 @@ void MulticastSocketTest::testLeaveGroupWithoutJoin()
 		mcastSocket.leaveGroup( multicastAddress.getAddress() );
 		failTestMissingException( "SocketException", "leaving a group without joining first" );
 	}
-	catch( SysCommon::SocketException& se )
+	catch( SysCommon::SocketException& )
 	{
 		// SUCCESS!
 	}
@@ -270,7 +270,7 @@ void MulticastSocketTest::testSendWhileClosed()
 		sender.send( sendPacket );
 		failTestMissingException( "SocketException", "sending on a closed socket" );
 	}
-	catch( SysCommon::SocketException& se )
+	catch( SysCommon::SocketException& )
 	{
 		// SUCCESS!
 	}
@@ -306,7 +306,7 @@ void MulticastSocketTest::testSendNoAddress()
 		sender.send( sendPacket );
 		failTestMissingException( "SocketException", "sending without a destination address" );
 	}
-	catch( SysCommon::SocketException& se )
+	catch( SysCommon::SocketException& )
 	{
 		// SUCCESS!
 	}
@@ -338,7 +338,7 @@ void MulticastSocketTest::testReceiveWhileClosed()
 		receiver.receive( receivePacket );
 		failTestMissingException( "SocketException", "receiving on a closed socket" );
 	}
-	catch( SysCommon::SocketException& se )
+	catch( SysCommon::SocketException& )
 	{
 		// SUCCESS!
 	}
