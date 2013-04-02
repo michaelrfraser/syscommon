@@ -225,7 +225,7 @@ void MulticastSocketTest::testSendReceive()
 		receiver.receive( receivePacket );
 
 		// Is the received data the same as what was sent?
-		CPPUNIT_ASSERT( receivePacket.getLength() == sendLength );
+		CPPUNIT_ASSERT( (size_t)receivePacket.getLength() == sendLength );
 		CPPUNIT_ASSERT( ::memcmp(sendBuffer, receiveBuffer, sendLength) == 0 );
 
 		sender.leaveGroup( multicastAddress.getAddress() );
