@@ -43,9 +43,9 @@ namespace SysCommon
 			NATIVE_IP_ADDRESS address;
 			unsigned short port;
 			char* buffer;
-			size_t offset;
-			size_t length;
-			size_t bufferLength;
+			int offset;
+			int length;
+			int bufferLength;
 
 		//----------------------------------------------------------
 		//                      CONSTRUCTORS
@@ -60,8 +60,8 @@ namespace SysCommon
 			 * @param length the number of bytes to read.
 			 */
 			DatagramPacket( char* buffer, 
-							size_t offset, 
-							size_t length );
+							int offset, 
+							int length );
 
 			/**
 			 * Constructs a DatagramPacket for receiving packets of size length. 
@@ -70,7 +70,7 @@ namespace SysCommon
 			 * @param length the number of bytes to read.
 			 */
 			DatagramPacket( char* buffer, 
-							size_t length );
+							int length );
 
 			/**
 			 * Constructs a datagram packet for sending packets of size length with an offset to 
@@ -83,8 +83,8 @@ namespace SysCommon
 			 * @param port the destination port number.
 			 */
 			DatagramPacket( const char* buffer, 
-							size_t offset, 
-							size_t length, 
+							int offset, 
+							int length, 
 							NATIVE_IP_ADDRESS address, 
 							unsigned short port );
 
@@ -98,8 +98,8 @@ namespace SysCommon
 			 * @param address the destination socket address.
 			 */
 			DatagramPacket( const char* buffer,
-							size_t offset,
-							size_t length,
+							int offset,
+							int length,
 							InetSocketAddress& address );
 
 			virtual ~DatagramPacket();
@@ -109,8 +109,8 @@ namespace SysCommon
 			 * Internal constructor helper
 			 */
 			void _DatagramPacket( char* buffer, 
-								  size_t offset, 
-								  size_t length, 
+								  int offset, 
+								  int length, 
 								  NATIVE_IP_ADDRESS address, 
 								  unsigned short port );
 
@@ -127,7 +127,7 @@ namespace SysCommon
 			 * @param length the length of the data 
 			 *       and/or the length of the buffer used to receive data
 			 */
-			void setData( char* buffer, size_t offset, size_t length );
+			void setData( char* buffer, int offset, int length );
 
 			/**
 			 * Sets the IP address of the machine which this datagram is being sent to or has been 
@@ -154,7 +154,7 @@ namespace SysCommon
 			 *
 			 * @param length the length to set for this packet.
 			 */
-			void setLength( size_t length );
+			void setLength( int length );
 
 			/**
 			 * Returns the data buffer. The data received or the data to be sent
@@ -171,7 +171,7 @@ namespace SysCommon
 			 * @return the offset of the data to be sent or the offset of the
 			 * data received.
 			 */
-			size_t getOffset();
+			int getOffset();
 
 			/**
 			 * Returns the length of the data to be sent or the length of the
@@ -180,14 +180,14 @@ namespace SysCommon
 			 * @return the length of the data to be sent or the length of the
 			 * data received.
 			 */
-			size_t getLength();
+			int getLength();
 
 			/**
 			 * Returns the original length of the data buffer of this packet
 			 *
 			 * @return the original length of the data buffer of this packet
 			 */
-			size_t getBufferLength();
+			int getBufferLength();
 
 			/**
 			 * Returns the IP address of the machine to which this datagram is being

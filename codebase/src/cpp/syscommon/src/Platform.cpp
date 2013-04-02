@@ -49,7 +49,7 @@ bool Platform::initialiseSemaphore( NATIVE_SEMAPHORE& nativeSemaphore,
 	return result;
 }
 
-bool Platform::isSemaphoreInitialised( const NATIVE_SEMAPHORE& nativeSemaphore )
+bool Platform::isSemaphoreInitialised( const NATIVE_SEMAPHORE nativeSemaphore )
 {
 	return nativeSemaphore != INVALID_HANDLE_VALUE;
 }
@@ -120,19 +120,19 @@ void Platform::leaveCriticalSection( NATIVE_CRITICALSECTION& nativeCriticalSecti
 
 NATIVE_THREAD Platform::createUninitialisedThread()
 {
-	return NATIVE_THREAD_UNINIT;
+	return INVALID_HANDLE_VALUE;
 }
 
 bool Platform::initialiseThread( NATIVE_THREAD& nativeThread, 
 								 void* thisPointer )
 {
-	assert( !Platform::isThreadInitialised() );
+	assert( !Platform::isThreadInitialised(nativeThread) );
 	assert( thisPointer );
 
 	bool result = false;
-	if ( !Platform::isThreadInitialised() && thisPointer )
+	if ( !Platform::isThreadInitialised(nativeThread) && thisPointer )
 	{
-		DWORD nativeThreadID = NATIVE_THREAD_UNINIT;
+		DWORD nativeThreadID = 0;
 		nativeThread = ::CreateThread( NULL, 
 									   NULL, 
 									   Platform::threadEntry,
@@ -147,7 +147,7 @@ bool Platform::initialiseThread( NATIVE_THREAD& nativeThread,
 
 bool Platform::isThreadInitialised( const NATIVE_THREAD& nativeThread )
 {
-	return nativeThread != NATIVE_THREAD_UNINIT;
+	return nativeThread != INVALID_HANDLE_VALUE;
 }
 
 bool Platform::destroyThread( NATIVE_THREAD& nativeThread )
@@ -160,7 +160,7 @@ bool Platform::destroyThread( NATIVE_THREAD& nativeThread )
 		result = ::CloseHandle( nativeThread ) != FALSE;
 
 		if ( result )
-			nativeThread = NATIVE_THREAD_UNINIT;
+			nativeThread = INVALID_HANDLE_VALUE;
 	}
 
 	return result;
@@ -185,10 +185,10 @@ WaitResult Platform::joinThread( NATIVE_THREAD& nativeThread,
 								 DWORD timeout )
 {
 	assert( Platform::isThreadInitialised(nativeThread) );
-	assert( threadInterrupt != NATIVE_INTERRUPT_UNINIT );
+	assert( threadInterrupt != INVALID_HANDLE_VALUE );
 
 	WaitResult result = WR_FAILED;
-	if ( Platform::isThreadInitialised(nativeThread) && threadInterrupt != NATIVE_INTERRUPT_UNINIT )
+	if ( Platform::isThreadInitialised(nativeThread) && threadInterrupt != INVALID_HANDLE_VALUE )
 		result = Platform::waitOnInterruptableHandle( nativeThread, threadInterrupt, timeout );
 
 	return result;
@@ -217,7 +217,7 @@ bool Platform::initialiseThreadInterrupt( NATIVE_INTERRUPT& nativeInterrupt, con
 	if ( !Platform::isThreadInterruptInitialised(nativeInterrupt) )
 	{
 		nativeInterrupt = ::CreateEvent( NULL, FALSE, FALSE, name.c_str() );
-		result = Platform::isThreadInterruptInitialised();
+		result = Platform::isThreadInterruptInitialised( nativeInterrupt );
 	}
 
 	return result;
@@ -314,6 +314,17 @@ NATIVE_IP_ADDRESS Platform::lookupHost( const tchar* hostName )
 	return result;
 }
 
+void Platform::setMulticastSocketOptions( NATIVE_SOCKET& socket )
+{
+	// Set SO_REUSEADDR so that other processes can bind to it
+	int intTrue = 1;
+	::setsockopt( socket,
+				  SOL_SOCKET, 
+				  SO_REUSEADDR, 
+				  (char*)&intTrue,
+				  sizeof(intTrue) );
+}
+
 int Platform::lookupHostName( NATIVE_IP_ADDRESS address, 
 							  int addressType, 
 							  tchar* outBuffer, 
@@ -332,7 +343,7 @@ int Platform::lookupHostName( NATIVE_IP_ADDRESS address,
 		if( host )
 		{
 			const char* name = host->h_name;
-			returnSize = Platform::toPlatformChars( name, strlen(name), outBuffer, outBufferSize );
+			returnSize = Platform::toPlatformChars( name, (int)strlen(name), outBuffer, outBufferSize );
 		}
 
 		Platform::cleanupSocketFramework();
@@ -355,7 +366,7 @@ int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 		if( ansiAddress )
 		{
 			returnSize = Platform::toPlatformChars( ansiAddress, 
-													strlen(ansiAddress), 
+													(int)strlen(ansiAddress), 
 													outBuffer, 
 													outBufferSize );
 		}
@@ -603,17 +614,17 @@ std::string Platform::toAnsiString( const char* string )
 	return std::string( string );
 }
 
-std::string Platform::toAnsiString( const char* string, size_t length )
+std::string Platform::toAnsiString( const char* string, int length )
 {
 	return std::string( string, length );
 }
 
 std::string Platform::toAnsiString( const wchar_t* string )
 {
-	return toAnsiString( string, ::wcslen(string) );
+	return toAnsiString( string, (int)::wcslen(string) );
 }
 
-std::string Platform::toAnsiString( const wchar_t* string, size_t length )
+std::string Platform::toAnsiString( const wchar_t* string, int length )
 {
 	std::string result;
 
@@ -641,10 +652,10 @@ int Platform::toUnicodeChars( const char* string,
 
 std::wstring Platform::toUnicodeString( const char* string )
 {
-	return Platform::toUnicodeString( string, strlen(string) );
+	return Platform::toUnicodeString( string, (int)strlen(string) );
 }
 
-std::wstring Platform::toUnicodeString( const char* string, size_t length )
+std::wstring Platform::toUnicodeString( const char* string, int length )
 {
 	std::wstring result;
 	
@@ -666,7 +677,7 @@ std::wstring Platform::toUnicodeString( const wchar_t* string )
 	return std::wstring( string );
 }
 
-std::wstring Platform::toUnicodeString( const wchar_t* string, size_t length )
+std::wstring Platform::toUnicodeString( const wchar_t* string, int length )
 {
 	return std::wstring( string, length );
 }
@@ -702,7 +713,7 @@ String Platform::toPlatformString( const char* string )
 #endif
 }
 
-String Platform::toPlatformString( const char* string, size_t length )
+String Platform::toPlatformString( const char* string, int length )
 {
 #ifndef UNICODE
 	return Platform::toAnsiString( string, length );
@@ -1269,6 +1280,24 @@ bool Platform::initialiseSocketFramework()
 void Platform::cleanupSocketFramework()
 {
 	// Nothing to do on Posix
+}
+
+void Platform::setMulticastSocketOptions( NATIVE_SOCKET& socket )
+{
+	// Set SO_REUSEADDR so that other processes can bind to it
+	int intTrue = 1;
+	::setsockopt( socket,
+				  SOL_SOCKET, 
+				  SO_REUSEADDR, 
+				  (char*)&intTrue,
+				  sizeof(intTrue) );
+
+	// MacOSX also requires us to set SO_REUSEPORT
+	::setsockopt( socket,
+				  SOL_SOCKET,
+				  SO_REUSEPORT,
+				  (char*)&intTrue,
+				  sizeof(intTrue) );
 }
 
 NATIVE_IP_ADDRESS Platform::lookupHost( const tchar* hostName )

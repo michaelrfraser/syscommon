@@ -22,21 +22,21 @@ using namespace SysCommon;
 //                      CONSTRUCTORS
 //----------------------------------------------------------
 DatagramPacket::DatagramPacket( char* buffer, 
-								size_t offset, 
-								size_t length )
+								int offset, 
+								int length )
 {
 	_DatagramPacket( buffer, offset, length, INADDR_NONE, 0 );	
 }
 
 DatagramPacket::DatagramPacket( char* buffer, 
-								size_t length )
+								int length )
 {
 	_DatagramPacket( buffer, 0, length, INADDR_NONE, 0 );
 }
 
 DatagramPacket::DatagramPacket( const char* buffer, 
-								size_t offset, 
-								size_t length, 
+								int offset, 
+								int length, 
 								NATIVE_IP_ADDRESS address, 
 								unsigned short port )
 {
@@ -44,8 +44,8 @@ DatagramPacket::DatagramPacket( const char* buffer,
 }
 
 DatagramPacket::DatagramPacket( const char* buffer,
-								size_t offset,
-								size_t length,
+								int offset,
+								int length,
 								InetSocketAddress& address )
 {
 	_DatagramPacket( (char*)buffer, 
@@ -61,8 +61,8 @@ DatagramPacket::~DatagramPacket()
 }
 
 void DatagramPacket::_DatagramPacket( char* buffer, 
-									  size_t offset, 
-									  size_t length, 
+									  int offset, 
+									  int length, 
 									  NATIVE_IP_ADDRESS address, 
 									  unsigned short port )
 {
@@ -75,7 +75,7 @@ void DatagramPacket::_DatagramPacket( char* buffer,
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-void DatagramPacket::setData( char* buffer, size_t offset, size_t length )
+void DatagramPacket::setData( char* buffer, int offset, int length )
 {
 	assert( buffer );
 
@@ -95,7 +95,7 @@ void DatagramPacket::setPort( unsigned short port )
 	this->port = port;
 }
 
-void DatagramPacket::setLength( size_t length )
+void DatagramPacket::setLength( int length )
 {
 	this->length = length;
 }
@@ -105,17 +105,17 @@ char* DatagramPacket::getData()
 	return this->buffer;
 }
 
-size_t DatagramPacket::getOffset()
+int DatagramPacket::getOffset()
 {
 	return this->offset;
 }
 
-size_t DatagramPacket::getLength()
+int DatagramPacket::getLength()
 {
 	return this->length;
 }
 
-size_t DatagramPacket::getBufferLength()
+int DatagramPacket::getBufferLength()
 {
 	return this->bufferLength;
 }

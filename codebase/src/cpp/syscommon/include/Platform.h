@@ -236,6 +236,7 @@ namespace SysCommon
 			static bool initialiseSocketFramework();
 			static void cleanupSocketFramework();
 			static NATIVE_IP_ADDRESS lookupHost( const tchar* hostName );
+			static void setMulticastSocketOptions( NATIVE_SOCKET& socket );
 			static int lookupHostName( NATIVE_IP_ADDRESS address, 
 									   int addressType, 
 									   tchar* outBuffer, 

@@ -80,8 +80,8 @@ bool Utils::stringStartsWith( const String& string, const String& prefix )
 {
 	bool result = false;
 
-	int stringLength = string.length();
-	int testLength = prefix.length();
+	size_t stringLength = string.length();
+	size_t testLength = prefix.length();
 
 	if( testLength == stringLength )
 	{
@@ -100,8 +100,8 @@ bool Utils::stringEndsWith( const String& string, const String& suffix )
 {
 	bool result = false;
 
-	int stringLength = string.length();
-	int testLength = suffix.length();
+	size_t stringLength = string.length();
+	size_t testLength = suffix.length();
 
 	if( testLength == stringLength )
 	{

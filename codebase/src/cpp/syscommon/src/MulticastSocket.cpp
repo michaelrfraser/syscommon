@@ -168,7 +168,7 @@ void MulticastSocket::receive( DatagramPacket& packet ) throw ( IOException )
 
 	// Calculate the pointer within the data buffer that we should receive into
 	size_t offset = packet.getOffset();
-	size_t readLength = packet.getBufferLength();
+	int readLength = packet.getBufferLength();
 	char* readPos = &data[offset];
 
 	// Create a struct to receive the sender's information into
@@ -210,7 +210,7 @@ void MulticastSocket::send( DatagramPacket& packet ) throw ( IOException )
 
 	// Calculate the pointer within the data buffer that we should send from
 	size_t offset = packet.getOffset();
-	size_t sendLength = packet.getLength();
+	int sendLength = packet.getLength();
 	char* sendPos = &data[offset];
 
 	// Create an address struct and populate it with the target information
@@ -221,7 +221,6 @@ void MulticastSocket::send( DatagramPacket& packet ) throw ( IOException )
 	::memset( &to, 0, sizeof(sockaddr_in) );
 	to.sin_family = AF_INET;
 	to.sin_addr.s_addr = htonl( toAddress );
-	to.sin_len = sizeof(NATIVE_IP_ADDRESS);
 	to.sin_port = htons( toPort );
 
 	// Perform the send
@@ -230,7 +229,7 @@ void MulticastSocket::send( DatagramPacket& packet ) throw ( IOException )
 							   sendLength,
 							   0,
 							   (struct sockaddr*)&to,
-							   sizeof(to) );
+							   (int)sizeof(to) );
 
 	//int sendResult = ::send( nativeSocket, sendPos, sendLength, 0 );
 
@@ -258,20 +257,7 @@ void MulticastSocket::create() throw ( IOException )
 	this->nativeSocket = ::socket( AF_INET, SOCK_DGRAM, IPPROTO_UDP );
 	if( this->nativeSocket != NATIVE_SOCKET_UNINIT )
 	{
-		// Set SO_REUSEADDR so that other processes can bind to it
-		int intTrue = 1;
-		::setsockopt( this->nativeSocket,
-					  SOL_SOCKET, 
-					  SO_REUSEADDR, 
-					  (char*)&intTrue,
-					  sizeof(intTrue) );
-
-		// MacOSX also requires us to set SO_REUSEPORT
-		::setsockopt( this->nativeSocket,
-					  SOL_SOCKET,
-					  SO_REUSEPORT,
-					  (char*)&intTrue,
-					  sizeof(intTrue) );
+		Platform::setMulticastSocketOptions( this->nativeSocket );
 
 		setTimeToLive( DEFAULT_TTL );
 	}
