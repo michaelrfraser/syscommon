@@ -16,7 +16,6 @@
  */
 
 #include "Platform.h"
-#include "Semaphore.h"
 
 namespace SysCommon
 {

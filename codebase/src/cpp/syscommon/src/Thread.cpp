@@ -33,7 +33,7 @@ NATIVE_THREAD Thread::mainThreadHandle = Platform::getCurrentThreadHandle();
 /**
  * Default constructor for type Thread with anonymous name and NULL IRunnable
  */
-Thread::Thread()
+Thread::Thread() : joinEvent( false, "ThreadJoin" )
 {
 	// Generate anonymous name and call initialiser
 	String anonymousName = this->generateAnonymousThreadName();
@@ -47,7 +47,7 @@ Thread::Thread()
  *
  * @param runnable This Thread's unit of execution
  */
-Thread::Thread( IRunnable* runnable )
+Thread::Thread( IRunnable* runnable ) : joinEvent( false, "ThreadJoin" )
 {
 	// Generate anonymous name and call initialiser
 	String anonymousName = this->generateAnonymousThreadName();
@@ -61,7 +61,7 @@ Thread::Thread( IRunnable* runnable )
  * @param runnable This thread's unit of execution
  * @param name The name of the thread
  */
-Thread::Thread( IRunnable* runnable, const tchar* name )
+Thread::Thread( IRunnable* runnable, const tchar* name ) : joinEvent( false, "ThreadJoin" )
 {
 	this->_Thread( runnable, String(name) );
 }
@@ -153,24 +153,31 @@ void Thread::join() throw ( InterruptedException )
  * operation could complete
  */
 void Thread::join( unsigned long millis ) throw ( InterruptedException )
-{
-	if ( this->state == TS_ALIVE )
-	{
-		// Get the currently executing thread for its interrupt handle
-		Thread* thisThread = Thread::currentThread();
-		if ( thisThread && thisThread->interruptInitialised )
-		{
-			// Join this thread with the provided timeout
-			WaitResult result = Platform::joinThread( this->sysThreadHandle, 
-													  thisThread->interruptEvent, 
-													  millis );
+{	
+	// The commented code below was how the join was originally done, however it was creating a 
+	// buttload of race conditions, so I've just used an event to signal the join instead
 
-			if( result == WR_INTERRUPTED )
-			{
-				throw InterruptedException( TEXT("Thread interrupted") );
-			}
-		}
-	}
+	//if ( this->state == TS_ALIVE )
+	//{
+	//	// Get the currently executing thread for its interrupt handle
+	//	Thread* thisThread = Thread::currentThread();
+	//	if ( thisThread && thisThread->interruptInitialised )
+	//	{
+	//		NATIVE_THREAD threadHandle = this->sysThreadHandle;
+	//		
+	//		// Join this thread with the provided timeout
+	//		WaitResult result = Platform::joinThread( threadHandle, 
+	//												  thisThread->interruptEvent, 
+	//												  millis );
+
+	//		if( result == WR_INTERRUPTED )
+	//		{
+	//			throw InterruptedException( TEXT("Thread interrupted") );
+	//		}
+	//	}
+	//}
+
+	this->joinEvent.waitFor( millis );
 }
 
 /**
@@ -317,6 +324,8 @@ void Thread::threadEntry( void* threadInstance )
 			// Clean up and close handles
 			Thread::nativeThreadMap.erase( sysHandle );
 			Platform::destroyThread( sysHandle );
+
+			asThread->joinEvent.signal();
 		}
 	}
 }

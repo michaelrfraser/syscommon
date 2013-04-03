@@ -18,6 +18,7 @@
 #include <map>
 #include "Platform.h"
 #include "Exception.h"
+#include "Event.h"
 
 namespace SysCommon
 {
@@ -188,6 +189,8 @@ namespace SysCommon
 
 			IRunnable* runner;
 			String name;
+
+			Event joinEvent;
 
 		//----------------------------------------------------------
 		//                      CONSTRUCTORS
