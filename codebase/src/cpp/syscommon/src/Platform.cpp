@@ -21,6 +21,7 @@
 using namespace SysCommon;
 
 #ifdef _WIN32
+std::map<DWORD,HANDLE> Platform::threadIdToHandleMap;
 
 //----------------------------------------------------------
 //                     STATIC METHODS
@@ -140,6 +141,11 @@ bool Platform::initialiseThread( NATIVE_THREAD& nativeThread,
 									   CREATE_SUSPENDED, 
 									   &nativeThreadID );
 		result = nativeThread != INVALID_HANDLE_VALUE;
+
+		// Map the thread handle to the Win32 Thread ID (see notes in header file for more
+		// info regarding why this is necessary)
+		if( result )
+			threadIdToHandleMap[nativeThreadID] = nativeThread;
 	}
 
 	return result;
@@ -157,6 +163,10 @@ bool Platform::destroyThread( NATIVE_THREAD& nativeThread )
 	bool result = false;
 	if ( Platform::isThreadInitialised(nativeThread) )
 	{
+		// Unmap the handle from the corresponding Win32 Thread ID
+		DWORD threadId = ::GetThreadId( nativeThread );
+		threadIdToHandleMap.erase( threadId );
+
 		result = ::CloseHandle( nativeThread ) != FALSE;
 
 		if ( result )
@@ -197,15 +207,14 @@ WaitResult Platform::joinThread( NATIVE_THREAD& nativeThread,
 NATIVE_THREAD Platform::getCurrentThreadHandle()
 {
 	NATIVE_THREAD handle = INVALID_HANDLE_VALUE;
-	HANDLE process = ::GetCurrentProcess();
 
-	::DuplicateHandle( process,
-					   ::GetCurrentThread(),
-					   process,
-					   &handle,
-					   0,
-					   TRUE,
-					   DUPLICATE_SAME_ACCESS );
+	// Get the unique Win32 Thread Id
+	DWORD currentId = ::GetCurrentThreadId();
+
+	// Get the handle that was assigned to the Thread ID when the thread was created
+	std::map<DWORD,HANDLE>::iterator handleIt = threadIdToHandleMap.find( currentId );
+	if( handleIt != threadIdToHandleMap.end() )
+		handle = (*handleIt).second;
 
 	return handle;
 }

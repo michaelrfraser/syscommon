@@ -92,5 +92,4 @@ int main( int argc, char* argv[] )
 
 	// Pass back the return code
 	return result.wasSuccessful() ? 0 : 1;
-
 }

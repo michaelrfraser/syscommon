@@ -19,6 +19,7 @@
 #ifdef _WIN32
 	#include <windows.h>
 	#include <winsock.h>
+	#include <map>
 
 	#pragma warning( disable : 4290 )
 
@@ -287,6 +288,15 @@ namespace SysCommon
 #ifdef _WIN32
 		// Win32 Specific
 		private:
+			// The handle returned by ::GetCurrentThread() is only a psuedo-handle, and 
+			// trying to call ::DuplicateHandle() on it gives a different result each time.
+			// So, we have to store the unique Thread ID returned by ::CreateThread() against
+			// the handle it gave as at that point so that we can look it up in the future.
+			//
+			// An entry for a thread is inserted when it is created in Platform::initialiseThread()
+			// and removed when it is destroyed in Platform::destroyThread()
+			static std::map<DWORD,HANDLE> threadIdToHandleMap;
+
 			static DWORD WINAPI threadEntry( LPVOID argument );
 			static WaitResult translateWaitResult( DWORD nativeWaitResult, bool interruptIsFirstHandle );
 			static WaitResult waitOnInterruptableHandle( HANDLE interruptableHandle, 
