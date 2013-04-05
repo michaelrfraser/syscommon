@@ -54,11 +54,10 @@ void SocketTest::testDefaultConstructor()
 		CPPUNIT_ASSERT( testSocket.isInputShutdown() );
 		CPPUNIT_ASSERT( testSocket.isOutputShutdown() );
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
-		failTest( "Unexpected exception [%s] while creating Socket with default constructor. Error [%s]",
-				  e.getName(),
-				  e.getMessage() );
+		failTest( "Unexpected exception while creating Socket with default constructor. Error [%s]",
+				  e.what() );
 	}
 }
 

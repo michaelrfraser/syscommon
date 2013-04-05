@@ -16,48 +16,16 @@
  */
 
 #include "Platform.h"
+
+#include <exception>
+
 namespace SysCommon
 {
-	class Exception
-	{
-		//----------------------------------------------------------
-		//                    STATIC VARIABLES
-		//----------------------------------------------------------
-
-		//----------------------------------------------------------
-		//                   INSTANCE VARIABLES
-		//----------------------------------------------------------
-		private:
-			String name;
-			String message;
-
-		//----------------------------------------------------------
-		//                      CONSTRUCTORS
-		//----------------------------------------------------------
-		public:
-			Exception( const tchar* message );
-			Exception( const Exception& other );
-			virtual ~Exception();
-
-		//----------------------------------------------------------
-		//                    INSTANCE METHODS
-		//----------------------------------------------------------
-		public:
-			const tchar* getMessage() const;
-			const tchar* getName() const;
-
-		protected:
-			void setName( const tchar* name );
-		//----------------------------------------------------------
-		//                     STATIC METHODS
-		//----------------------------------------------------------
-	};
-
 	#define EXCEPTION_CHILD_DECL(T,S) \
-		class T : public S { public: T(const tchar* message) : S(message){ setName(#T); } virtual ~T() {} };
+		class T : public S { public: T(const tchar* message) : S(message){} virtual ~T() {} };
 
-	EXCEPTION_CHILD_DECL( InterruptedException, Exception )
-	EXCEPTION_CHILD_DECL( IOException, Exception )
+	EXCEPTION_CHILD_DECL( InterruptedException, std::runtime_error )
+	EXCEPTION_CHILD_DECL( IOException, std::runtime_error )
 	EXCEPTION_CHILD_DECL( SocketException, IOException )
 	EXCEPTION_CHILD_DECL( FileNotFoundException, IOException )
 }

@@ -57,14 +57,13 @@ void failTestMissingException( const char *expectedException, const char* action
  * include the expected and actual exception types and a message regarding the action that
  * was in progress.
  */
-void failTestWrongException( const char* expected, SysCommon::Exception& actual, const char* action )
+void failTestWrongException( const char* expected, std::exception& actual, const char* action )
 {
 	char buffer[4096];
 	sprintf( buffer,
-	         "(wrongException) Wrong exception received while %s: expected [%s], received[%s]\n%s",
+	         "(wrongException) Wrong exception received while %s: expected [%s], received a different exception with this message: [%s]\n",
 	         action,
 	         expected,
-	         actual.getName(),
-	         actual.getMessage() );
+	         actual.what() );
 	CPPUNIT_FAIL( buffer );
 }

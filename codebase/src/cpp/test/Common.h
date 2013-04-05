@@ -48,4 +48,4 @@ void failTestMissingException( const char *expectedException, const char* action
  * include the expected and actual exception types and a message regarding the action that
  * was in progress.
  */
-void failTestWrongException( const char *expected, SysCommon::Exception &actual, const char *action );
+void failTestWrongException( const char* expected, std::exception& actual, const char* action );

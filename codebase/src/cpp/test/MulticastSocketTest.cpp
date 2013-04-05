@@ -53,11 +53,10 @@ void MulticastSocketTest::testPortConstructor()
 
 		mcastSocket.close();
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
-		failTest( "Received exception %s while creating socket. Error: %s",
-				  e.getName(),
-				  e.getMessage() );
+		failTest( "Received exception while creating socket. Error: %s",
+				  e.what() );
 	}
 }
 
@@ -72,11 +71,10 @@ void MulticastSocketTest::testIfaceConstructor()
 
 		mcastSocket.close();
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
-		failTest( "Received exception %s while creating socket. Error: %s",
-				  e.getName(),
-				  e.getMessage() );
+		failTest( "Received exception while creating socket. Error: %s",
+				  e.what() );
 	}
 }
 
@@ -93,7 +91,7 @@ void MulticastSocketTest::testIfaceConstructorInvalid()
 	{
 
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
 		failTestWrongException( "SocketException", e, "binding a socket to an invalid address" );
 	}
@@ -111,11 +109,10 @@ void MulticastSocketTest::testJoinLeaveGroup()
 		mcastSocket.joinGroup( multicastAddress.getAddress() );
 		mcastSocket.leaveGroup( multicastAddress.getAddress() );
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
-		failTest( "Received exception %s while joining a multicast group. Error: %s",
-						  e.getName(),
-						  e.getMessage() );
+		failTest( "Received exception while joining a multicast group. Error: %s",
+				  e.what() );
 	}
 
 	mcastSocket.close();
@@ -138,7 +135,7 @@ void MulticastSocketTest::testJoinOnClosedSocket()
 	{
 		// SUCCESS!
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
 		failTestWrongException( "SocketException", e, "joining on a closed socket" );
 	}
@@ -160,7 +157,7 @@ void MulticastSocketTest::testLeaveGroupWithoutJoin()
 	{
 		// SUCCESS!
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
 		failTestWrongException( "SocketException", e, "leaving a group without joining first" );
 	}
@@ -178,11 +175,10 @@ void MulticastSocketTest::testAddressReusage()
 		SysCommon::MulticastSocket socketTwo( networkIface );
 		socketTwo.close();
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
-		failTest( "Unexpected exception [%s] while binding a second socket to the same address. Reported error [%s]",
-				  e.getName(),
-				  e.getMessage() );
+		failTest( "Unexpected exception while binding a second socket to the same address. Reported error [%s]",
+				  e.what() );
 	}
 
 	socketOne.close();
@@ -231,11 +227,10 @@ void MulticastSocketTest::testSendReceive()
 		sender.leaveGroup( multicastAddress.getAddress() );
 		receiver.leaveGroup( multicastAddress.getAddress() );
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
-		failTest( "Unexpected exception %s while sending a datagram. Reported error %s\n",
-				  e.getName(),
-				  e.getMessage() );
+		failTest( "Unexpected exception while sending a datagram. Reported error %s\n",
+				  e.what() );
 	}
 
 	sender.close();
@@ -274,7 +269,7 @@ void MulticastSocketTest::testSendWhileClosed()
 	{
 		// SUCCESS!
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
 		failTestWrongException( "SocketException", e, "sending on a closed socket" );
 	}
@@ -310,7 +305,7 @@ void MulticastSocketTest::testSendNoAddress()
 	{
 		// SUCCESS!
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
 		failTestWrongException( "SocketException", e, "sending without a destination address" );
 	}
@@ -342,7 +337,7 @@ void MulticastSocketTest::testReceiveWhileClosed()
 	{
 		// SUCCESS!
 	}
-	catch( SysCommon::Exception& e )
+	catch( std::exception& e )
 	{
 		failTestWrongException( "SocketException", e, "receiving on a closed socket" );
 	}
