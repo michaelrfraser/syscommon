@@ -45,22 +45,22 @@ Properties::~Properties()
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-bool Properties::containsKey( const tchar* key )
+bool Properties::containsKey( const tchar* key ) const
 {
-	std::map<String,String>::iterator found = properties.find( key );
+	std::map<String,String>::const_iterator found = properties.find( key );
 	return found != properties.end();
 }
 
-const tchar* Properties::getProperty( const tchar* key )
+const tchar* Properties::getProperty( const tchar* key ) const
 {
 	return getProperty( key, NULL );
 }
 
-const tchar* Properties::getProperty( const tchar* key, const tchar* defaultValue )
+const tchar* Properties::getProperty( const tchar* key, const tchar* defaultValue ) const
 {
 	const tchar* result = defaultValue;
 
-	std::map<String,String>::iterator found = properties.find( key );
+	std::map<String,String>::const_iterator found = properties.find( key );
 	if( found != properties.end() )
 		result = (*found).second.c_str();
 
@@ -151,7 +151,7 @@ void Properties::loadFromFile( const tchar* filename, Logger* logger ) throw ( I
 	}
 }
 
-std::set<const tchar*> Properties::getPropertyNames()
+std::set<const tchar*> Properties::getPropertyNames() const
 {
 	std::set<const tchar*> names;
 	getPropertyNames( names );
@@ -159,7 +159,7 @@ std::set<const tchar*> Properties::getPropertyNames()
 	return names;
 }
 
-void Properties::getPropertyNames( std::set<const tchar*>& outNames )
+void Properties::getPropertyNames( std::set<const tchar*>& outNames ) const
 {
 	// Iterate over all entries and populate the provided set with the names
 	std::map<String,String>::const_iterator propertiesIt = properties.begin();
@@ -170,4 +170,9 @@ void Properties::getPropertyNames( std::set<const tchar*>& outNames )
 
 		++propertiesIt;
 	}
+}
+
+void Properties::clear()
+{
+	properties.clear();
 }

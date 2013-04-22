@@ -24,6 +24,7 @@ namespace SysCommon
 	#define EXCEPTION_CHILD_DECL(T,S) \
 		class T : public S { public: T(const tchar* message) : S(message){} virtual ~T() {} };
 
+	EXCEPTION_CHILD_DECL( IllegalArgumentException, std::runtime_error )
 	EXCEPTION_CHILD_DECL( InterruptedException, std::runtime_error )
 	EXCEPTION_CHILD_DECL( IOException, std::runtime_error )
 	EXCEPTION_CHILD_DECL( SocketException, IOException )

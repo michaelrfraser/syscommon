@@ -270,10 +270,13 @@ namespace SysCommon
 			 *
 			 * Note: This call itself may be interrupted by other threads.
 			 *
+			 * @return true if the thread instance completed execution within the timeout period
+			 *              specified, otherwise false
+			 *
 			 * @throw InterruptedException if the current thread was interrupted before the join 
 			 * operation could complete
 			 */
-			void join( unsigned long millis ) throw ( InterruptedException );
+			bool join( unsigned long millis ) throw ( InterruptedException );
 
 			/**
 			 * Accepts an IInterruptable visitor, exposing the thread's interrupt handle to the 

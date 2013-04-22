@@ -17,6 +17,12 @@
 
 // WIN32
 #ifdef _WIN32
+	#define WIN32_LEAN_AND_MEAN 
+	#define NOGDI
+	#define NOUSER
+	#define NOKERNEL
+	#define NOSOUND
+
 	#include <windows.h>
 	#include <winsock.h>
 	#include <map>
@@ -121,6 +127,7 @@ namespace SysCommon
 	#define tcslen ::strlen
 	#define _ltot_s _ltoa_s
 	#define _ttol atol
+	#define tcstok ::strtok
 
 	#ifndef _WIN32
 	#define TEXT(T) T
@@ -133,6 +140,7 @@ namespace SysCommon
 	#define tcslen ::wcslen
 	#define _ltot_s _ltow_s
 	#define _ttol wtol
+	#define tcstok wcstok
 
 	#ifndef _WIN32
 	#define TEXT(T) L##T
@@ -164,6 +172,10 @@ namespace SysCommon
 		//----------------------------------------------------------
 		private:
 			static Platform lifecycleSingleton;
+
+		public:
+			static const tchar* DIRECTORY_SEPARATOR;
+			static const tchar* PATH_SEPARATOR;
 
 		//----------------------------------------------------------
 		//                   INSTANCE VARIABLES
@@ -281,9 +293,11 @@ namespace SysCommon
 
 			// Files
 			static bool fileExists( const tchar* fileName );
+			static String getCurrentDirectoryString();
 
 			// Time
 			static unsigned long getCurrentTimeMilliseconds();
+			static bool getRandomBytes( char* buffer, size_t length );
 
 #ifdef _WIN32
 		// Win32 Specific

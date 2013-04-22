@@ -152,7 +152,7 @@ void Thread::join() throw ( InterruptedException )
  * @throw InterruptedException if the current thread was interrupted before the join 
  * operation could complete
  */
-void Thread::join( unsigned long millis ) throw ( InterruptedException )
+bool Thread::join( unsigned long millis ) throw ( InterruptedException )
 {	
 	// The commented code below was how the join was originally done, however it was creating a 
 	// buttload of race conditions, so I've just used an event to signal the join instead
@@ -177,7 +177,12 @@ void Thread::join( unsigned long millis ) throw ( InterruptedException )
 	//	}
 	//}
 
-	this->joinEvent.waitFor( millis );
+	WaitResult result = this->joinEvent.waitFor( millis );
+	if( result == WR_INTERRUPTED )
+		throw InterruptedException( TEXT("Thread interrupted") );
+
+	bool completed = result == WR_SUCCEEDED;
+	return completed;
 }
 
 /**

@@ -69,7 +69,7 @@ namespace SysCommon
 			 *
 			 * @return true if this Properties instance contains a value for the specified key
 			 */
-			bool containsKey( const tchar* key );
+			bool containsKey( const tchar* key ) const;
 
 			/**
 			 * Searches for the property with the specified key in this property list. The method 
@@ -78,7 +78,7 @@ namespace SysCommon
 			 * @param key the property key.
 			 * @return the value in this property list with the specified key value.
 			 */
-			const tchar* getProperty( const tchar* key );
+			const tchar* getProperty( const tchar* key ) const;
 
 			/**
 			 * Searches for the property with the specified key in this property list. The method 
@@ -89,7 +89,7 @@ namespace SysCommon
 			 *
 			 * @return the value in this property list with the specified key value.
 			 */
-			const tchar* getProperty( const tchar* key, const tchar* defaultValue );
+			const tchar* getProperty( const tchar* key, const tchar* defaultValue ) const;
 
 			/**
 			 * Sets the property value for the specified key in this property list.
@@ -150,15 +150,19 @@ namespace SysCommon
 			 * @param outNames The set to populate with the list of property names contained within
 			 * this Properties instance
 			 */
-			void getPropertyNames( std::set<const tchar*>& outNames );
+			void getPropertyNames( std::set<const tchar*>& outNames ) const;
 
 			/**
 			 * Returns the set of property names contained within this Properties instance
 			 *
 			 * @return the set of property names contained within this Properties instance
 			 */
-			std::set<const tchar*> getPropertyNames();
+			std::set<const tchar*> getPropertyNames() const;
 
+			/**
+			 * Removes all entries from this Properties object
+			 */
+			void clear();
 		//----------------------------------------------------------
 		//                     STATIC METHODS
 		//----------------------------------------------------------

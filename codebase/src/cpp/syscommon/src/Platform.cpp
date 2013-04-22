@@ -21,6 +21,9 @@
 using namespace SysCommon;
 
 #ifdef _WIN32
+#include <wincrypt.h>
+const tchar* Platform::DIRECTORY_SEPARATOR = "\\";
+const tchar* Platform::PATH_SEPARATOR = ";";
 std::map<DWORD,HANDLE> Platform::threadIdToHandleMap;
 
 //----------------------------------------------------------
@@ -829,6 +832,14 @@ bool Platform::fileExists( const tchar* fileName )
 	return fileAttributes != INVALID_FILE_ATTRIBUTES;
 }
 
+String Platform::getCurrentDirectoryString()
+{
+	tchar path[MAX_PATH + 1];
+	::GetCurrentDirectory( MAX_PATH + 1, path );
+
+	return String( path );
+}
+
 unsigned long Platform::getCurrentTimeMilliseconds()
 {
 	unsigned long time = 0;
@@ -847,6 +858,20 @@ unsigned long Platform::getCurrentTimeMilliseconds()
 	}
 
 	return time;
+}
+
+bool Platform::getRandomBytes( char* buffer, size_t length )
+{
+	bool result = false;
+
+	HCRYPTPROV provider = 0;
+	if( ::CryptAcquireContext(&provider, NULL, NULL, PROV_RSA_FULL, 0) )
+	{
+		result = ::CryptGenRandom( provider, length, (BYTE*)buffer ) != FALSE;
+		::CryptReleaseContext( provider, 0 );
+	}
+	
+	return result;
 }
 
 DWORD WINAPI Platform::threadEntry( LPVOID argument )

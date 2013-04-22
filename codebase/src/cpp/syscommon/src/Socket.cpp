@@ -97,10 +97,11 @@ void Socket::connect( InetSocketAddress& endpoint ) throw ( IOException )
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
 
 	unsigned short networkOrderPort = htons( endpoint.getPort() );
+	NATIVE_IP_ADDRESS networkOrderAddress = htonl( endpoint.getAddress() );
 
 	sockaddr_in remoteAddress;
 	remoteAddress.sin_family = AF_INET;
-	remoteAddress.sin_addr.s_addr = endpoint.getAddress();
+	remoteAddress.sin_addr.s_addr = networkOrderAddress;
 	remoteAddress.sin_port = networkOrderPort;
 
 	int connectResult = ::connect( this->nativeSocket, 
