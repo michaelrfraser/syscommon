@@ -206,20 +206,20 @@ bool Logger::checkLevel( Level messageLevel )
 Logger::Level Logger::getLevelFromString( const tchar* string )
 {
 	Logger::Level level = Logger::LL_INFO;
-	std::string asStdString( string );
-	if( Utils::stringEquals(asStdString, "OFF") )
+	String asStdString( string );
+	if( Utils::stringEquals(asStdString, TEXT("OFF")) )
 		level = Logger::LL_OFF;
-	else if( Utils::stringEquals(asStdString, "FATAL") )
+	else if( Utils::stringEquals(asStdString, TEXT("FATAL")) )
 		level = Logger::LL_FATAL;
-	else if( Utils::stringEquals(asStdString, "ERROR") )
+	else if( Utils::stringEquals(asStdString, TEXT("ERROR")) )
 		level = Logger::LL_ERROR;
-	else if( Utils::stringEquals(asStdString, "WARN") )
+	else if( Utils::stringEquals(asStdString, TEXT("WARN")) )
 		level = Logger::LL_WARN;
-	else if( Utils::stringEquals(asStdString, "INFO") )
+	else if( Utils::stringEquals(asStdString, TEXT("INFO")) )
 		level = Logger::LL_INFO;
-	else if( Utils::stringEquals(asStdString, "DEBUG") )
+	else if( Utils::stringEquals(asStdString, TEXT("DEBUG")) )
 		level = Logger::LL_DEBUG;
-	else if( Utils::stringEquals(asStdString, "TRACE") )
+	else if( Utils::stringEquals(asStdString, TEXT("TRACE")) )
 		level = Logger::LL_TRACE;
 
 	return level;

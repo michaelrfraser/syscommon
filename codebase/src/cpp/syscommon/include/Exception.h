@@ -18,16 +18,58 @@
 #include "Platform.h"
 
 #include <exception>
+#include <stdexcept>
 
 namespace SysCommon
 {
-	#define EXCEPTION_CHILD_DECL(T,S) \
-		class T : public S { public: T(const tchar* message) : S(message){} virtual ~T() {} };
+	class Exception : public std::runtime_error
+	{
+		public:
+			Exception( const tchar* message ) :
+				std::runtime_error( Platform::toAnsiString(message) )
+			{
 
-	EXCEPTION_CHILD_DECL( IllegalArgumentException, std::runtime_error )
-	EXCEPTION_CHILD_DECL( InterruptedException, std::runtime_error )
-	EXCEPTION_CHILD_DECL( IOException, std::runtime_error )
-	EXCEPTION_CHILD_DECL( SocketException, IOException )
-	EXCEPTION_CHILD_DECL( FileNotFoundException, IOException )
+			}
+
+			virtual ~Exception() throw ()
+			{
+
+			}
+	};
+
+	class IllegalArgumentException : public Exception
+	{
+		public:
+			IllegalArgumentException( const tchar* message ) : Exception( message ) {}
+			virtual ~IllegalArgumentException() throw () {}
+	};
+
+	class InterruptedException : public Exception
+	{
+		public:
+			InterruptedException( const tchar* message ) : Exception( message ) {}
+			virtual ~InterruptedException() throw () {}
+	};
+
+	class IOException : public Exception
+	{
+		public:
+			IOException( const tchar* message ) : Exception( message ) {}
+			virtual ~IOException() throw () {}
+	};
+
+	class SocketException : public IOException
+	{
+		public:
+			SocketException( const tchar* message ) : IOException( message ) {}
+			virtual ~SocketException() throw () {}
+	};
+
+	class FileNotFoundException : public IOException
+	{
+		public:
+			FileNotFoundException( const tchar* message ) : IOException( message ) {}
+			virtual ~FileNotFoundException() throw () {}
+	};
 }
 

@@ -33,7 +33,7 @@ NATIVE_THREAD Thread::mainThreadHandle = Platform::getCurrentThreadHandle();
 /**
  * Default constructor for type Thread with anonymous name and NULL IRunnable
  */
-Thread::Thread() : joinEvent( false, "ThreadJoin" )
+Thread::Thread() : joinEvent( false, TEXT("ThreadJoin") )
 {
 	// Generate anonymous name and call initialiser
 	String anonymousName = this->generateAnonymousThreadName();
@@ -47,7 +47,7 @@ Thread::Thread() : joinEvent( false, "ThreadJoin" )
  *
  * @param runnable This Thread's unit of execution
  */
-Thread::Thread( IRunnable* runnable ) : joinEvent( false, "ThreadJoin" )
+Thread::Thread( IRunnable* runnable ) : joinEvent( false, TEXT("ThreadJoin") )
 {
 	// Generate anonymous name and call initialiser
 	String anonymousName = this->generateAnonymousThreadName();
@@ -61,7 +61,7 @@ Thread::Thread( IRunnable* runnable ) : joinEvent( false, "ThreadJoin" )
  * @param runnable This thread's unit of execution
  * @param name The name of the thread
  */
-Thread::Thread( IRunnable* runnable, const tchar* name ) : joinEvent( false, "ThreadJoin" )
+Thread::Thread( IRunnable* runnable, const tchar* name ) : joinEvent( false, TEXT("ThreadJoin") )
 {
 	this->_Thread( runnable, String(name) );
 }

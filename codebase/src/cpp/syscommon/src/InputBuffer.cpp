@@ -139,6 +139,6 @@ void InputBuffer::readAndCopy( size_t length, char* dest ) throw ( IOException )
 	}
 	else
 	{
-		throw IOException( "Buffer overflow" );
+		throw IOException( TEXT("Buffer overflow") );
 	}
 }

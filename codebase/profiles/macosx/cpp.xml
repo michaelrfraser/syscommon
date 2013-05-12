@@ -42,6 +42,18 @@
 	<property name="testansiR.build.dir"         location="${cpp.build.dir}/testansiR"/>
 	<property name="testansiR.complete.dir"      location="${testansiR.build.dir}/complete"/>
 	
+	<!-- unicodeD build -->
+	<property name="unicodeD.build.dir"             location="${cpp.build.dir}/unicodeD"/>
+	<property name="unicodeD.complete.dir"			 location="${unicodeD.build.dir}/complete"/>
+	<property name="testunicodeD.build.dir"         location="${cpp.build.dir}/testunicodeD"/>
+	<property name="testunicodeD.complete.dir"      location="${testunicodeD.build.dir}/complete"/>
+
+	<!-- unicodeR build -->
+	<property name="unicodeR.build.dir"             location="${cpp.build.dir}/unicodeR"/>
+	<property name="unicodeR.complete.dir"			 location="${unicodeR.build.dir}/complete"/>
+	<property name="testunicodeR.build.dir"         location="${cpp.build.dir}/testunicodeR"/>
+	<property name="testunicodeR.complete.dir"      location="${testunicodeR.build.dir}/complete"/>
+
 	<!-- =========================================================== -->
 	<!--                     Project Libraries                       -->
 	<!-- =========================================================== -->
@@ -76,7 +88,7 @@
 	<!--            ANSI Interface            -->
 	<!-- ==================================== -->
 	<target name="compile.ansiD">
-		<cpp-unix outfile="SysCommonAD"
+		<cpp-unix outfile="SysCommonD"
 		          outdir="${ansiD.build.dir}"
 		          compilerArgs="-g -fPIC -Wall -Wno-non-virtual-dtor"
 		          linkerArgs="-dynamiclib">
@@ -96,13 +108,13 @@
 			<includepath path="${syscommon.include.dir}"/>
 			<includepath path="${syscommon.src.dir}"/>
 			<includepath path="${cppunit.include}"/>
-			<library path="${ansiD.complete.dir}" libs="SysCommonAD"/>
+			<library path="${ansiD.complete.dir}" libs="SysCommonD"/>
 			<library path="${cppunit.lib}" libs="cppunit"/>
 		</cpp-unix>
 	</target>
 	
 	<target name="compile.ansiR">
-		<cpp-unix outfile="SysCommonA"
+		<cpp-unix outfile="SysCommon"
 		          outdir="${ansiR.build.dir}"
 		          compilerArgs="-O2 -fPIC -Wall -Wno-non-virtual-dtor"
 		          linkerArgs="-dynamiclib">
@@ -200,19 +212,19 @@
 		<!-- ========= -->
 		<!-- copy the compiled libraries -->
 		<copy todir="${dist.lib.dir}">
-			<fileset dir="${ansi.complete.debug.dir}"
+			<fileset dir="${ansiD.complete.dir}"
 			         includes="**/*"
 			         excludes="**/history.xml"
 			         followsymlinks="false"/>
-			<fileset dir="${ansi.complete.release.dir}"
+			<fileset dir="${ansiR.complete.dir}"
 			         includes="**/*"
 			         excludes="**/history.xml"
 			         followsymlinks="false"/>
-			<fileset dir="${unicode.complete.debug.dir}"
+			<fileset dir="${unicodeD.complete.dir}"
 			         includes="**/*"
 			         excludes="**/history.xml"
 			         followsymlinks="false"/>
-	        <fileset dir="${unicode.complete.release.dir}"
+	        <fileset dir="${unicodeR.complete.dir}"
 			         includes="**/*"
 			         excludes="**/history.xml"
 			         followsymlinks="false"/>

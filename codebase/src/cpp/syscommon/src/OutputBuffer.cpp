@@ -95,7 +95,7 @@ void OutputBuffer::writeUTF( const std::string& value ) throw ( IOException )
 	}
 	else
 	{
-		throw IOException( "Buffer overflow" );
+		throw IOException( TEXT("Buffer overflow") );
 	}
 }
 
@@ -132,6 +132,6 @@ void OutputBuffer::write( size_t length, const char* source ) throw ( IOExceptio
 	}
 	else
 	{
-		throw IOException( "Buffer overflow" );
+		throw IOException( TEXT("Buffer overflow") );
 	}
 }

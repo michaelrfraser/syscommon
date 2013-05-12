@@ -939,7 +939,9 @@ WaitResult Platform::waitOnInterruptableHandle( HANDLE interruptableHandle,
 
 #include <sys/time.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <netdb.h>
+#include <unistd.h>
 
 
 //----------------------------------------------------------
@@ -961,11 +963,12 @@ bool Platform::initialiseSemaphore( NATIVE_SEMAPHORE& nativeSemaphore,
 	{
 		// MacOSX doesn't support in-process semaphores created by sem_init(), so we need to create
 		// a 'grownup' semaphore instead with sem_open()
+		std::string ansiName = Platform::toAnsiString( name.c_str() );
 
 		// Semaphore path
 		char semName[PATH_MAX];
 		semName[0] = 0;
-		sprintf( semName, "/tmp/sem_pid%ld_%s", (long)getpid(), name.c_str() );
+		sprintf( semName, "/tmp/sem_pid%ld_%s", (long)getpid(), ansiName.c_str() );
 
 		// Create the semaphore
 		sem_t* createdSemaphore = ::sem_open( semName,
@@ -1708,13 +1711,25 @@ void Platform::longToChars( const long value, tchar* buffer, size_t length )
 #ifndef UNICODE
 	::snprintf( buffer, length, "%ld", value );
 #else
-	::swnprintf( buffer, length "%ld", value );
+	::swprintf( buffer, length, L"%ld", value );
 #endif
 }
 
 bool Platform::fileExists( const tchar* fileName )
 {
-	return false;
+	std::string ansiName = Platform::toAnsiString( fileName );
+	struct stat dummy;
+	int result = ::stat( ansiName.c_str(), &dummy );
+	return result == 0;
+}
+
+String Platform::getCurrentDirectoryString()
+{
+	char ansiPath[PATH_MAX + 1];
+	::getcwd( ansiPath, PATH_MAX );
+
+	String platformPath = Platform::toPlatformString( ansiPath );
+	return platformPath;
 }
 
 unsigned long Platform::getCurrentTimeMilliseconds()
@@ -1723,6 +1738,20 @@ unsigned long Platform::getCurrentTimeMilliseconds()
 	::gettimeofday( &time, NULL );
 
 	return (time.tv_sec * 1000) + (time.tv_usec / 1000L);
+}
+
+bool Platform::getRandomBytes( char* buffer, size_t length )
+{
+	bool result = false;
+	int randomFD = ::open( "/dev/random", O_RDONLY );
+	if( randomFD >= 0 )
+	{
+		::read( randomFD, buffer, length );
+		::close( randomFD );
+		result = true;
+	}
+
+	return result;
 }
 
 void* Platform::threadEntry( void* argument )
