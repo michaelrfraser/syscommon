@@ -52,11 +52,11 @@
 	// Conditions
 	#define NATIVE_EVENT				HANDLE
 #else	
-#include <pthread.h>
-#include <netinet/in.h>
-#include <errno.h>
-#include <semaphore.h>
-#include <list>
+	#include <pthread.h>
+	#include <netinet/in.h>
+	#include <errno.h>
+	#include <semaphore.h>
+	#include <list>
 
 	// Semaphores
 	#define NATIVE_SEMAPHORE			sem_t*
@@ -117,6 +117,7 @@
 #endif
 
 #include <string>
+#include <set>
 
 namespace SysCommon
 {		
@@ -260,6 +261,7 @@ namespace SysCommon
 									   int outBufferSize );
 			static const int closeSocket( NATIVE_SOCKET socket );
 			static const tchar* describeLastSocketError();
+			static std::set<NATIVE_IP_ADDRESS> getAvailableNetworkInterfaceAddresses();
 
 			// String helpers
 			static int toAnsiChars( const wchar_t* string, 

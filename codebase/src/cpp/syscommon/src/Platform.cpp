@@ -21,6 +21,7 @@
 using namespace SysCommon;
 
 #ifdef _WIN32
+#include <Iphlpapi.h>
 #include <wincrypt.h>
 const tchar* Platform::DIRECTORY_SEPARATOR = "\\";
 const tchar* Platform::PATH_SEPARATOR = ";";
@@ -683,6 +684,52 @@ const tchar* Platform::describeLastSocketError()
 	return error;
 }
 
+std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
+{
+	std::set<NATIVE_IP_ADDRESS> addresses;
+	addresses.insert( INADDR_LOOPBACK );
+
+	// Allocate heap memory to hold the adapter information
+	ULONG structSize = sizeof(IP_ADAPTER_INFO);
+	PIP_ADAPTER_INFO adapterInfo = (IP_ADAPTER_INFO*)::HeapAlloc( ::GetProcessHeap(), 
+																	0, 
+																	structSize );
+
+	// Check to see whether there's enough space in the initial allocated buffer
+	if( ::GetAdaptersInfo( adapterInfo, &structSize ) == ERROR_BUFFER_OVERFLOW )
+	{
+		// Reallocate with the new size given by the initial call to GetAdaptersInfo
+		::HeapFree( ::GetProcessHeap(), 0, adapterInfo );
+		adapterInfo = (IP_ADAPTER_INFO*)::HeapAlloc( ::GetProcessHeap(), 0, structSize );
+	}
+
+	// Retrieve the list of adapters from the OS 
+	if( ::GetAdaptersInfo(adapterInfo, &structSize) == NO_ERROR )
+	{
+		// Iterate through all network adapters
+		PIP_ADAPTER_INFO currentIface = adapterInfo;
+		while( currentIface )
+		{
+			// If the current adapter is an ethernet adapter, add it to the set of interfaces
+			if( currentIface->Type == MIB_IF_TYPE_ETHERNET )
+			{
+				NATIVE_IP_ADDRESS address = Platform::lookupHost( currentIface->IpAddressList.IpAddress.String );
+				if( address != INADDR_NONE )
+					addresses.insert( address );
+			}
+
+			// Move to the next adapter
+			currentIface = currentIface->Next;
+		}
+	}
+
+	// Free any allocated heap memory
+	if( adapterInfo )
+		::HeapFree( ::GetProcessHeap(), 0, adapterInfo );
+
+	return addresses;
+}
+
 int Platform::toAnsiChars( const wchar_t* string, 
 						   int stringLength, 
 						   char* outBuffer, 
@@ -942,7 +989,12 @@ WaitResult Platform::waitOnInterruptableHandle( HANDLE interruptableHandle,
 #include <sys/stat.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
+#include <arpa/inet.h>
 
+const tchar* Platform::DIRECTORY_SEPARATOR = "/";
+const tchar* Platform::PATH_SEPARATOR = ":";
 
 //----------------------------------------------------------
 //                     STATIC METHODS
@@ -1601,6 +1653,45 @@ const tchar* Platform::describeLastSocketError()
 	}
 
 	return error;
+}
+
+std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
+{
+	std::set<NATIVE_IP_ADDRESS> addresses;
+	addresses.insert( INADDR_LOOPBACK );
+
+	NATIVE_SOCKET dummySocket = ::socket( AF_INET, SOCK_DGRAM, 0 );
+	if( dummySocket >= 0 )
+	{
+		ifconf ifaceConfig;
+		char buffer[4096];
+		::memset( &ifaceConfig, 0, sizeof(ifconf) );
+		ifaceConfig.ifc_len = sizeof(buffer);
+		ifaceConfig.ifc_buf = (caddr_t)buffer;
+		
+		if( ::ioctl(dummySocket, SIOCGIFCONF, &ifaceConfig) >= 0 )
+		{
+			char* bufferPos = buffer;
+
+			while( bufferPos < (buffer + ifaceConfig.ifc_len) )
+			{
+				ifreq* currentIface = (ifreq*)bufferPos;
+				sockaddr ifaceAddress = currentIface->ifr_addr;
+				if( ifaceAddress.sa_family == AF_INET )
+				{
+					sockaddr_in* inetAddress = (sockaddr_in*)&ifaceAddress;
+					NATIVE_IP_ADDRESS address = ntohl( inetAddress->sin_addr.s_addr );
+					addresses.insert( address );
+				}
+				
+				bufferPos += _SIZEOF_ADDR_IFREQ(*currentIface);
+			}
+		}
+		
+		::close( dummySocket );
+	}
+	
+	return addresses;
 }
 
 int Platform::toAnsiChars( const wchar_t* string,
