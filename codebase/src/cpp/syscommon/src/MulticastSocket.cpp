@@ -139,6 +139,10 @@ bool MulticastSocket::close()
 	stateLock.lock();
 	if ( isCreated() )
 	{
+		// Shutdown input and output
+		::shutdown( this->nativeSocket, 0x00 );
+		::shutdown( this->nativeSocket, 0x01 );
+
 		// Attempt to close the socket
 		int closeResult = Platform::closeSocket( this->nativeSocket );
 		if ( closeResult != NATIVE_SOCKET_ERROR )

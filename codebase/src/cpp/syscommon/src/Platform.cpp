@@ -993,6 +993,8 @@ WaitResult Platform::waitOnInterruptableHandle( HANDLE interruptableHandle,
 #include <net/if.h>
 #include <arpa/inet.h>
 
+#include <fcntl.h>
+
 const tchar* Platform::DIRECTORY_SEPARATOR = "/";
 const tchar* Platform::PATH_SEPARATOR = ":";
 
@@ -1484,12 +1486,14 @@ void Platform::setMulticastSocketOptions( NATIVE_SOCKET& socket )
 				  (char*)&intTrue,
 				  sizeof(intTrue) );
 
+#ifdef __APPLE__
 	// MacOSX also requires us to set SO_REUSEPORT
 	::setsockopt( socket,
 				  SOL_SOCKET,
 				  SO_REUSEPORT,
 				  (char*)&intTrue,
 				  sizeof(intTrue) );
+#endif
 }
 
 NATIVE_IP_ADDRESS Platform::lookupHost( const tchar* hostName )
@@ -1532,9 +1536,6 @@ int Platform::lookupHostName( NATIVE_IP_ADDRESS address,
 
 	return returnSize;
 }
-
-
-#include <arpa/inet.h>
 
 int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 							  int addressType,
@@ -1671,6 +1672,9 @@ std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
 		
 		if( ::ioctl(dummySocket, SIOCGIFCONF, &ifaceConfig) >= 0 )
 		{
+#ifdef __APPLE__
+			// Apple implementation has a variable length record, so we need to use
+			// _SIZEOF_ADDR_IFREQ to iterate through the collection
 			char* bufferPos = buffer;
 
 			while( bufferPos < (buffer + ifaceConfig.ifc_len) )
@@ -1686,6 +1690,23 @@ std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
 				
 				bufferPos += _SIZEOF_ADDR_IFREQ(*currentIface);
 			}
+#else
+			// Linux has fixed record sizes, so we can calculate the number of records
+			// from the returned length
+			ifreq* ifaceReqs = (ifreq*)buffer;
+			size_t interfaces = ifaceConfig.ifc_len / sizeof(ifreq);
+			for( size_t i = 0 ; i < interfaces ; ++i )
+			{
+				const ifreq currentIface = ifaceReqs[i];
+				sockaddr ifaceAddress = currentIface.ifr_addr;
+				if( ifaceAddress.sa_family == AF_INET )
+				{
+					sockaddr_in* inetAddress = (sockaddr_in*)&ifaceAddress;
+					NATIVE_IP_ADDRESS address = ntohl( inetAddress->sin_addr.s_addr );
+					addresses.insert( address );
+				}
+			}
+#endif
 		}
 		
 		::close( dummySocket );
@@ -1834,7 +1855,8 @@ unsigned long Platform::getCurrentTimeMilliseconds()
 bool Platform::getRandomBytes( char* buffer, size_t length )
 {
 	bool result = false;
-	int randomFD = ::open( "/dev/random", O_RDONLY );
+	int randomFD = ::open( "/dev/urandom", O_RDONLY );
+
 	if( randomFD >= 0 )
 	{
 		::read( randomFD, buffer, length );

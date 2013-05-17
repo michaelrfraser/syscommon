@@ -128,6 +128,12 @@ void Socket::close() throw ( IOException )
 	{
 		if( isCreated() )
 		{
+			if( !this->inputShutdown )
+				this->shutdownInput();
+
+			if( !this->outputShutdown )
+				this->shutdownOutput();
+
 			int closeResult = Platform::closeSocket( this->nativeSocket );
 			if( closeResult != NATIVE_SOCKET_ERROR )
 			{
@@ -155,7 +161,7 @@ int Socket::send( const char* buffer, int length ) throw ( IOException )
 
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
 
-	int result = ::send( this->nativeSocket, buffer, length, NULL );
+	int result = ::send( this->nativeSocket, buffer, length, 0 );
 	if( result == NATIVE_SOCKET_ERROR )
 		throw SocketException( Platform::describeLastSocketError() );
 	
@@ -175,7 +181,7 @@ int Socket::receive( char* buffer, int length ) throw ( IOException )
 
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
 
-	int result = ::recv( this->nativeSocket, buffer, length, NULL );
+	int result = ::recv( this->nativeSocket, buffer, length, 0 );
 	if( result == NATIVE_SOCKET_ERROR )
 		throw SocketException( Platform::describeLastSocketError() );
 
@@ -220,7 +226,7 @@ void Socket::shutdownOutput() throw ( SysCommon::IOException )
 	if( !isConnected() )
 		throw SocketException( TEXT("Socket is not connected") );
 
-	if( isInputShutdown() )
+	if( isOutputShutdown() )
 		throw SocketException( TEXT("Socket output is already shutdown") );
 
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );

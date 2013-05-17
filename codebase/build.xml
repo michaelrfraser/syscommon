@@ -96,6 +96,8 @@
 	<include file="profiles/windows/cpp64.xml"       as="cpp"          if="platform.win64"/>
 	<include file="profiles/windows/installer64.xml" as="installer"    if="platform.win64"/>
 	-->
+	<echo>platform.linux is ${platform.linux64}</echo>
+	<include file="profiles/linux/cpp.xml"          as="cpp"          if="platform.linux"/>
 
 	<!-- =========================================================== -->
 	<!--      Private Internal Targets. Do not modify or extend.     -->
