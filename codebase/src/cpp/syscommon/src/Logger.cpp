@@ -15,8 +15,6 @@
 #include "util/Logger.h"
 #include "Utils.h"
 
-#include <stdarg.h>
-
 #pragma warning( disable : 4996 )
 
 using namespace SysCommon;

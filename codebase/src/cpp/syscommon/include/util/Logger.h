@@ -18,6 +18,8 @@
 #include "Platform.h"
 #include "concurrent/Lock.h"
 
+#include <stdarg.h>
+
 namespace SysCommon
 {
 	class Logger
