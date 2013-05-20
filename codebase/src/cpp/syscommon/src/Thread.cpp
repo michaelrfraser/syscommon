@@ -16,6 +16,8 @@
 #include "concurrent/Thread.h"
 #include "Utils.h"
 
+#include <limits.h>
+
 using namespace SysCommon;
 
 //----------------------------------------------------------

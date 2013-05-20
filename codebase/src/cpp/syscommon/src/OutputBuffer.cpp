@@ -15,6 +15,7 @@
 
 #include "io/OutputBuffer.h"
 
+#include <cstring>
 #include <assert.h>
 
 using namespace SysCommon;

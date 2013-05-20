@@ -14,6 +14,7 @@
  */
 
 #include "io/InputBuffer.h"
+#include <cstring>
 
 using namespace SysCommon;
 
@@ -54,50 +55,77 @@ char InputBuffer::readInt8() throw ( IOException )
 
 unsigned short InputBuffer::readUInt16() throw ( IOException )
 {
-	char asBytes[sizeof(unsigned short)];
-	this->readAndCopy( sizeof(unsigned short), asBytes );
+	union 
+	{ 
+		char asBytes[sizeof(unsigned short)]; 
+		unsigned short value; 
+	} unionUInt16;
 
-	return *((unsigned short*)asBytes);
+	this->readAndCopy( sizeof(unsigned short), unionUInt16.asBytes );
+
+	return unionUInt16.value;
 }
 
 short InputBuffer::readInt16() throw ( IOException )
 {
-	char asBytes[sizeof(short)];
-	this->readAndCopy( sizeof(short), asBytes );
+	union
+	{
+		char asBytes[sizeof(short)];
+		short value;
+	} unionInt16;
 
-	return *((short*)asBytes);
+	this->readAndCopy( sizeof(short), unionInt16.asBytes );
+
+	return unionInt16.value;
 }
 
 unsigned int InputBuffer::readUInt32() throw ( IOException )
 {
-	char asBytes[sizeof(unsigned int)];
-	this->readAndCopy( sizeof(unsigned int), asBytes );
+	union
+	{
+		char asBytes[sizeof(unsigned int)];
+		unsigned int value;
+	} unionUInt32;
 
-	return *((unsigned int*)asBytes);
+	this->readAndCopy( sizeof(unsigned int), unionUInt32.asBytes );
+
+	return unionUInt32.value;
 }
 
 int InputBuffer::readInt32() throw ( IOException )
 {
-	char asBytes[sizeof(int)];
-	this->readAndCopy( sizeof(int), asBytes );
+	union
+	{
+		char asBytes[sizeof(int)];
+		int value;
+	} unionInt32;
+	this->readAndCopy( sizeof(int), unionInt32.asBytes );
 
-	return *((int*)asBytes);
+	return unionInt32.value;
 }
 
 unsigned long long InputBuffer::readUInt64() throw ( IOException )
 {
-	char asBytes[sizeof(unsigned long long)];
-	this->readAndCopy( sizeof(unsigned long long), asBytes );
+	union
+	{
+		char asBytes[sizeof(unsigned long long)];
+		unsigned long long value;
+	} unionUInt64;
+	this->readAndCopy( sizeof(unsigned long long), unionUInt64.asBytes );
 
-	return *((unsigned long long*)asBytes);
+	return unionUInt64.value;
 }
 
 long long InputBuffer::readInt64() throw ( IOException )
 {
-	char asBytes[sizeof(long long)];
-	this->readAndCopy( sizeof(long long), asBytes );
+	union
+	{
+		char asBytes[sizeof(long long)];
+		long long value;
+	} unionInt64;
+	this->readAndCopy( sizeof(long long), unionInt64.asBytes );
 
-	return *((long long*)asBytes);
+	return unionInt64.value;
 }
 
 std::string InputBuffer::readUTF() throw ( IOException )

@@ -17,6 +17,7 @@
 #include "concurrent/Thread.h"
 #include "Utils.h"
 
+#include <limits.h>
 #include "assert.h"
 
 using namespace SysCommon;

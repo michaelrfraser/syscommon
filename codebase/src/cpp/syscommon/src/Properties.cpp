@@ -15,6 +15,8 @@
 #include "util/Properties.h"
 #include "Utils.h"
 
+#include <cstdio>
+
 using namespace SysCommon;
 
 #pragma warning( disable : 4996 )

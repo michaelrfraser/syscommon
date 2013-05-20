@@ -13,6 +13,7 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "concurrent/Event.h"
+#include <limits.h>
 
 using namespace SysCommon;
 

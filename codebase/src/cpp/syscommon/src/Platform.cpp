@@ -992,8 +992,10 @@ WaitResult Platform::waitOnInterruptableHandle( HANDLE interruptableHandle,
 #include <sys/ioctl.h>
 #include <net/if.h>
 #include <arpa/inet.h>
-
+#include <limits.h>
 #include <fcntl.h>
+#include <cstdio>
+#include <cstring>
 
 const tchar* Platform::DIRECTORY_SEPARATOR = "/";
 const tchar* Platform::PATH_SEPARATOR = ":";
@@ -1838,9 +1840,9 @@ bool Platform::fileExists( const tchar* fileName )
 String Platform::getCurrentDirectoryString()
 {
 	char ansiPath[PATH_MAX + 1];
-	::getcwd( ansiPath, PATH_MAX );
+	char* result = ::getcwd( ansiPath, PATH_MAX );
 
-	String platformPath = Platform::toPlatformString( ansiPath );
+	String platformPath = Platform::toPlatformString( result );
 	return platformPath;
 }
 
@@ -1859,9 +1861,11 @@ bool Platform::getRandomBytes( char* buffer, size_t length )
 
 	if( randomFD >= 0 )
 	{
-		::read( randomFD, buffer, length );
+		size_t bytesRead = ::read( randomFD, buffer, length );
+		if( bytesRead == length )
+			result = true;
+
 		::close( randomFD );
-		result = true;
 	}
 
 	return result;

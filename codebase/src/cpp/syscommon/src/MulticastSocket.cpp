@@ -14,6 +14,7 @@
  */
 #include "net/MulticastSocket.h"
 
+#include <cstring>
 #include "assert.h"
 
 using namespace SysCommon;
