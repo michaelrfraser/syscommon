@@ -25,7 +25,15 @@ using namespace SysCommon;
 #include <wincrypt.h>
 const tchar* Platform::DIRECTORY_SEPARATOR = "\\";
 const tchar* Platform::PATH_SEPARATOR = ";";
-std::map<DWORD,HANDLE> Platform::threadIdToHandleMap;
+
+std::map<DWORD,HANDLE>& getThreadIdToHandleMap()
+{
+	// This used to be a file-local variable, however functions that referenced it could be called
+	// before it was initialised, which resulted in memory errors. I've moved it into this method
+	// as a static method member, which will ensure that it is always created when needed
+	static std::map<DWORD,HANDLE> threadIdToHandleMap;
+	return threadIdToHandleMap;
+}
 
 //----------------------------------------------------------
 //                     STATIC METHODS
@@ -149,7 +157,10 @@ bool Platform::initialiseThread( NATIVE_THREAD& nativeThread,
 		// Map the thread handle to the Win32 Thread ID (see notes in header file for more
 		// info regarding why this is necessary)
 		if( result )
+		{
+			std::map<DWORD,HANDLE>& threadIdToHandleMap = ::getThreadIdToHandleMap();
 			threadIdToHandleMap[nativeThreadID] = nativeThread;
+		}
 	}
 
 	return result;
@@ -169,6 +180,7 @@ bool Platform::destroyThread( NATIVE_THREAD& nativeThread )
 	{
 		// Unmap the handle from the corresponding Win32 Thread ID
 		DWORD threadId = ::GetThreadId( nativeThread );
+		std::map<DWORD,HANDLE>& threadIdToHandleMap = ::getThreadIdToHandleMap();
 		threadIdToHandleMap.erase( threadId );
 
 		result = ::CloseHandle( nativeThread ) != FALSE;
@@ -216,6 +228,7 @@ NATIVE_THREAD Platform::getCurrentThreadHandle()
 	DWORD currentId = ::GetCurrentThreadId();
 
 	// Get the handle that was assigned to the Thread ID when the thread was created
+	std::map<DWORD,HANDLE>& threadIdToHandleMap = ::getThreadIdToHandleMap();
 	std::map<DWORD,HANDLE>::iterator handleIt = threadIdToHandleMap.find( currentId );
 	if( handleIt != threadIdToHandleMap.end() )
 		handle = (*handleIt).second;
@@ -912,12 +925,25 @@ bool Platform::getRandomBytes( char* buffer, size_t length )
 	bool result = false;
 
 	HCRYPTPROV provider = 0;
-	if( ::CryptAcquireContext(&provider, NULL, NULL, PROV_RSA_FULL, 0) )
+	BOOL haveContext = ::CryptAcquireContext( &provider, NULL, NULL, PROV_RSA_FULL, 0 );
+
+	// If the initial acquire context failed because the keyset does not already exist, then we
+	// need to create it
+	if( !haveContext && ::GetLastError() == NTE_BAD_KEYSET )
+	{
+		haveContext = ::CryptAcquireContext( &provider, 
+											 NULL, 
+											 NULL, 
+											 PROV_RSA_FULL, 
+											 CRYPT_NEWKEYSET );
+	}
+
+	if( haveContext )
 	{
 		result = ::CryptGenRandom( provider, length, (BYTE*)buffer ) != FALSE;
 		::CryptReleaseContext( provider, 0 );
 	}
-	
+
 	return result;
 }
 
