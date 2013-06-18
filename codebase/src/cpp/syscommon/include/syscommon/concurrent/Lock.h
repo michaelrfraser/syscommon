@@ -15,9 +15,9 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
+#include "syscommon/Platform.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/**
 	 * This class represents a reentrant mutual exclusion Lock.

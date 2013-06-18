@@ -15,11 +15,11 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
-#include "InetSocketAddress.h"
-#include "Exception.h"
+#include "syscommon/Exception.h"
+#include "syscommon/Platform.h"
+#include "syscommon/net/InetSocketAddress.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/**
 	 * This class implements client sockets (also called just "sockets"). A socket is an endpoint 

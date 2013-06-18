@@ -16,9 +16,10 @@
  */
 
 #include <string>
-#include "../Exception.h"
 
-namespace SysCommon
+#include "syscommon/Exception.h"
+
+namespace syscommon
 {
 	class InputBuffer
 	{

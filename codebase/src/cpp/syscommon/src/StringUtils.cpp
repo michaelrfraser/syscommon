@@ -13,11 +13,11 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Utils.h"
+#include "syscommon/util/StringUtils.h"
 
-using namespace SysCommon;
+using namespace syscommon;
 
-String Utils::longToString( const long value )
+String StringUtils::longToString( const long value )
 {
 	// stdc _ltow will return up to 33 bytes
 	tchar buffer[MAX_LTOT_SIZE];
@@ -25,7 +25,7 @@ String Utils::longToString( const long value )
 	return String( buffer );
 }
 
-String Utils::unsignedShortToString( const unsigned short value )
+String StringUtils::unsignedShortToString( const unsigned short value )
 {
 	// stdc _ltow will return up to 33 bytes
 	tchar buffer[MAX_LTOT_SIZE];
@@ -33,7 +33,7 @@ String Utils::unsignedShortToString( const unsigned short value )
 	return String( buffer );
 }
 
-String Utils::stringTrimLeft( const String& string, const String& characters )
+String StringUtils::stringTrimLeft( const String& string, const String& characters )
 {
 	String result = string;
 	size_t startPos = string.find_first_not_of( characters );
@@ -45,7 +45,7 @@ String Utils::stringTrimLeft( const String& string, const String& characters )
 	return result;
 }
 
-String Utils::stringTrimRight( const String& string, const String& characters )
+String StringUtils::stringTrimRight( const String& string, const String& characters )
 {
 	String result = string;
 	size_t endpos = string.find_last_not_of( characters );
@@ -57,26 +57,26 @@ String Utils::stringTrimRight( const String& string, const String& characters )
 	return result;
 }
 
-String Utils::stringTrim( const String& string, const String& characters )
+String StringUtils::stringTrim( const String& string, const String& characters )
 {
-	String result = Utils::stringTrimLeft( string, characters );
-	result = Utils::stringTrimRight( result, characters );
+	String result = StringUtils::stringTrimLeft( string, characters );
+	result = StringUtils::stringTrimRight( result, characters );
 
 	return result;
 }
 
-String Utils::stringTrim( const String& string )
+String StringUtils::stringTrim( const String& string )
 {
-	return Utils::stringTrim( string, TEXT("\n\r\t ") );
+	return StringUtils::stringTrim( string, TEXT("\n\r\t ") );
 }
 
 
-bool Utils::stringEquals( const String& string1, const String& string2 )
+bool StringUtils::stringEquals( const String& string1, const String& string2 )
 {
 	return string1.compare(string2) == 0;
 }
 
-bool Utils::stringStartsWith( const String& string, const String& prefix )
+bool StringUtils::stringStartsWith( const String& string, const String& prefix )
 {
 	bool result = false;
 
@@ -85,18 +85,18 @@ bool Utils::stringStartsWith( const String& string, const String& prefix )
 
 	if( testLength == stringLength )
 	{
-		result = Utils::stringEquals(prefix, string);
+		result = StringUtils::stringEquals(prefix, string);
 	}
 	else if( testLength < stringLength )
 	{
 		String substring = string.substr( 0, testLength );
-		result = Utils::stringEquals( prefix, substring );
+		result = StringUtils::stringEquals( prefix, substring );
 	}
 
 	return result;
 }
 
-bool Utils::stringEndsWith( const String& string, const String& suffix )
+bool StringUtils::stringEndsWith( const String& string, const String& suffix )
 {
 	bool result = false;
 
@@ -105,18 +105,18 @@ bool Utils::stringEndsWith( const String& string, const String& suffix )
 
 	if( testLength == stringLength )
 	{
-		result = Utils::stringEquals( suffix, string );
+		result = StringUtils::stringEquals( suffix, string );
 	}
 	else if( testLength < stringLength )
 	{
 		String substring = string.substr( stringLength - testLength );
-		result = Utils::stringEquals( suffix, substring );
+		result = StringUtils::stringEquals( suffix, substring );
 	}
 
 	return result;
 }
 
-String Utils::stringToUpperCase( const String& string )
+String StringUtils::stringToUpperCase( const String& string )
 {
 	size_t length = string.length();
 	const tchar* data = string.data();

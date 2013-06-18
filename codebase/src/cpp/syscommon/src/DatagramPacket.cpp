@@ -12,11 +12,11 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
+#include "syscommon/net/DatagramPacket.h"
 
-#include "net/DatagramPacket.h"
-#include "assert.h"
+#include <assert.h>
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS

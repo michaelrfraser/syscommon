@@ -12,13 +12,13 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
-#include "Platform.h"
+#include "syscommon/Platform.h"
 
-#include "assert.h"
+#include <assert.h>
 #include <stdlib.h>
-#include "concurrent/Thread.h"
+#include "syscommon/concurrent/Thread.h"
 
-using namespace SysCommon;
+using namespace syscommon;
 
 #ifdef _WIN32
 #include <Iphlpapi.h>

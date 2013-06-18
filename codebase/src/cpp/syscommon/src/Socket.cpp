@@ -12,11 +12,11 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
+#include "syscommon/net/Socket.h"
 
-#include "net/Socket.h"
-#include "assert.h"
+#include <assert.h>
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                    STATIC VARIABLES
@@ -218,7 +218,7 @@ bool Socket::isOutputShutdown()
 	return this->outputShutdown;
 }
 
-void Socket::shutdownOutput() throw ( SysCommon::IOException )
+void Socket::shutdownOutput() throw ( IOException )
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );

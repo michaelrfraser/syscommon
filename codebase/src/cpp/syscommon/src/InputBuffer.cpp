@@ -12,11 +12,11 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
+#include "syscommon/io/InputBuffer.h"
 
-#include "io/InputBuffer.h"
 #include <cstring>
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS

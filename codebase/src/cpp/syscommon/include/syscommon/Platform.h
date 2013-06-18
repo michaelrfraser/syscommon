@@ -119,7 +119,7 @@
 #include <string>
 #include <set>
 
-namespace SysCommon
+namespace syscommon
 {		
 #ifndef UNICODE  
 	typedef std::string String;

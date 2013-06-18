@@ -13,14 +13,15 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "concurrent/Semaphore.h"
-#include "concurrent/Thread.h"
-#include "Utils.h"
+#include "syscommon/concurrent/Semaphore.h"
 
+#include <assert.h>
 #include <limits.h>
-#include "assert.h"
 
-using namespace SysCommon;
+#include "syscommon/concurrent/Thread.h"
+#include "syscommon/util/StringUtils.h"
+
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                    STATIC VARIABLES
@@ -100,6 +101,6 @@ WaitResult Semaphore::visit( NATIVE_INTERRUPT& threadInterrupt, unsigned long ti
 String Semaphore::generateAnonymousSemaphoreName( unsigned long syntheticID )
 {
 	String result = TEXT("Semaphore-");
-	result.append( Utils::longToString(syntheticID) );
+	result.append( StringUtils::longToString(syntheticID) );
 	return result;
 }

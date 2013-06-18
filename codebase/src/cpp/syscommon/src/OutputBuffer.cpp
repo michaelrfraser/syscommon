@@ -13,12 +13,12 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "io/OutputBuffer.h"
+#include "syscommon/io/OutputBuffer.h"
 
-#include <cstring>
 #include <assert.h>
+#include <cstring>
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS

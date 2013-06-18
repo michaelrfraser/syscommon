@@ -12,13 +12,12 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
-
-#include "concurrent/Thread.h"
-#include "Utils.h"
+#include "syscommon/concurrent/Thread.h"
 
 #include <limits.h>
+#include "syscommon/util/StringUtils.h"
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                    STATIC VARIABLES
@@ -299,7 +298,7 @@ void Thread::sleep( unsigned long millis ) throw ( InterruptedException )
 String Thread::generateAnonymousThreadName()
 {
 	String result = TEXT("Thread-");
-	result.append( Utils::longToString(THREAD_ID_COUNTER) );
+	result.append( StringUtils::longToString(THREAD_ID_COUNTER) );
 	return result;
 }
 

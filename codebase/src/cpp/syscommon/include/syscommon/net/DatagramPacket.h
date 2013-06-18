@@ -15,10 +15,10 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
-#include "InetSocketAddress.h"
+#include "syscommon/Platform.h"
+#include "syscommon/net/InetSocketAddress.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/**
 	 * This class represents a datagram packet. 

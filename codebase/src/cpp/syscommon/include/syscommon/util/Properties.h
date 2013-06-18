@@ -15,13 +15,14 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
-#include "Logger.h"
-#include "Exception.h"
 #include <map>
 #include <set>
 
-namespace SysCommon
+#include "syscommon/Exception.h"
+#include "syscommon/Platform.h"
+#include "syscommon/util/Logger.h"
+
+namespace syscommon
 {
 	/**
 	 * The Properties class represents a persistent set of properties. The Properties can be saved 

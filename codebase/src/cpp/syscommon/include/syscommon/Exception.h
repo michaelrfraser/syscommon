@@ -15,12 +15,12 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
-
 #include <exception>
 #include <stdexcept>
 
-namespace SysCommon
+#include "syscommon/Platform.h"
+
+namespace syscommon
 {
 	class Exception : public std::runtime_error
 	{

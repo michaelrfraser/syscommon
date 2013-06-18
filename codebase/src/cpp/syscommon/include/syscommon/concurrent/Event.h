@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Platform.h"
+#include "syscommon/Platform.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/**
 	 * An event object is a synchronization object whose state can be explicitly set to signaled by

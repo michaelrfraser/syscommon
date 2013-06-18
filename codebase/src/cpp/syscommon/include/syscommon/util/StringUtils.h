@@ -15,14 +15,14 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
+#include "syscommon/Platform.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/**
 	 * A collection of static utility functions
 	 */
-	class Utils
+	class StringUtils
 	{
 		//----------------------------------------------------------
 		//                    STATIC VARIABLES

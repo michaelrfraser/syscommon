@@ -15,13 +15,13 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
-#include "InetSocketAddress.h"
-#include "DatagramPacket.h"
-#include "concurrent/Lock.h"
-#include "Exception.h"
+#include "syscommon/Exception.h"
+#include "syscommon/Platform.h"
+#include "syscommon/concurrent/Lock.h"
+#include "syscommon/net/DatagramPacket.h"
+#include "syscommon/net/InetSocketAddress.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/**
 	 * A MulticastSocket is a UDP Datagram Socket, with capabilities for joining "groups" of other 

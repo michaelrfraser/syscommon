@@ -12,12 +12,12 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
-#include "net/MulticastSocket.h"
+#include "syscommon/net/MulticastSocket.h"
 
+#include <assert.h>
 #include <cstring>
-#include "assert.h"
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS

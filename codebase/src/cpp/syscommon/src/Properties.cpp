@@ -12,12 +12,12 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
-#include "util/Properties.h"
-#include "Utils.h"
+#include "syscommon/util/Properties.h"
 
 #include <cstdio>
+#include "syscommon/util/StringUtils.h"
 
-using namespace SysCommon;
+using namespace syscommon;
 
 #pragma warning( disable : 4996 )
 
@@ -112,24 +112,24 @@ void Properties::loadFromFile( const tchar* filename, Logger* logger ) throw ( I
 		{
 			// Convert to String and trim whitespace
 			String asString = Platform::toPlatformString( line );
-			asString = Utils::stringTrim( asString );
+			asString = StringUtils::stringTrim( asString );
 
 			// Parse property statements (eg not comments or empty lines)
 			if( !asString.empty() && 
-				!Utils::stringStartsWith(asString, TEXT("#")) && 
-				!Utils::stringStartsWith(asString, TEXT("!")) )
+				!StringUtils::stringStartsWith(asString, TEXT("#")) && 
+				!StringUtils::stringStartsWith(asString, TEXT("!")) )
 			{
 				// Find the end of the key
 				size_t keyEndPos = asString.find_first_of( SEPARATOR_CHARS );
 				if( keyEndPos != String::npos )
 				{
 					String key = asString.substr( 0, keyEndPos );
-					key = Utils::stringTrim( key );
+					key = StringUtils::stringTrim( key );
 
 					// Find the start fo the value
 					size_t valueStart = asString.find_first_not_of( SEPARATOR_CHARS, keyEndPos );
 					String value = asString.substr( valueStart, asString.length() );
-					value = Utils::stringTrim( value );
+					value = StringUtils::stringTrim( value );
 
 					if( logger )
 						logger->trace( TEXT("Parsed property KEY=[%s], VALUE=[%s]"), key.c_str(), value.c_str() );

@@ -12,14 +12,14 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
-#include "util/Logger.h"
-#include "Utils.h"
+#include "syscommon/util/Logger.h"
 
 #include <cstdio>
+#include "syscommon/util/StringUtils.h"
 
 #pragma warning( disable : 4996 )
 
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS
@@ -209,19 +209,19 @@ Logger::Level Logger::getLevelFromString( const tchar* string )
 {
 	Logger::Level level = Logger::LL_INFO;
 	String asStdString( string );
-	if( Utils::stringEquals(asStdString, TEXT("OFF")) )
+	if( StringUtils::stringEquals(asStdString, TEXT("OFF")) )
 		level = Logger::LL_OFF;
-	else if( Utils::stringEquals(asStdString, TEXT("FATAL")) )
+	else if( StringUtils::stringEquals(asStdString, TEXT("FATAL")) )
 		level = Logger::LL_FATAL;
-	else if( Utils::stringEquals(asStdString, TEXT("ERROR")) )
+	else if( StringUtils::stringEquals(asStdString, TEXT("ERROR")) )
 		level = Logger::LL_ERROR;
-	else if( Utils::stringEquals(asStdString, TEXT("WARN")) )
+	else if( StringUtils::stringEquals(asStdString, TEXT("WARN")) )
 		level = Logger::LL_WARN;
-	else if( Utils::stringEquals(asStdString, TEXT("INFO")) )
+	else if( StringUtils::stringEquals(asStdString, TEXT("INFO")) )
 		level = Logger::LL_INFO;
-	else if( Utils::stringEquals(asStdString, TEXT("DEBUG")) )
+	else if( StringUtils::stringEquals(asStdString, TEXT("DEBUG")) )
 		level = Logger::LL_DEBUG;
-	else if( Utils::stringEquals(asStdString, TEXT("TRACE")) )
+	else if( StringUtils::stringEquals(asStdString, TEXT("TRACE")) )
 		level = Logger::LL_TRACE;
 
 	return level;

@@ -12,10 +12,9 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
+#include "syscommon/concurrent/Lock.h"
 
-#include "concurrent/Lock.h"
-
-using namespace SysCommon;
+using namespace syscommon;
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS

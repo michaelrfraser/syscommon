@@ -15,61 +15,75 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include <string>
-#include "../Exception.h"
+#include <stdarg.h>
 
-namespace SysCommon
+#include "syscommon/Platform.h"
+#include "syscommon/concurrent/Lock.h"
+
+namespace syscommon
 {
-	class OutputBuffer
+	class Logger
 	{
 		//----------------------------------------------------------
 		//                    STATIC VARIABLES
 		//----------------------------------------------------------
-		
+		public:
+			enum Level { LL_OFF,
+						 LL_FATAL,
+						 LL_ERROR,
+						 LL_WARN,
+						 LL_INFO,
+						 LL_DEBUG, 
+						 LL_TRACE };
+
+			static const int MAX_MSG_LENGTH = 4096;
+
 		//----------------------------------------------------------
 		//                   INSTANCE VARIABLES
 		//----------------------------------------------------------
 		private:
-			char* data;
-			size_t dataLength;
-			size_t writeMarker;
-			bool littleEndian;
+			FILE* file;
+			Level level;
+			Lock lock;
 
 		//----------------------------------------------------------
 		//                      CONSTRUCTORS
 		//----------------------------------------------------------
-		public:
-			OutputBuffer( size_t dataLength, bool littleEndian );
-
-			virtual ~OutputBuffer();
-
+		public: 
+			Logger();
+			virtual ~Logger();
+				
 		//----------------------------------------------------------
 		//                    INSTANCE METHODS
 		//----------------------------------------------------------
 		public:
-			void writeUInt8( unsigned char value ) throw ( IOException );
-			void writeInt8( char value ) throw ( IOException );
+			bool start( const tchar* filePath, bool append );
+			void stop();
+			bool isStarted();
 
-			void writeUInt16( unsigned short value ) throw ( IOException );
-			void writeInt16( short value ) throw ( IOException );
+			Level getLevel();
+			void setLevel( Level newLevel );
 
-			void writeUInt32( unsigned int value ) throw ( IOException );
-			void writeInt32( int value ) throw ( IOException );
-
-			void writeUInt64( unsigned long long value ) throw ( IOException );
-			void writeInt64( long long value ) throw ( IOException );
-
-			void writeUTF( const std::string& value ) throw ( IOException );
-
-			size_t getLength();
-			const char* getData();
+			// logging methods
+			void fatal( const tchar* format, ... );
+			void error( const tchar* format, ... );
+			void warn ( const tchar* format, ... );
+			void info ( const tchar* format, ... );
+			void debug( const tchar* format, ... );
+			void trace( const tchar* format, ... );
 
 		private:
-			size_t getBytesRemaining();
-			void write( size_t length, const char* source ) throw ( IOException );
+			void log( const tchar* level, const tchar* message );
+			void log( const tchar* level, const tchar* format, va_list args );
+
+			// this method will return true if messages for the given
+			// level should be printed, false otherwise
+			bool checkLevel( Level messageLevel );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS
 		//----------------------------------------------------------
+		public:
+			static Level getLevelFromString( const tchar* level );
 	};
 }

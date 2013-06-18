@@ -15,11 +15,11 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
-#include "Platform.h"
-#include "Thread.h"
-#include "Exception.h"
+#include "syscommon/Exception.h"
+#include "syscommon/Platform.h"
+#include "syscommon/concurrent/Thread.h"
 
-namespace SysCommon
+namespace syscommon
 {
 	/** 
 	 * A counting semaphore. Conceptually, a semaphore maintains a set of permits. Each acquire() 

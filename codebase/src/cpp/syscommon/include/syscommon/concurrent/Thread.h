@@ -16,11 +16,12 @@
  */
 
 #include <map>
-#include "Platform.h"
-#include "Exception.h"
-#include "Event.h"
 
-namespace SysCommon
+#include "syscommon/Platform.h"
+#include "syscommon/Exception.h"
+#include "syscommon/concurrent/Event.h"
+
+namespace syscommon
 {
 	/**
 	 * An interface representing a unit of execution. IRunnables are usually passed into Threads 
