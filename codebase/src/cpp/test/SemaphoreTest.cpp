@@ -13,8 +13,9 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "SemaphoreTest.h"
-#include "concurrent/Thread.h"
-#include "Platform.h"
+#include "syscommon/Platform.h"
+#include "syscommon/concurrent/Thread.h"
+
 
 //CPPUNIT_TEST_SUITE_REGISTRATION( SemaphoreTest );
 
@@ -47,16 +48,16 @@ void SemaphoreTest::tearDown()
 void SemaphoreTest::testSemaphore()
 {
 	// Create a semaphore with 2 permits
-	SysCommon::Semaphore semaphore( 2 );
+	syscommon::Semaphore semaphore( 2 );
 
 	// Create 3 runnables/threads to ask for permits
 	SemaphoreRunnable runnableOne( &semaphore );
 	SemaphoreRunnable runnableTwo( &semaphore );
 	SemaphoreRunnable runnableThree( &semaphore );
 
-	SysCommon::Thread threadOne( &runnableOne );
-	SysCommon::Thread threadTwo( &runnableTwo );
-	SysCommon::Thread threadThree( &runnableThree );
+	syscommon::Thread threadOne( &runnableOne );
+	syscommon::Thread threadTwo( &runnableTwo );
+	syscommon::Thread threadThree( &runnableThree );
 
 	// Start the threads, they will block until we signal the acquire event on them
 	threadOne.start();
@@ -76,8 +77,8 @@ void SemaphoreTest::testSemaphore()
 	// Have another runnable attempt to acquire the permit, it should timeout as both permits are
 	// taken
 	runnableThree.signalAcquire();
-	SysCommon::WaitResult blockedAcquire = runnableThree.waitForAcquired( 100L );
-	CPPUNIT_ASSERT( blockedAcquire == SysCommon::WR_TIMEOUT );
+	syscommon::WaitResult blockedAcquire = runnableThree.waitForAcquired( 100L );
+	CPPUNIT_ASSERT( blockedAcquire == syscommon::WR_TIMEOUT );
 	CPPUNIT_ASSERT( !runnableThree.isHoldingPermit() );
 
 	// Have one of the original runnables release its permit, the waiting runnable should wake up
@@ -100,7 +101,7 @@ void SemaphoreTest::testSemaphore()
 //----------------------------------------------------------
 //                      CONSTRUCTORS
 //----------------------------------------------------------
-SemaphoreRunnable::SemaphoreRunnable( SysCommon::Semaphore* semaphore ) :
+SemaphoreRunnable::SemaphoreRunnable( syscommon::Semaphore* semaphore ) :
 		acquireEvent(false, TEXT("acquire")), acquiredEvent(false, TEXT("acquired")), releaseEvent(false, TEXT("release"))
 {
 	this->holdingPermit = false;
@@ -131,7 +132,7 @@ void SemaphoreRunnable::signalAcquire()
 	acquireEvent.signal();
 }
 
-SysCommon::WaitResult SemaphoreRunnable::waitForAcquired( unsigned long timeout )
+syscommon::WaitResult SemaphoreRunnable::waitForAcquired( unsigned long timeout )
 {
 	return acquiredEvent.waitFor( timeout );
 }

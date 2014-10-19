@@ -16,9 +16,9 @@
  */
 
 #include "Common.h"
-#include "concurrent/Thread.h"
-#include "concurrent/Semaphore.h"
-#include "concurrent/Event.h"
+#include "syscommon/concurrent/Thread.h"
+#include "syscommon/concurrent/Semaphore.h"
+#include "syscommon/concurrent/Event.h"
 
 class SemaphoreTest: public CppUnit::TestFixture
 {
@@ -56,7 +56,7 @@ class SemaphoreTest: public CppUnit::TestFixture
 };
 
 // SemaphoreRunnable runnable helper class
-class SemaphoreRunnable : public SysCommon::IRunnable
+class SemaphoreRunnable : public syscommon::IRunnable
 {
 	//----------------------------------------------------------
 	//                    STATIC VARIABLES
@@ -66,18 +66,18 @@ class SemaphoreRunnable : public SysCommon::IRunnable
 	//                   INSTANCE VARIABLES
 	//----------------------------------------------------------
 	private:
-		SysCommon::Event acquireEvent;
-		SysCommon::Event acquiredEvent;
-		SysCommon::Event releaseEvent;
+		syscommon::Event acquireEvent;
+		syscommon::Event acquiredEvent;
+		syscommon::Event releaseEvent;
 		volatile bool holdingPermit;
 
-		SysCommon::Semaphore* semaphore;
+		syscommon::Semaphore* semaphore;
 
 	//----------------------------------------------------------
 	//                      CONSTRUCTORS
 	//----------------------------------------------------------
 	public:
-		SemaphoreRunnable( SysCommon::Semaphore* semaphore );
+		SemaphoreRunnable( syscommon::Semaphore* semaphore );
 		virtual ~SemaphoreRunnable();
 
 	//----------------------------------------------------------
@@ -86,7 +86,7 @@ class SemaphoreRunnable : public SysCommon::IRunnable
 	public:
 		virtual void run();
 		void signalAcquire();
-		SysCommon::WaitResult waitForAcquired( unsigned long timeout );
+		syscommon::WaitResult waitForAcquired( unsigned long timeout );
 		void signalRelease();
 		bool isHoldingPermit();
 

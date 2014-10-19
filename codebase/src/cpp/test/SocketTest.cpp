@@ -13,8 +13,9 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "SocketTest.h"
-#include "net/Socket.h"
-#include "Platform.h"
+#include "syscommon/Platform.h"
+#include "syscommon/net/Socket.h"
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION( SocketTest );
 
@@ -49,7 +50,7 @@ void SocketTest::testDefaultConstructor()
 	try
 	{
 		// Socket should be created in an unconnected state
-		SysCommon::Socket testSocket;
+		syscommon::Socket testSocket;
 		CPPUNIT_ASSERT( !testSocket.isConnected() );
 		CPPUNIT_ASSERT( testSocket.isInputShutdown() );
 		CPPUNIT_ASSERT( testSocket.isOutputShutdown() );

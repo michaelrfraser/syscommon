@@ -84,7 +84,7 @@ void OutputBuffer::writeInt64( long long value ) throw ( IOException )
 void OutputBuffer::writeUTF( const std::string& value ) throw ( IOException )
 {
 	size_t length = value.length();
-	this->writeUInt16( length );
+	this->writeUInt16( (unsigned short)length );
 
 	if( this->getBytesRemaining() >= length )
 	{

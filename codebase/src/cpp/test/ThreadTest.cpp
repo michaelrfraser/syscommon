@@ -13,8 +13,8 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "ThreadTest.h"
-#include "concurrent/Thread.h"
-#include "Platform.h"
+#include "syscommon/Platform.h"
+#include "syscommon/concurrent/Thread.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION( ThreadTest );
 
@@ -46,18 +46,18 @@ void ThreadTest::tearDown()
 
 void ThreadTest::testMainThread()
 {
-	SysCommon::Thread* mainThread = SysCommon::Thread::currentThread();
+	syscommon::Thread* mainThread = syscommon::Thread::currentThread();
 	CPPUNIT_ASSERT( mainThread != NULL );
 }
 
 void ThreadTest::testIsAlive()
 {
 	// Create a test event and a runner to wait on it
-	SysCommon::Event testEvent( false, TEXT("SyncEvent") );
+	syscommon::Event testEvent( false, TEXT("SyncEvent") );
 	SyncPointRunnable testRunner( &testEvent );
 
 	// Create the test thread, it should initially not be alive
-	SysCommon::Thread testThread( &testRunner );
+	syscommon::Thread testThread( &testRunner );
 	CPPUNIT_ASSERT( !testThread.isAlive() );
 
 	// Start the thread
@@ -77,14 +77,14 @@ void ThreadTest::testIsAlive()
 
 void ThreadTest::testSleep()
 {
-	SysCommon::Thread* currentThread = SysCommon::Thread::currentThread();
+	syscommon::Thread* currentThread = syscommon::Thread::currentThread();
 
 	// Clock time before sleep
-	unsigned long before = SysCommon::Platform::getCurrentTimeMilliseconds();
+	unsigned long before = syscommon::Platform::getCurrentTimeMilliseconds();
 	currentThread->sleep( 300L );
 
 	// Clock time after sleep
-	unsigned long after = SysCommon::Platform::getCurrentTimeMilliseconds();
+	unsigned long after = syscommon::Platform::getCurrentTimeMilliseconds();
 
 	// Difference should not be less than the sleep period
 	CPPUNIT_ASSERT( after >= (before + 300L) );
@@ -93,7 +93,7 @@ void ThreadTest::testSleep()
 void ThreadTest::testInterruptSleep()
 {
 	IndefiniteWaitRunnable testRunner;
-	SysCommon::Thread testThread( &testRunner );
+	syscommon::Thread testThread( &testRunner );
 
 	testThread.start();
 	testRunner.waitForIsAlive();
@@ -113,7 +113,7 @@ void ThreadTest::testInterruptSleep()
 //----------------------------------------------------------
 //                      CONSTRUCTORS
 //----------------------------------------------------------
-SyncPointRunnable::SyncPointRunnable( SysCommon::Event* waitForEvent ) :
+SyncPointRunnable::SyncPointRunnable( syscommon::Event* waitForEvent ) :
 		isAliveEvent(false, TEXT("IsAlive"))
 {
 	this->waitForEvent = waitForEvent;
@@ -170,10 +170,10 @@ void IndefiniteWaitRunnable::run()
 	try
 	{
 		// Sleep pretty much forever
-		SysCommon::Thread* currentThread = SysCommon::Thread::currentThread();
+		syscommon::Thread* currentThread = syscommon::Thread::currentThread();
 		currentThread->sleep( NATIVE_INFINITE_WAIT );
 	}
-	catch( SysCommon::InterruptedException& )
+	catch( syscommon::InterruptedException& )
 	{
 		// We are expecting this exception
 		this->result = FR_SUCCESS;

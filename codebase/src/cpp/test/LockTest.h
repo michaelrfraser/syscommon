@@ -16,9 +16,9 @@
  */
 
 #include "Common.h"
-#include "concurrent/Thread.h"
-#include "concurrent/Event.h"
-#include "concurrent/Lock.h"
+#include "syscommon/concurrent/Thread.h"
+#include "syscommon/concurrent/Event.h"
+#include "syscommon/concurrent/Lock.h"
 
 class LockTest: public CppUnit::TestFixture
 {
@@ -56,7 +56,7 @@ class LockTest: public CppUnit::TestFixture
 };
 
 // LockRunnable runnable helper class
-class LockRunnable : public SysCommon::IRunnable
+class LockRunnable : public syscommon::IRunnable
 {
 	//----------------------------------------------------------
 	//                    STATIC VARIABLES
@@ -66,18 +66,18 @@ class LockRunnable : public SysCommon::IRunnable
 	//                   INSTANCE VARIABLES
 	//----------------------------------------------------------
 	private:
-		SysCommon::Event lockEvent;
-		SysCommon::Event lockedEvent;
-		SysCommon::Event unlockEvent;
+		syscommon::Event lockEvent;
+		syscommon::Event lockedEvent;
+		syscommon::Event unlockEvent;
 		volatile bool holdingLock;
 
-		SysCommon::Lock* lock;
+		syscommon::Lock* lock;
 
 	//----------------------------------------------------------
 	//                      CONSTRUCTORS
 	//----------------------------------------------------------
 	public:
-		LockRunnable( SysCommon::Lock* lock );
+		LockRunnable( syscommon::Lock* lock );
 		virtual ~LockRunnable();
 
 	//----------------------------------------------------------
@@ -86,7 +86,7 @@ class LockRunnable : public SysCommon::IRunnable
 	public:
 		virtual void run();
 		void signalLock();
-		SysCommon::WaitResult waitForLocked( unsigned long timeout );
+		syscommon::WaitResult waitForLocked( unsigned long timeout );
 		void signalUnlock();
 		bool isHoldingLock();
 

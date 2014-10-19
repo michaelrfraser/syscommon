@@ -16,8 +16,8 @@
  */
 
 #include "Common.h"
-#include "concurrent/Thread.h"
-#include "concurrent/Event.h"
+#include "syscommon/concurrent/Thread.h"
+#include "syscommon/concurrent/Event.h"
 
 class ThreadTest: public CppUnit::TestFixture
 {
@@ -61,7 +61,7 @@ class ThreadTest: public CppUnit::TestFixture
 };
 
 // SyncPoint runnable helper class
-class SyncPointRunnable : public SysCommon::IRunnable
+class SyncPointRunnable : public syscommon::IRunnable
 {
 	//----------------------------------------------------------
 	//                    STATIC VARIABLES
@@ -71,14 +71,14 @@ class SyncPointRunnable : public SysCommon::IRunnable
 	//                   INSTANCE VARIABLES
 	//----------------------------------------------------------
 	private:
-		SysCommon::Event* waitForEvent;
-		SysCommon::Event isAliveEvent;
+		syscommon::Event* waitForEvent;
+		syscommon::Event isAliveEvent;
 
 	//----------------------------------------------------------
 	//                      CONSTRUCTORS
 	//----------------------------------------------------------
 	public:
-		SyncPointRunnable( SysCommon::Event* waitForEvent );
+		SyncPointRunnable( syscommon::Event* waitForEvent );
 		virtual ~SyncPointRunnable();
 
 	//----------------------------------------------------------
@@ -94,7 +94,7 @@ class SyncPointRunnable : public SysCommon::IRunnable
 };
 
 // IndefiniteWait runnable helper class
-class IndefiniteWaitRunnable : public SysCommon::IRunnable
+class IndefiniteWaitRunnable : public syscommon::IRunnable
 {
 	//----------------------------------------------------------
 	//                    STATIC VARIABLES
@@ -107,7 +107,7 @@ class IndefiniteWaitRunnable : public SysCommon::IRunnable
 	//----------------------------------------------------------
 	private:
 		FinishResult result;
-		SysCommon::Event isAliveEvent;
+		syscommon::Event isAliveEvent;
 
 	//----------------------------------------------------------
 	//                      CONSTRUCTORS

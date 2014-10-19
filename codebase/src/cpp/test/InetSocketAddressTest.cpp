@@ -13,8 +13,9 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "InetSocketAddressTest.h"
-#include "net/InetSocketAddress.h"
-#include "Platform.h"
+#include "syscommon/Platform.h"
+#include "syscommon/net/InetSocketAddress.h"
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION( InetSocketAddressTest );
 
@@ -47,24 +48,24 @@ void InetSocketAddressTest::tearDown()
 void InetSocketAddressTest::testLookupHostDottedOctets()
 {
 	// Host address
-	NATIVE_IP_ADDRESS ipAddress = SysCommon::Platform::lookupHost( TEXT("127.0.0.1") );
+	NATIVE_IP_ADDRESS ipAddress = syscommon::Platform::lookupHost( TEXT("127.0.0.1") );
 	CPPUNIT_ASSERT( ipAddress != INADDR_NONE );
 	CPPUNIT_ASSERT( ipAddress == INADDR_LOOPBACK );
 
 	// Multicast address
-	NATIVE_IP_ADDRESS multicastAddress = SysCommon::Platform::lookupHost( TEXT("226.0.1.1") );
+	NATIVE_IP_ADDRESS multicastAddress = syscommon::Platform::lookupHost( TEXT("226.0.1.1") );
 	CPPUNIT_ASSERT( multicastAddress != INADDR_NONE );
 }
 
 void InetSocketAddressTest::testLookupHostName()
 {
-	NATIVE_IP_ADDRESS ipAddress = SysCommon::Platform::lookupHost( TEXT("localhost") );
+	NATIVE_IP_ADDRESS ipAddress = syscommon::Platform::lookupHost( TEXT("localhost") );
 	CPPUNIT_ASSERT( ipAddress != INADDR_NONE );
 }
 
 void InetSocketAddressTest::testPortConstructor()
 {
-	SysCommon::InetSocketAddress sockAddress( 3001 );
+	syscommon::InetSocketAddress sockAddress( 3001 );
 	CPPUNIT_ASSERT( !sockAddress.isUnresolved() );
 	CPPUNIT_ASSERT( sockAddress.getAddress() == INADDR_ANY );
 	CPPUNIT_ASSERT( sockAddress.isAnyAddress() );
@@ -75,8 +76,8 @@ void InetSocketAddressTest::testPortConstructor()
 
 void InetSocketAddressTest::testAddressPortConstructor()
 {
-	NATIVE_IP_ADDRESS multicastAddress = SysCommon::Platform::lookupHost( TEXT("226.0.1.1") );
-	SysCommon::InetSocketAddress sockAddress( multicastAddress, 3001 );
+	NATIVE_IP_ADDRESS multicastAddress = syscommon::Platform::lookupHost( TEXT("226.0.1.1") );
+	syscommon::InetSocketAddress sockAddress( multicastAddress, 3001 );
 	CPPUNIT_ASSERT( !sockAddress.isUnresolved() );
 	CPPUNIT_ASSERT( !sockAddress.isAnyAddress() );
 	CPPUNIT_ASSERT( !sockAddress.isLoopbackAddress() );
@@ -87,8 +88,8 @@ void InetSocketAddressTest::testAddressPortConstructor()
 
 void InetSocketAddressTest::testHostPortConstructor()
 {
-	NATIVE_IP_ADDRESS loopbackAddress = SysCommon::Platform::lookupHost( TEXT("127.0.0.1") );
-	SysCommon::InetSocketAddress sockAddress( TEXT("localhost"), 3030 );
+	NATIVE_IP_ADDRESS loopbackAddress = syscommon::Platform::lookupHost( TEXT("127.0.0.1") );
+	syscommon::InetSocketAddress sockAddress( TEXT("localhost"), 3030 );
 
 	CPPUNIT_ASSERT( !sockAddress.isUnresolved() );
 	CPPUNIT_ASSERT( sockAddress.getAddress() == INADDR_LOOPBACK );
@@ -102,17 +103,17 @@ void InetSocketAddressTest::testHostPortConstructor()
 
 void InetSocketAddressTest::testGetHostAddress()
 {
-	SysCommon::InetSocketAddress sockAddress( INADDR_LOOPBACK, 2099 );
+	syscommon::InetSocketAddress sockAddress( INADDR_LOOPBACK, 2099 );
 	CPPUNIT_ASSERT( ::strcmp(sockAddress.getHostAddress(), TEXT("127.0.0.1")) == 0 );
 }
 
 void InetSocketAddressTest::testGetHostName()
 {
-	SysCommon::InetSocketAddress initiallySpecified( TEXT("localhost"), 2099 );
+	syscommon::InetSocketAddress initiallySpecified( TEXT("localhost"), 2099 );
 	CPPUNIT_ASSERT( ::strcmp(initiallySpecified.getHostName(true), TEXT("localhost")) == 0 );
 
 	// Does not work under Windows :( returns the machine's netbios name
-	//SysCommon::InetSocketAddress localLookup( INADDR_LOOPBACK, 2099 );
+	//syscommon::InetSocketAddress localLookup( INADDR_LOOPBACK, 2099 );
 	//CPPUNIT_ASSERT( ::strcmp(localLookup.getHostName(true), TEXT("localhost")) == 0 );
 }
 

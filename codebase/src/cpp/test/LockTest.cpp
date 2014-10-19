@@ -13,8 +13,9 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "LockTest.h"
-#include "concurrent/Thread.h"
-#include "Platform.h"
+#include "syscommon/Platform.h"
+#include "syscommon/concurrent/Thread.h"
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION( LockTest );
 
@@ -47,14 +48,14 @@ void LockTest::tearDown()
 void LockTest::testLock()
 {
 	// Create a semaphore with 2 permits
-	SysCommon::Lock lock;
+	syscommon::Lock lock;
 
 	// Create 3 runnables/threads to ask for permits
 	LockRunnable runnableOne( &lock );
 	LockRunnable runnableThree( &lock );
 
-	SysCommon::Thread threadOne( &runnableOne, "ThreadOne" );
-	SysCommon::Thread threadThree( &runnableThree, "ThreadThree" );
+	syscommon::Thread threadOne( &runnableOne, "ThreadOne" );
+	syscommon::Thread threadThree( &runnableThree, "ThreadThree" );
 
 	// Start the threads, they will block until we signal the acquire event on them
 	threadOne.start();
@@ -70,8 +71,8 @@ void LockTest::testLock()
 	// Have another runnable attempt to acquire the permit, it should timeout as both permits are
 	// taken
 	runnableThree.signalLock();
-	SysCommon::WaitResult blockedLock = runnableThree.waitForLocked( 100L );
-	CPPUNIT_ASSERT( blockedLock == SysCommon::WR_TIMEOUT );
+	syscommon::WaitResult blockedLock = runnableThree.waitForLocked( 100L );
+	CPPUNIT_ASSERT( blockedLock == syscommon::WR_TIMEOUT );
 	CPPUNIT_ASSERT( !runnableThree.isHoldingLock() );
 
 	// Have one of the original runnables release its permit, the waiting runnable should wake up
@@ -92,7 +93,7 @@ void LockTest::testLock()
 //----------------------------------------------------------
 //                      CONSTRUCTORS
 //----------------------------------------------------------
-LockRunnable::LockRunnable( SysCommon::Lock* lock ) :
+LockRunnable::LockRunnable( syscommon::Lock* lock ) :
 		lockEvent(false, TEXT("lock")),
 		lockedEvent(false, TEXT("locked")),
 		unlockEvent(false, TEXT("unlock"))
@@ -125,7 +126,7 @@ void LockRunnable::signalLock()
 	lockEvent.signal();
 }
 
-SysCommon::WaitResult LockRunnable::waitForLocked( unsigned long timeout )
+syscommon::WaitResult LockRunnable::waitForLocked( unsigned long timeout )
 {
 	return lockedEvent.waitFor( timeout );
 }

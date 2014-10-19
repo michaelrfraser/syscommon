@@ -23,8 +23,8 @@ using namespace syscommon;
 #ifdef _WIN32
 #include <Iphlpapi.h>
 #include <wincrypt.h>
-const tchar* Platform::DIRECTORY_SEPARATOR = "\\";
-const tchar* Platform::PATH_SEPARATOR = ";";
+const tchar* Platform::DIRECTORY_SEPARATOR = TEXT("\\");
+const tchar* Platform::PATH_SEPARATOR = TEXT(";");
 
 std::map<DWORD,HANDLE>& getThreadIdToHandleMap()
 {
@@ -726,7 +726,9 @@ std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
 			// If the current adapter is an ethernet adapter, add it to the set of interfaces
 			if( currentIface->Type == MIB_IF_TYPE_ETHERNET )
 			{
-				NATIVE_IP_ADDRESS address = Platform::lookupHost( currentIface->IpAddressList.IpAddress.String );
+				syscommon::String platformHostName = 
+					Platform::toPlatformString( currentIface->IpAddressList.IpAddress.String );
+				NATIVE_IP_ADDRESS address = Platform::lookupHost( platformHostName.c_str() );
 				if( address != INADDR_NONE )
 					addresses.insert( address );
 			}
@@ -940,7 +942,7 @@ bool Platform::getRandomBytes( char* buffer, size_t length )
 
 	if( haveContext )
 	{
-		result = ::CryptGenRandom( provider, length, (BYTE*)buffer ) != FALSE;
+		result = ::CryptGenRandom( provider, (DWORD)length, (BYTE*)buffer ) != FALSE;
 		::CryptReleaseContext( provider, 0 );
 	}
 
