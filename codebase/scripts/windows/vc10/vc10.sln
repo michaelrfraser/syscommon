@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syscommon", "syscommon\syscommon.vcxproj", "{8C05D329-0817-4A29-BCFB-18EB2E89728F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{DC105837-27A0-4C61-960A-3831C65C49BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F} = {8C05D329-0817-4A29-BCFB-18EB2E89728F}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Ansi Debug|Win32 = Ansi Debug|Win32
+		Ansi Debug|x64 = Ansi Debug|x64
+		Ansi Release|Win32 = Ansi Release|Win32
+		Ansi Release|x64 = Ansi Release|x64
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Debug|x64 = Unicode Debug|x64
+		Unicode Release|Win32 = Unicode Release|Win32
+		Unicode Release|x64 = Unicode Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Debug|Win32.ActiveCfg = Ansi Debug|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Debug|Win32.Build.0 = Ansi Debug|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Debug|x64.ActiveCfg = Ansi Debug|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Debug|x64.Build.0 = Ansi Debug|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Release|Win32.ActiveCfg = Ansi Release|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Release|Win32.Build.0 = Ansi Release|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Release|x64.ActiveCfg = Ansi Release|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Ansi Release|x64.Build.0 = Ansi Release|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Debug|x64.ActiveCfg = Unicode Debug|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Debug|x64.Build.0 = Unicode Debug|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Release|Win32.Build.0 = Unicode Release|Win32
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Release|x64.ActiveCfg = Unicode Release|x64
+		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Release|x64.Build.0 = Unicode Release|x64
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Debug|Win32.ActiveCfg = Ansi Debug|Win32
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Debug|x64.ActiveCfg = Ansi Debug|x64
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Release|Win32.ActiveCfg = Ansi Release|Win32
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Release|Win32.Build.0 = Ansi Release|Win32
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Release|x64.ActiveCfg = Ansi Release|x64
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Unicode Debug|x64.ActiveCfg = Unicode Debug|x64
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Unicode Release|Win32.ActiveCfg = Unicode Release|Win32
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Unicode Release|x64.ActiveCfg = Unicode Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
