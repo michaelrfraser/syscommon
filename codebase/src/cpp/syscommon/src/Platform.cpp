@@ -1025,8 +1025,8 @@ WaitResult Platform::waitOnInterruptableHandle( HANDLE interruptableHandle,
 #include <cstdio>
 #include <cstring>
 
-const tchar* Platform::DIRECTORY_SEPARATOR = "/";
-const tchar* Platform::PATH_SEPARATOR = ":";
+const tchar* Platform::DIRECTORY_SEPARATOR = TEXT("/");
+const tchar* Platform::PATH_SEPARATOR = TEXT(":");
 
 //----------------------------------------------------------
 //                     STATIC METHODS
