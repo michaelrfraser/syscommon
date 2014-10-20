@@ -29,25 +29,25 @@ function main
 	fi
 
 	echo DEBUG ANSI
-	build "-g -fPIC -Wall -Wno-unknown-pragmas" build/ansidebug libsyscommon64d.a
+	buildlib "-g -fPIC -Wall -Wno-unknown-pragmas" build/ansidebug libsyscommon64d.a
 	echo
 	
 	echo RELEASE ANSI
-	build "-O2 -fPIC -Wall -Wno-unknown-pragmas" build/ansirelease libsyscommon64.a
+	buildlib "-O2 -fPIC -Wall -Wno-unknown-pragmas" build/ansirelease libsyscommon64.a
 	echo
 	
 	echo DEBUG UNICODE
-	build "-g -fPIC -Wall -Wno-unknown-pragmas -DUNICODE" build/unicodedebug libsyscommon64ud.a
+	buildlib "-g -fPIC -Wall -Wno-unknown-pragmas -DUNICODE" build/unicodedebug libsyscommon64ud.a
 	echo
 	
 	echo RELEASE UNICODE
-	build "-O2 -fPIC -Wall -Wno-unknown-pragmas -DUNICODE" build/unicoderelease libsyscommon64u.a
+	buildlib "-O2 -fPIC -Wall -Wno-unknown-pragmas -DUNICODE" build/unicoderelease libsyscommon64u.a
 	echo
 	
 	echo Done!
 }
 
-function build # cflags builddir outname 
+function buildlib # cflags builddir outname 
 {
 	CFLAGS=$1
 	BUILD_DIR=$2
