@@ -55,7 +55,7 @@ class ThreadTest: public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE( ThreadTest );
 		CPPUNIT_TEST( testMainThread );
 		CPPUNIT_TEST( testIsAlive );
-		//CPPUNIT_TEST( testSleep );
+		CPPUNIT_TEST( testSleep );
 		CPPUNIT_TEST( testInterruptSleep );
 	CPPUNIT_TEST_SUITE_END();
 };

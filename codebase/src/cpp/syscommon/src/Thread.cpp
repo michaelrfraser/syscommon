@@ -14,6 +14,7 @@
  */
 #include "syscommon/concurrent/Thread.h"
 
+#include <assert.h>
 #include <limits.h>
 #include "syscommon/util/StringUtils.h"
 
@@ -23,6 +24,7 @@ using namespace syscommon;
 //                    STATIC VARIABLES
 //----------------------------------------------------------
 unsigned long Thread::THREAD_ID_COUNTER = 0;
+Lock Thread::managementLock;
 std::map<unsigned long, Thread*> Thread::threadMap;
 std::map<NATIVE_THREAD, Thread*> Thread::nativeThreadMap;
 Thread Thread::mainThread( NULL, TEXT("Main") );
@@ -76,7 +78,10 @@ void Thread::_Thread( IRunnable* runnable, const String& name )
 	this->runner = runnable;
 	this->name = name;
 	this->syntheticHandle = THREAD_ID_COUNTER++;
-	this->threadMap[this->syntheticHandle] = this;
+	
+	Thread::managementLock.lock();
+	Thread::threadMap[this->syntheticHandle] = this;
+	Thread::managementLock.unlock();
 
 	this->sysThreadHandle = Platform::createUninitialisedThread();
 	this->interruptEvent = Platform::createUninitialisedInterrupt();
@@ -90,7 +95,10 @@ Thread::~Thread()
 {
 	if ( this->interruptInitialised )
 		Platform::destroyThreadInterrupt( this->interruptEvent );
+
+	Thread::managementLock.lock();
 	this->threadMap.erase( this->syntheticHandle );
+	Thread::managementLock.unlock();
 }
 
 //----------------------------------------------------------
@@ -241,10 +249,14 @@ void Thread::start()
  * Returns the current thread of execution.
  *
  * @return The currently executing thread.
- */ 
+ */
 Thread* Thread::currentThread()
 {
 	Thread* asThread = NULL;
+
+	// Lock the managementLock. Threads being created and destroyed while we are in
+	// this function can mess with the results!
+	Thread::managementLock.lock();
 
 	// Get the current thread's ID from the OS
 	NATIVE_THREAD sysHandle = Platform::getCurrentThreadHandle();
@@ -266,6 +278,8 @@ Thread* Thread::currentThread()
 		asThread = &Thread::mainThread;
 	}
 	
+	// Unlock the management lock now we are all done.
+	Thread::managementLock.unlock();
 	return asThread;
 }
 
@@ -312,11 +326,14 @@ void Thread::threadEntry( void* threadInstance )
 	if( threadInstance )
 	{
 		Thread* asThread = reinterpret_cast<Thread*>( threadInstance );
+		assert( asThread );
 		if ( asThread )
 		{
 			// Put the thread in the native thread map
 			NATIVE_THREAD sysHandle = asThread->sysThreadHandle;
-			Thread::nativeThreadMap[sysHandle] = asThread;
+			Thread::managementLock.lock();
+			Thread::nativeThreadMap.insert( std::pair<NATIVE_THREAD,Thread*>(sysHandle, asThread) );
+			Thread::managementLock.unlock();
 
 			// Switch into TS_ALIVE state
 			asThread->state = TS_ALIVE;
@@ -328,7 +345,10 @@ void Thread::threadEntry( void* threadInstance )
 			asThread->state = TS_STOPPED;
 
 			// Clean up and close handles
+			Thread::managementLock.lock();
 			Thread::nativeThreadMap.erase( sysHandle );
+			Thread::managementLock.unlock();
+			
 			Platform::destroyThread( sysHandle );
 
 			asThread->joinEvent.signal();

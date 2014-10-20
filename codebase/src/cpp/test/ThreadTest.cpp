@@ -13,6 +13,8 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "ThreadTest.h"
+
+#include <limits.h>
 #include "syscommon/Platform.h"
 #include "syscommon/concurrent/Thread.h"
 
@@ -79,15 +81,18 @@ void ThreadTest::testSleep()
 {
 	syscommon::Thread* currentThread = syscommon::Thread::currentThread();
 
-	// Clock time before sleep
-	unsigned long before = syscommon::Platform::getCurrentTimeMilliseconds();
-	currentThread->sleep( 300L );
+	for( int i = 0 ; i < 10 ; ++i )
+	{
+		// Clock time before sleep
+		unsigned long before = syscommon::Platform::getCurrentTimeMilliseconds();
+		currentThread->sleep( 300L );
 
-	// Clock time after sleep
-	unsigned long after = syscommon::Platform::getCurrentTimeMilliseconds();
+		// Clock time after sleep
+		unsigned long after = syscommon::Platform::getCurrentTimeMilliseconds();
 
-	// Difference should not be less than the sleep period
-	CPPUNIT_ASSERT( after >= (before + 300L) );
+		// Difference should not be less than the sleep period
+		CPPUNIT_ASSERT( after >= (before + 300L) );
+	}
 }
 
 void ThreadTest::testInterruptSleep()

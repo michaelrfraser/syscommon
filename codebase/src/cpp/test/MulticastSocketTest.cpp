@@ -13,6 +13,8 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "MulticastSocketTest.h"
+
+#include <cstring>
 #include "syscommon/Platform.h"
 #include "syscommon/net/MulticastSocket.h"
 

@@ -20,6 +20,7 @@
 #include "syscommon/Platform.h"
 #include "syscommon/Exception.h"
 #include "syscommon/concurrent/Event.h"
+#include "syscommon/concurrent/Lock.h"
 
 namespace syscommon
 {
@@ -173,6 +174,7 @@ namespace syscommon
 			static unsigned long THREAD_ID_COUNTER;
 			static Thread mainThread;
 			static NATIVE_THREAD mainThreadHandle;
+			static Lock managementLock;
 			static std::map<unsigned long, Thread*> threadMap;
 			static std::map<NATIVE_THREAD, Thread*> nativeThreadMap;
 

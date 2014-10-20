@@ -13,6 +13,8 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "SemaphoreTest.h"
+
+#include <limits.h>
 #include "syscommon/Platform.h"
 #include "syscommon/concurrent/Thread.h"
 
