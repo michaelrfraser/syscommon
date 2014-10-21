@@ -26,9 +26,6 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
-// SysCommon includes
-#include "Exception.h"
-
 ////////////////////////////////////
 ////////// useful methods //////////
 ////////////////////////////////////

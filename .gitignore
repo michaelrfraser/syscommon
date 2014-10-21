@@ -2,24 +2,16 @@
 .DS_Store
 *~
 
-# /
-/MacOSX
-/eclipse-build
-
-# /.settings/
-/.settings/org.eclipse.mylyn.tasks.ui.prefs
-/.settings/org.eclipse.wst.validation.prefs
-/.CNRLogLicense/
-
 # /codebase/
 /codebase/build
 /codebase/logs
 /codebase/dist
-/codebase/build.properties
-/codebase/savedata
 
-# /codebase/documentation/
-/codebase/documentation/javadoc
-
-# /codebase/lib/clover/
-/codebase/lib/clover/clover.license
+# /scripts
+/codebase/scripts/windows/vc8/**/*.ncb
+/codebase/scripts/windows/vc8/**/*.user
+/codebase/scripts/windows/vc8/**/*.suo
+/codebase/scripts/windows/vc10/ipch
+/codebase/scripts/windows/vc10/**/*.user
+/codebase/scripts/windows/vc10/**/*.sdf
+/codebase/scripts/windows/vc10/**/*.suo

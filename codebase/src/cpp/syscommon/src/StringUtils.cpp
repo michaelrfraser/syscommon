@@ -14,6 +14,7 @@
  */
 
 #include "syscommon/util/StringUtils.h"
+#include <wctype.h>
 
 using namespace syscommon;
 

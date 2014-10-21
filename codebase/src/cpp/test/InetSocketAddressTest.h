@@ -16,7 +16,6 @@
  */
 
 #include "Common.h"
-#include "net/InetSocketAddress.h"
 
 class InetSocketAddressTest: public CppUnit::TestFixture
 {
