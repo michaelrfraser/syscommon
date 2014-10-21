@@ -13,7 +13,7 @@
 # DEFINITIONS
 #
 INCLUDES=-Isrc/cpp/syscommon/include
-CC=clang
+CC=g++
 SRC_DIR=src/cpp/syscommon/src
 DIST_DIR=dist
 LIBNAME=syscommon
@@ -64,12 +64,28 @@ function buildlib # cflags builddir outname
 	do
 		BASENAME=`basename $SOURCEFILE`
 		UNITNAME="${BASENAME%%.*}"
-		$CC $INCLUDES $CFLAGS -c $SOURCEFILE -o $BUILD_DIR/$UNITNAME.o
+
+		echo [CC] $SOURCEFILE
+		RESULT=`$CC $INCLUDES $CFLAGS -c $SOURCEFILE -o $BUILD_DIR/$UNITNAME.o && echo OK`
+		if [ "$RESULT" != "OK" ]; then
+			fail
+		fi
+
 		LINKOBJECTS="$LINKOBJECTS $BUILD_DIR/$UNITNAME.o"
 	done
 	
-	echo Linking to $DIST_DIR/$OUTNAME
-	ar rcs $DIST_DIR/$OUTNAME $LINKOBJECTS
+	echo [LD] $DIST_DIR/$OUTNAME
+	RESULT=`ar rcs $DIST_DIR/$OUTNAME $LINKOBJECTS && echo OK`
+	if [ "$RESULT" != "OK" ]; then
+		fail
+	fi
+}
+
+function fail
+{
+	echo
+	echo BUILD FAILED $1
+	exit
 }
 
 main
