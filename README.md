@@ -21,7 +21,6 @@ SysCommon currently provides:
 - A few string functions to augment std:string (startsWith, endsWith, toUpper, 
   trim)
 
-NOTE: Currently only the Windows implementation is complete. I will be actively
-working on Linux/Mac implementations shortly.
+SysCommon is cross-platform and compiles under Windows, OSX and Linux.
 
 SysCommon is provided under the Common Development and Distribution License (CDDL).
