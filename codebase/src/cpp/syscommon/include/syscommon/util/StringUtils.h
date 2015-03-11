@@ -15,6 +15,7 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
+#include <vector>
 #include "syscommon/Platform.h"
 
 namespace syscommon
@@ -152,5 +153,15 @@ namespace syscommon
 		     * Converts all of the characters in this String to upper case
 			 */
 			static String stringToUpperCase( const String& string );
+
+			/**
+			 * Splits the source string into several smaller strings, divided by the delimiter token.
+			 *
+			 * @param source the string to split
+			 * @param delimiter the sequence of characters to use as the delimiter token
+			 * @return a list of all substrings that were extracted from the source string
+			 */
+			static std::vector<String> stringSplit( const String& source, 
+			                                        const String& delimiter );
 	};
 }

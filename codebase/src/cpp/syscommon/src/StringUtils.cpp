@@ -38,7 +38,7 @@ String StringUtils::stringTrimLeft( const String& string, const String& characte
 {
 	String result = string;
 	size_t startPos = string.find_first_not_of( characters );
-	if( String::npos != startPos )
+	if( startPos != String::npos )
 		result = string.substr( startPos, result.length() );
 	else if( string.length() > 0 )
 		result.clear();
@@ -50,7 +50,7 @@ String StringUtils::stringTrimRight( const String& string, const String& charact
 {
 	String result = string;
 	size_t endpos = string.find_last_not_of( characters );
-	if( String::npos != endpos )
+	if( endpos != String::npos )
 		result = string.substr( 0, endpos + 1 );
 	else if( string.length() > 0 )
 		result.clear();
@@ -128,6 +128,28 @@ String StringUtils::stringToUpperCase( const String& string )
 	copy[length] = 0;
 	String result = copy;
 	delete[] copy;
+
+	return result;
+}
+
+std::vector<String> StringUtils::stringSplit( const String& source, const String& delimiter )
+{
+	std::vector<String> result;
+	size_t delimiterSize = delimiter.size();
+
+	size_t basePos = 0;
+	size_t foundPos = source.find( delimiter );
+	while( foundPos != String::npos )
+	{
+		String entry = source.substr( basePos, foundPos - basePos );
+		result.push_back( entry );
+
+		basePos = foundPos + delimiterSize;
+		foundPos = source.find( delimiter, basePos );
+	}
+
+	String lastEntry = source.substr( basePos );
+	result.push_back( lastEntry );
 
 	return result;
 }
