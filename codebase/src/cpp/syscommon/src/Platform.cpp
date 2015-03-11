@@ -94,7 +94,7 @@ WaitResult Platform::waitOnSemaphore( NATIVE_SEMAPHORE& nativeSemaphore,
 	if ( Platform::isSemaphoreInitialised(nativeSemaphore) &&
 		 Platform::isThreadInterruptInitialised(threadInterrupt) )
 	{
-		result = Platform::waitOnInterruptableHandle( threadInterrupt, nativeSemaphore, timeout );
+		result = Platform::waitOnInterruptableHandle( nativeSemaphore, threadInterrupt, timeout );
 	}
 
 	return result;

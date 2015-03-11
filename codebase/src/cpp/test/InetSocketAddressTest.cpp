@@ -119,3 +119,44 @@ void InetSocketAddressTest::testGetHostName()
 	//CPPUNIT_ASSERT( ::strcmp(localLookup.getHostName(true), TEXT("localhost")) == 0 );
 }
 
+void InetSocketAddressTest::testLessThan()
+{
+	CPPUNIT_ASSERT( InetSocketAddress(INADDR_LOOPBACK, 3000) < 
+	                InetSocketAddress(INADDR_LOOPBACK, 3001) );
+
+	CPPUNIT_ASSERT( !(InetSocketAddress(INADDR_LOOPBACK, 3001) <   
+	                InetSocketAddress(INADDR_LOOPBACK, 3000)) );
+
+	CPPUNIT_ASSERT( InetSocketAddress(INADDR_LOOPBACK, 3001) >   
+	                InetSocketAddress(INADDR_LOOPBACK, 3000) );
+
+	CPPUNIT_ASSERT( InetSocketAddress(INADDR_LOOPBACK, 3000) < 
+	                InetSocketAddress("127.0.0.1", 3001) );
+
+	CPPUNIT_ASSERT( InetSocketAddress("192.168.0.1", 3000) < 
+	                InetSocketAddress("192.168.0.2", 3000) );
+
+	CPPUNIT_ASSERT( InetSocketAddress("192.168.0.1", 3000) < 
+	                InetSocketAddress("192.168.1.1", 3000) );
+
+	CPPUNIT_ASSERT( InetSocketAddress("192.168.0.1", 3000) < 
+	                InetSocketAddress("192.169.0.1", 3000) );
+
+	CPPUNIT_ASSERT( InetSocketAddress("192.168.0.1", 3000) < 
+	                InetSocketAddress("193.168.0.1", 3000) );
+}
+
+void InetSocketAddressTest::testEquality()
+{
+	CPPUNIT_ASSERT( InetSocketAddress(INADDR_LOOPBACK, 3000) == 
+	                InetSocketAddress(INADDR_LOOPBACK, 3000) );
+
+	CPPUNIT_ASSERT( !(InetSocketAddress(INADDR_LOOPBACK, 3000) == 
+	                InetSocketAddress(INADDR_LOOPBACK, 3001)) );
+
+	CPPUNIT_ASSERT( InetSocketAddress(INADDR_LOOPBACK, 3000) != 
+	                InetSocketAddress(INADDR_LOOPBACK, 3001) );
+
+	CPPUNIT_ASSERT( InetSocketAddress(INADDR_LOOPBACK, 3000) ==
+	                InetSocketAddress("127.0.0.1", 3000) );
+}

@@ -17,6 +17,8 @@
 
 #include "syscommon/Platform.h"
 
+using namespace std::rel_ops;
+
 namespace syscommon
 {
 	/**
@@ -145,6 +147,22 @@ namespace syscommon
 			 * 				false
 			 */
 			bool isAnyAddress();
+
+		////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////// Operator Overloads ////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////
+		public:
+			/**
+			 * Compares whether this InetSocketAddress is semantically less-than the specified
+			 * InetSocketAddress
+			 */
+			bool operator < ( const InetSocketAddress& other ) const;
+		
+			/**
+			 * Compares whether this InetSocketAddress is semantically equal to the specified
+			 * InetSocketAddress
+			 */
+			bool operator == ( const InetSocketAddress& other ) const;
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

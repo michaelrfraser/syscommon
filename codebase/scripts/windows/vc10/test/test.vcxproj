@@ -157,6 +157,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\dist\vc10;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\win32\vc10</AdditionalLibraryDirectories>
+      <AdditionalDependencies>syscommond.lib;cppunitd.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|x64'">
@@ -263,6 +265,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\cpp\test\Common.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\test\StringConnection.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\test\StringServer.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\test\InetSocketAddressTest.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\test\LockTest.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\test\main.cpp" />
@@ -273,6 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\cpp\test\Common.h" />
+    <ClInclude Include="..\..\..\..\src\cpp\test\StringConnection.h" />
+    <ClInclude Include="..\..\..\..\src\cpp\test\StringServer.h" />
+    <ClInclude Include="..\..\..\..\src\cpp\test\IStringConsumer.h" />
     <ClInclude Include="..\..\..\..\src\cpp\test\InetSocketAddressTest.h" />
     <ClInclude Include="..\..\..\..\src\cpp\test\LockTest.h" />
     <ClInclude Include="..\..\..\..\src\cpp\test\MulticastSocketTest.h" />

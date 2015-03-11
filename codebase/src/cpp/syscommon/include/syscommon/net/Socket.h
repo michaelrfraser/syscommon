@@ -36,11 +36,14 @@ namespace syscommon
 		//----------------------------------------------------------
 		private:
 			NATIVE_SOCKET nativeSocket;
-			bool created;
 			bool connected;
+			bool created;
 			bool closed;
 			bool inputShutdown;
 			bool outputShutdown;
+
+			NATIVE_IP_ADDRESS remoteAddress;
+			unsigned short remotePort;
 
 		//----------------------------------------------------------
 		//                      CONSTRUCTORS
@@ -79,7 +82,7 @@ namespace syscommon
 			 *
 			 * @return true if the socket successfuly connected to a server
 			 */
-			bool isConnected();
+			bool isConnected() const;
 
 			/**
 			 * Connects this socket to the specified server.
@@ -94,7 +97,7 @@ namespace syscommon
 			 *
 			 * @return true if the socket has been closed
 			 */
-			bool isClosed();
+			bool isClosed() const;
 
 			/**
 			 * Closes this socket.
@@ -137,11 +140,49 @@ namespace syscommon
 			int receive( char* buffer, int length ) throw ( IOException );
 
 			/**
+			 * Returns the address to which the socket is connected.
+			 * <p>
+			 * If the socket was connected prior to being {@link #close closed}, then this method 
+			 * will continue to return the connected address after the socket is closed.
+			 *
+			 * @return the remote IP address to which this socket is connected, or 
+			 *         <code>INADDR_NONE</code> if the socket is not connected.
+			 */
+			NATIVE_IP_ADDRESS getInetAddress() const;
+
+			/**
+			 * Returns the remote port number to which this socket is connected.
+			 * <p>
+			 * If the socket was connected prior to being {@link #close closed}, then this method 
+			 * will continue to return the connected port number after the socket is closed.
+			 *
+			 * @return the remote port number to which this socket is connected, or 0 if the 
+			 *         socket is not connected yet.
+			 */
+			unsigned short getPort() const;
+
+			/**
+			 * Returns the address of the endpoint this socket is connected to. If the socket is 
+			 * not currently connected, the address potion of the return value will be set to
+			 * INADDR_NONE
+			 * <p>
+			 * If the socket was connected prior to being {@link #close closed}, then this method 
+			 * will continue to return the connected address after the socket is closed.
+			 *
+			 * @return a <code>InetSocketAddress</code> representing the remote endpoint of this
+			 *         socket
+			 * @see #getInetAddress()
+			 * @see #getPort()
+			 * @see #connect( const InetSocketAddress& )
+			 */
+			InetSocketAddress getRemoteSocketAddress() const;
+
+			/**
 			 * Returns whether the read-half of the socket connection is closed.
 			 *
 			 * @return true if the input of the socket has been shutdown
 			 */
-			bool isInputShutdown();
+			bool isInputShutdown() const;
 
 			/**
 			 * Shuts down this socket's input handle
@@ -161,7 +202,7 @@ namespace syscommon
 			 *
 			 * @return true if the output of the socket has been shutdown
 			 */
-			bool isOutputShutdown();
+			bool isOutputShutdown() const;
 
 			/**
 			 * Disables the output stream for this socket. For a TCP socket, any previously written 
@@ -176,11 +217,14 @@ namespace syscommon
 			void shutdownOutput() throw ( IOException );
 
 		private:
-			bool isCreated();
+			bool isCreated() const;
 			void create() throw ( SocketException );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS
 		//----------------------------------------------------------
+		public:
+			static Socket* createFromAccept( NATIVE_SOCKET client, 
+			                                 const InetSocketAddress& clientAddress );
 	};
 }

@@ -50,16 +50,18 @@ void Socket::_Socket()
 	Platform::initialiseSocketFramework();
 	this->nativeSocket = NATIVE_SOCKET_UNINIT;
 	this->created = false;
-	this->connected = false;
 	this->closed = false;
 	this->inputShutdown = true;
 	this->outputShutdown = true;
+
+	this->remoteAddress = INADDR_NONE;
+	this->remotePort = 0;
 }
 
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-bool Socket::isCreated()
+bool Socket::isCreated() const
 {
 	return this->created;
 }
@@ -78,9 +80,9 @@ void Socket::create() throw ( SocketException )
 
 }
 
-bool Socket::isConnected()
+bool Socket::isConnected() const
 {
-	return this->connected;
+	return this->remoteAddress != INADDR_NONE;
 }
 
 void Socket::connect( InetSocketAddress& endpoint ) throw ( IOException )
@@ -109,15 +111,18 @@ void Socket::connect( InetSocketAddress& endpoint ) throw ( IOException )
 								  sizeof(sockaddr_in) );
 	if( connectResult != NATIVE_SOCKET_ERROR )
 	{
-		this->connected = true;
+		this->remoteAddress = endpoint.getAddress();
+		this->remotePort = endpoint.getPort();
 		this->inputShutdown = false;
 		this->outputShutdown = false;
 	}
 	else
+	{
 		throw SocketException( Platform::describeLastSocketError() );
+	}
 }
 
-bool Socket::isClosed()
+bool Socket::isClosed() const
 {
 	return this->closed;
 }
@@ -157,7 +162,7 @@ int Socket::send( const char* buffer, int length ) throw ( IOException )
 		throw SocketException( TEXT("Socket is not connected") );
 
 	if( isOutputShutdown() )
-		throw SocketException( TEXT("Socket output has been shutdown") );	
+		throw SocketException( TEXT("Socket output has been shutdown") );
 
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
 
@@ -188,7 +193,22 @@ int Socket::receive( char* buffer, int length ) throw ( IOException )
 	return result;
 }
 
-bool Socket::isInputShutdown()
+NATIVE_IP_ADDRESS Socket::getInetAddress() const
+{
+	return this->remoteAddress;
+}
+
+unsigned short Socket::getPort() const
+{
+	return this->remotePort;
+}
+
+InetSocketAddress Socket::getRemoteSocketAddress() const
+{
+	return InetSocketAddress( this->remoteAddress, this->remotePort );
+}
+
+bool Socket::isInputShutdown() const
 {
 	return this->inputShutdown;
 }
@@ -213,7 +233,7 @@ void Socket::shutdownInput() throw ( IOException )
 		throw SocketException( Platform::describeLastSocketError() );
 }
 
-bool Socket::isOutputShutdown()
+bool Socket::isOutputShutdown() const
 {
 	return this->outputShutdown;
 }
@@ -236,4 +256,23 @@ void Socket::shutdownOutput() throw ( IOException )
 		outputShutdown = true;
 	else
 		throw SocketException( Platform::describeLastSocketError() );
+}
+
+//----------------------------------------------------------
+//                     STATIC METHODS
+//----------------------------------------------------------
+Socket* Socket::createFromAccept( NATIVE_SOCKET client, const InetSocketAddress& clientAddress )
+{
+	// Create a new, connected Socket based around the client's socket descriptor
+	Socket* clientSocket = new Socket();
+	clientSocket->nativeSocket = client;
+	clientSocket->closed = false;
+	clientSocket->created = true;
+	clientSocket->inputShutdown = false;
+	clientSocket->outputShutdown = false;
+
+	clientSocket->remoteAddress = clientAddress.getAddress();
+	clientSocket->remotePort = clientAddress.getPort();
+
+	return clientSocket;
 }

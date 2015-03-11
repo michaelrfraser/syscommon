@@ -26,6 +26,8 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestFixture.h>
 
+#include "StringServer.h"
+
 ////////////////////////////////////
 ////////// useful methods //////////
 ////////////////////////////////////
@@ -46,3 +48,7 @@ void failTestMissingException( const char *expectedException, const char* action
  * was in progress.
  */
 void failTestWrongException( const char* expected, std::exception& actual, const char* action );
+
+StringServer* quickCreateServer( NATIVE_IP_ADDRESS address, unsigned short port );
+
+void quickReleaseServer( StringServer* server );

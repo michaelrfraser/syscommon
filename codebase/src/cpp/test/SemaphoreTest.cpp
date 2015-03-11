@@ -19,7 +19,7 @@
 #include "syscommon/concurrent/Thread.h"
 
 
-//CPPUNIT_TEST_SUITE_REGISTRATION( SemaphoreTest );
+CPPUNIT_TEST_SUITE_REGISTRATION( SemaphoreTest );
 
 //----------------------------------------------------------
 //                      CONSTRUCTORS
@@ -76,12 +76,14 @@ void SemaphoreTest::testSemaphore()
 	CPPUNIT_ASSERT( runnableOne.isHoldingPermit() );
 	CPPUNIT_ASSERT( runnableTwo.isHoldingPermit() );
 
+#ifdef _WIN32
 	// Have another runnable attempt to acquire the permit, it should timeout as both permits are
 	// taken
 	runnableThree.signalAcquire();
 	syscommon::WaitResult blockedAcquire = runnableThree.waitForAcquired( 100L );
 	CPPUNIT_ASSERT( blockedAcquire == syscommon::WR_TIMEOUT );
 	CPPUNIT_ASSERT( !runnableThree.isHoldingPermit() );
+#endif
 
 	// Have one of the original runnables release its permit, the waiting runnable should wake up
 	// and acquire the released permit

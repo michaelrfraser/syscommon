@@ -57,5 +57,8 @@
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Thread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\ServerSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
