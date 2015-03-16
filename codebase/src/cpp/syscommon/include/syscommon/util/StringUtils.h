@@ -163,5 +163,90 @@ namespace syscommon
 			 */
 			static std::vector<String> stringSplit( const String& source, 
 			                                        const String& delimiter );
+
+			/**
+			 * Formats the specified time value using the provided format string and returns the
+			 * result.
+			 * <br/><br/>
+			 * The format string can contain any combination of regular characters and special 
+			 * format specifiers. These format specifiers are replaced by the function to the 
+			 * corresponding values to represent the time specified in the <code>time</code> 
+			 * parameter. The format specifiers all begin with the percentage (%) sign and are:
+			 *
+			 * <table>
+			 *	<tr>
+			 *		<th>Specifier</th><th>Replaced By</th><th>Example</th>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%a</td><td>Abbreviated weekday name *</td><td>Thu</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%A</td><td>Full weekday name *</td><td>Thursday</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%b</td><td>Abbreviated month name *</td><td>Aug</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%B</td><td>Full month name *</td><td>August</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%c</td><td>Date and time representation *</td><td>Thu Aug 23 14:55:02 2001</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%d</td><td>Day of the month, zero-padded (01-31)</td><td>23</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%H</td><td>Hour in 24h format (00-23)</td><td>14</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%H</td><td>Hour in 12h format (01-22)</td><td>02</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%j</td><td>Day of the year (001-366)</td><td>235</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%m</td><td>Month as a decimal number (01-12)</td><td>08</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%M</td><td>Minute (00-59)</td><td>55</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%p</td><td>AM or PM designation</td><td>PM</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%S</td><td>Second (00-61)</td><td>02</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%w</td><td>Weekday as a decimal number with Sunday as 0 (0-6)</td><td>4</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%W</td><td>Week number with the first Monday as the first day of week one (00-53)</td><td>34</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%x</td><td>Date representation *</td><td>08/23/01</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%X</td><td>Time representation *</td><td>14:55:02</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%y</td><td>Year, last two digits (00-99)</td><td>01</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%Y</td><td>Year</td><td>2001</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%Z</td><td>Timezone name or abbreviation *</td><td>CDT</td>
+			 *	</tr>
+			 *	<tr>
+			 *		<td>%%</td><td>A % sign</td><td>%</td>
+			 *	</tr>
+			 * </table>
+			 *	* The specifiers marked with an asterisk (*) are locale-dependent.
+			 *
+			 * @param time the time value to format
+			 * @param format a format string containing any combination of regular characters and 
+			 *               special format specifiers.
+			 */
+			static String formatTime( const time_t& time, const String& format );
 	};
 }
