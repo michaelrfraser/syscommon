@@ -74,6 +74,7 @@ sets, placing them in the `codebase\dist` directory.
 ### Version 0.3.1, 2015-03-17 ###
 **New and Noteworthy**
 - Added `formatTime()` method to `StringUtils` class
+- Added `stringSplit()` method to `StringUtils` class
 
 **Bug Fixes and Improvements**
 - Improvements to the Logger class
