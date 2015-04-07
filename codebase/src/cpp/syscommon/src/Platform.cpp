@@ -922,6 +922,14 @@ unsigned long Platform::getCurrentTimeMilliseconds()
 	return time;
 }
 
+tm* Platform::toLocalTime( const time_t& time )
+{
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+	return ::localtime( &time );
+#pragma warning( pop )
+}
+
 bool Platform::getRandomBytes( char* buffer, size_t length )
 {
 	bool result = false;
@@ -1880,6 +1888,11 @@ unsigned long Platform::getCurrentTimeMilliseconds()
 	::gettimeofday( &time, NULL );
 
 	return (time.tv_sec * 1000) + (time.tv_usec / 1000L);
+}
+
+tm* Platform::toLocalTime( const time_t& time )
+{
+	return ::localtime( &time );
 }
 
 bool Platform::getRandomBytes( char* buffer, size_t length )

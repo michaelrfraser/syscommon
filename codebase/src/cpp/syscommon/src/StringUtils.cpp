@@ -14,7 +14,6 @@
  */
 
 #include "syscommon/util/StringUtils.h"
-#include <time.h>
 #include <wctype.h>
 
 using namespace syscommon;
@@ -160,12 +159,12 @@ String StringUtils::formatTime( const time_t& time, const String& format )
 	char buffer[2048];
 
 	// Get the local time, and string format in narrow chars
-	tm* timeLocal = ::localtime( &time );
+	tm* timeLocal = Platform::toLocalTime( time );
 	std::string narrowFormat = Platform::toAnsiString( format.c_str() );
 
 	// Perform the format
 	size_t length = ::strftime( buffer, 1024, narrowFormat.c_str(), timeLocal );
 
 	// Convert back to platform string and return
-	return Platform::toPlatformString( buffer, length );
+	return Platform::toPlatformString( buffer, (int)length );
 }

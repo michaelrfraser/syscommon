@@ -118,6 +118,7 @@
 
 #include <string>
 #include <set>
+#include <time.h>
 
 namespace syscommon
 {		
@@ -299,6 +300,7 @@ namespace syscommon
 
 			// Time
 			static unsigned long getCurrentTimeMilliseconds();
+			static tm* toLocalTime( const time_t& time );
 			static bool getRandomBytes( char* buffer, size_t length );
 
 #ifdef _WIN32
