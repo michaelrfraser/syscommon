@@ -15,3 +15,7 @@
 /codebase/scripts/windows/vc10/**/*.user
 /codebase/scripts/windows/vc10/**/*.sdf
 /codebase/scripts/windows/vc10/**/*.suo
+/codebase/scripts/windows/vc12/ipch
+/codebase/scripts/windows/vc12/**/*.user
+/codebase/scripts/windows/vc12/**/*.sdf
+/codebase/scripts/windows/vc12/**/*.suo
