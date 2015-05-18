@@ -85,7 +85,7 @@ void StringConnection::interrupt()
 		{
 			this->socket->close();
 		}
-		catch( IOException& ioe )
+		catch( IOException& )
 		{
 			// Log an error?
 		}
@@ -100,7 +100,7 @@ void StringConnection::join()
 		{
 			this->receiveThread->join();
 		}
-		catch( InterruptedException& ie )
+		catch( InterruptedException& )
 		{
 			// Log an error?
 		}
@@ -143,7 +143,7 @@ void StringConnection::run()
 			delete [] messageData;
 			messageData = NULL;
 		}
-		catch( IOException& ioe )
+		catch( IOException& )
 		{
 			if( !this->running )
 			{
