@@ -128,7 +128,7 @@ unsigned short ServerSocket::getLocalPort()
 	NATIVE_SOCKET impl = getImpl();
 
 	sockaddr_in myAddress;
-	socklen_t addrLen = sizeof(myAddress);
+	NATIVE_SOCKET_LEN addrLen = sizeof(myAddress);
 	int sockNameResult = ::getsockname( impl, (sockaddr*)&myAddress, &addrLen );
 	if( sockNameResult != NATIVE_SOCKET_ERROR )
 		return ntohs( myAddress.sin_port );
@@ -145,7 +145,7 @@ Socket* ServerSocket::accept() throw ( IOException )
 
 	NATIVE_SOCKET impl = getImpl();
 	sockaddr_in clientAddress;
-	socklen_t addrLen = sizeof(clientAddress);
+	NATIVE_SOCKET_LEN addrLen = sizeof(clientAddress);
 	NATIVE_SOCKET acceptResult = ::accept( impl, (sockaddr*)&clientAddress, &addrLen );
 	if( acceptResult != NATIVE_SOCKET_ERROR )
 	{
