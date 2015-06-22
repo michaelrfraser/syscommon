@@ -95,10 +95,10 @@ void ServerSocket::bind( const InetSocketAddress& endpoint,
 
 	NATIVE_SOCKET impl = getImpl();
 	int bindResult = ::bind( impl, (sockaddr*)&myAddress, sizeof(sockaddr_in) );
-	if( bindResult != SOCKET_ERROR )
+	if( bindResult != NATIVE_SOCKET_ERROR )
 	{
 		int listenResult = ::listen( impl, backlog );
-		if( listenResult != SOCKET_ERROR )
+		if( listenResult != NATIVE_SOCKET_ERROR )
 		{
 			this->boundTo = endpoint.getAddress();
 		}
@@ -128,9 +128,9 @@ unsigned short ServerSocket::getLocalPort()
 	NATIVE_SOCKET impl = getImpl();
 
 	sockaddr_in myAddress;
-	int addrLen = sizeof(myAddress);
+	socklen_t addrLen = sizeof(myAddress);
 	int sockNameResult = ::getsockname( impl, (sockaddr*)&myAddress, &addrLen );
-	if( sockNameResult != SOCKET_ERROR )
+	if( sockNameResult != NATIVE_SOCKET_ERROR )
 		return ntohs( myAddress.sin_port );
 	else
 		return 0;
@@ -145,12 +145,12 @@ Socket* ServerSocket::accept() throw ( IOException )
 
 	NATIVE_SOCKET impl = getImpl();
 	sockaddr_in clientAddress;
-	int addrLen = sizeof(clientAddress);
+	socklen_t addrLen = sizeof(clientAddress);
 	NATIVE_SOCKET acceptResult = ::accept( impl, (sockaddr*)&clientAddress, &addrLen );
-	if( acceptResult != SOCKET_ERROR )
+	if( acceptResult != NATIVE_SOCKET_ERROR )
 	{
-		NATIVE_IP_ADDRESS clientIp = ::ntohl( clientAddress.sin_addr.s_addr );
-		unsigned short clientPort = ::ntohs( clientAddress.sin_port );
+		NATIVE_IP_ADDRESS clientIp = ntohl( clientAddress.sin_addr.s_addr );
+		unsigned short clientPort = ntohs( clientAddress.sin_port );
 		return Socket::createFromAccept( acceptResult, InetSocketAddress(clientIp, clientPort) );
 	}
 	else
@@ -168,7 +168,7 @@ void ServerSocket::close() throw ( IOException )
 		if( impl != NATIVE_SOCKET_UNINIT )
 		{
 			int closeResult = Platform::closeSocket( impl );
-			if( closeResult != SOCKET_ERROR )
+			if( closeResult != NATIVE_SOCKET_ERROR )
 			{
 				this->closed = true;
 			}

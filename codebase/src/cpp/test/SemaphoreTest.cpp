@@ -83,6 +83,8 @@ void SemaphoreTest::testSemaphore()
 	syscommon::WaitResult blockedAcquire = runnableThree.waitForAcquired( 100L );
 	CPPUNIT_ASSERT( blockedAcquire == syscommon::WR_TIMEOUT );
 	CPPUNIT_ASSERT( !runnableThree.isHoldingPermit() );
+#else
+	runnableThree.signalAcquire();
 #endif
 
 	// Have one of the original runnables release its permit, the waiting runnable should wake up

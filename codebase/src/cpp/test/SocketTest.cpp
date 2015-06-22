@@ -46,17 +46,16 @@ void SocketTest::setUp()
 
 void SocketTest::tearDown()
 {
+	if( this->socket && this->socket->isConnected() )
+		this->socket->close();
+	
 	quickReleaseServer( this->server );
 	this->server = NULL;
-
+	
 	if( this->socket )
 	{
-		if( this->socket->isConnected() )
-			this->socket->close();
-
 		delete this->socket;
 		this->socket = NULL;
-
 	}
 }
 

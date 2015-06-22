@@ -36,7 +36,6 @@ namespace syscommon
 		//----------------------------------------------------------
 		private:
 			NATIVE_SOCKET nativeSocket;
-			bool connected;
 			bool created;
 			bool closed;
 			bool inputShutdown;
@@ -90,7 +89,7 @@ namespace syscommon
 			 * @param	endpoint the InetSocketAddress of the server to connect to
 			 * @throws	IOException if an error occurs during the connection
 			 */
-			void connect( InetSocketAddress& endpoint ) throw ( IOException );
+			void connect( const InetSocketAddress& endpoint ) throw ( IOException );
 
 			/**
 			 * Returns the closed state of the socket.

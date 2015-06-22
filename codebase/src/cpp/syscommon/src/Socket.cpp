@@ -85,13 +85,16 @@ bool Socket::isConnected() const
 	return this->remoteAddress != INADDR_NONE;
 }
 
-void Socket::connect( InetSocketAddress& endpoint ) throw ( IOException )
+void Socket::connect( const InetSocketAddress& endpoint ) throw ( IOException )
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
 
 	if( isConnected() )
 		throw SocketException( TEXT("Socket is already connected") );
+
+	if( endpoint.getAddress() == INADDR_ANY )
+		throw SocketException( TEXT("Cannot connect to INADDR_NONE/INADDR_ANY") );
 
 	if ( !isCreated() )
 		this->create();
@@ -133,11 +136,14 @@ void Socket::close() throw ( IOException )
 	{
 		if( isCreated() )
 		{
-			if( !this->inputShutdown )
-				this->shutdownInput();
-
-			if( !this->outputShutdown )
-				this->shutdownOutput();
+			// Explicit shutdown on input/output. Calling our own shutdown methods was
+			// causing problems in the unit test with exceptions being thrown.
+			int shutdownResult = ::shutdown( this->nativeSocket, 0x02 );
+			if( shutdownResult != NATIVE_SOCKET_ERROR )
+			{
+				this->inputShutdown = true;
+				this->outputShutdown = true;
+			}
 
 			int closeResult = Platform::closeSocket( this->nativeSocket );
 			if( closeResult != NATIVE_SOCKET_ERROR )
