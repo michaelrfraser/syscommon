@@ -167,6 +167,10 @@ void ServerSocket::close() throw ( IOException )
 	{
 		if( impl != NATIVE_SOCKET_UNINIT )
 		{
+			// Attempt to shutdown input and output. Required on linux, otherwise
+			// calls to accept won't wake up :(
+			::shutdown( impl, 0x02 );
+
 			int closeResult = Platform::closeSocket( impl );
 			if( closeResult != NATIVE_SOCKET_ERROR )
 			{

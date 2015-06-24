@@ -56,6 +56,7 @@ class StringConnection : IRunnable
 		void send( const string& data ) throw ( IOException );
 		void interrupt();
 		void join();
+		bool isRunning() const;
 
 	private:
 		void receiveFully( char* buffer, int length ) throw ( IOException );

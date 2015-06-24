@@ -13,7 +13,7 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 #include "StringServer.h"
-
+#include <stdio.h>
 //----------------------------------------------------------
 //                      CONSTRUCTORS
 //----------------------------------------------------------
@@ -50,12 +50,16 @@ void StringServer::stop()
 	if( this->acceptThread )
 	{
 		this->serverSocket.close();
+
 		this->acceptThread->join();
+		delete this->acceptThread;
 		this->acceptThread = NULL;
 
+		receiveLock.lock();
 		set<StringConnection*>::iterator it = this->clients.begin();
 		while( it != this->clients.end() )
 			(*it++)->interrupt();
+		receiveLock.unlock();
 
 		while( it != this->clients.end() )
 		{
@@ -142,7 +146,8 @@ void StringServer::consume( const string& data, StringConnection* connection )
 	++this->receiveCount;
 	this->lastMessage = data;
 	this->receiveEvent.signal();
-	receiveLock.unlock();
 
-	connection->send( data );
+	if( connection->isRunning() )
+		connection->send( data );
+	receiveLock.unlock();
 }

@@ -69,12 +69,16 @@ void StringConnection::start() throw ( IOException )
 
 void StringConnection::send( const string& data ) throw ( IOException )
 { 
-	size_t messageLength = data.length();
-	const char* message = data.data();
-	this->socket->send( (char*)&messageLength, sizeof(size_t) );
-	this->socket->send( message, messageLength );
+	if( this->running )
+	{
+		size_t messageLength = data.length();
+		const char* message = data.data();
+		this->socket->send( (char*)&messageLength, sizeof(size_t) );
+		this->socket->send( message, messageLength );
+	}
 }
 
+#include <stdio.h>
 void StringConnection::interrupt()
 {
 	if( this->receiveThread )
@@ -85,8 +89,9 @@ void StringConnection::interrupt()
 		{
 			this->socket->close();
 		}
-		catch( IOException& )
+		catch( IOException& ioe )
 		{
+			printf( "Error on socket interrupt: %s\n", ioe.what() );
 			// Log an error?
 		}
 	}
@@ -122,6 +127,11 @@ void StringConnection::receiveFully( char* buffer, int length ) throw ( IOExcept
 
 		totalReceived += received;
 	}
+}
+
+bool StringConnection::isRunning() const
+{
+	return this->running;
 }
 
 void StringConnection::run()

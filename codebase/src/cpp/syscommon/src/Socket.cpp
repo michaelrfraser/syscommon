@@ -170,6 +170,9 @@ int Socket::send( const char* buffer, int length ) throw ( IOException )
 	if( isOutputShutdown() )
 		throw SocketException( TEXT("Socket output has been shutdown") );
 
+	if( length < 0 )
+		throw SocketException( TEXT("Negative length provided to send") );
+
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
 
 	int result = ::send( this->nativeSocket, buffer, length, 0 );
@@ -195,7 +198,7 @@ int Socket::receive( char* buffer, int length ) throw ( IOException )
 	int result = ::recv( this->nativeSocket, buffer, length, 0 );
 	if( result == NATIVE_SOCKET_ERROR )
 		throw SocketException( Platform::describeLastSocketError() );
-
+	
 	return result;
 }
 

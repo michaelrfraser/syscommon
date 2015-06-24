@@ -15,6 +15,7 @@
  * Portions Copyright [yyyy] [name of copyright owner]
  */
 
+#include <utility>
 #include "syscommon/Platform.h"
 
 using namespace std::rel_ops;
