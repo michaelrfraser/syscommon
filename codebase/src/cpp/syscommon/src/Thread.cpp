@@ -109,7 +109,7 @@ Thread::~Thread()
  *
  * @return The name of this thread
  */
-const tchar* Thread::getName()
+const tchar* Thread::getName() const
 {
 	return this->name.c_str();
 }
@@ -131,7 +131,7 @@ void Thread::interrupt()
  *
  * @return Whether the current thread is executing.
  */
-bool Thread::isAlive()
+bool Thread::isAlive() const
 {
 	return this->state == TS_ALIVE;
 }

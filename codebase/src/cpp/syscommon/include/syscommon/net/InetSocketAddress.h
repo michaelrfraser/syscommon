@@ -138,7 +138,7 @@ namespace syscommon
 			 *
 			 * @return true if this address represents the loopback interface, otherwise false.
 			 */
-			bool isLoopbackAddress();
+			bool isLoopbackAddress() const;
 
 			/**
 			 * Returns whether the address portion of this InetSocketAddress represents the network
@@ -147,7 +147,7 @@ namespace syscommon
 			 * @return true if this address represents the wildcard interface address, otherwise
 			 * 				false
 			 */
-			bool isAnyAddress();
+			bool isAnyAddress() const;
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////// Operator Overloads ////////////////////////////////////

@@ -158,7 +158,7 @@ bool MulticastSocket::close()
 	return result;
 }
 
-bool MulticastSocket::isBound()
+bool MulticastSocket::isBound() const
 {
 	return this->bound;
 }

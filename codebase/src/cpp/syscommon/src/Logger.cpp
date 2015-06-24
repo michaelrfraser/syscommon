@@ -70,12 +70,12 @@ void Logger::stop()
 	}
 }
 
-bool Logger::isStarted()
+bool Logger::isStarted() const
 {
 	return this->file != NULL;
 }
 
-Logger::Level Logger::getLevel()
+Logger::Level Logger::getLevel() const
 {
 	return this->level;
 }
@@ -201,7 +201,7 @@ void Logger::log( const tchar* level, const tchar* format, va_list args )
 	lock.unlock();
 }
 
-bool Logger::checkLevel( Level messageLevel )
+bool Logger::checkLevel( Level messageLevel ) const
 {
 	bool levelEnabled = messageLevel <= this->level;
 	return levelEnabled;

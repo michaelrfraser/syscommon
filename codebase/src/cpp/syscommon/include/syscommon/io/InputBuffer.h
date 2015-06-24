@@ -63,7 +63,7 @@ namespace syscommon
 			std::string readUTF() throw ( IOException );
 
 		private:
-			size_t getBytesRemaining();
+			size_t getBytesRemaining() const;
 			void readAndCopy( size_t length, char* dest ) throw ( IOException );
 
 		//----------------------------------------------------------

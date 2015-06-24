@@ -100,37 +100,37 @@ void DatagramPacket::setLength( int length )
 	this->length = length;
 }
 
-char* DatagramPacket::getData()
+char* DatagramPacket::getData() const
 {
 	return this->buffer;
 }
 
-int DatagramPacket::getOffset()
+int DatagramPacket::getOffset() const
 {
 	return this->offset;
 }
 
-int DatagramPacket::getLength()
+int DatagramPacket::getLength() const
 {
 	return this->length;
 }
 
-int DatagramPacket::getBufferLength()
+int DatagramPacket::getBufferLength() const
 {
 	return this->bufferLength;
 }
 
-NATIVE_IP_ADDRESS DatagramPacket::getAddress()
+NATIVE_IP_ADDRESS DatagramPacket::getAddress() const
 {
 	return this->address;
 }
 
-unsigned short DatagramPacket::getPort()
+unsigned short DatagramPacket::getPort() const
 {
 	return this->port;
 }
 
-InetSocketAddress DatagramPacket::getSocketAddress()
+InetSocketAddress DatagramPacket::getSocketAddress() const
 {
 	return InetSocketAddress( address, port );
 }

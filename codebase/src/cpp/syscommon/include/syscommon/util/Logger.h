@@ -59,9 +59,9 @@ namespace syscommon
 		public:
 			bool start( const tchar* filePath, bool append );
 			void stop();
-			bool isStarted();
+			bool isStarted() const;
 
-			Level getLevel();
+			Level getLevel() const;
 			void setLevel( Level newLevel );
 
 			// logging methods
@@ -78,7 +78,7 @@ namespace syscommon
 
 			// this method will return true if messages for the given
 			// level should be printed, false otherwise
-			bool checkLevel( Level messageLevel );
+			bool checkLevel( Level messageLevel ) const;
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

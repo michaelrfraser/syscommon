@@ -144,7 +144,7 @@ std::string InputBuffer::readUTF() throw ( IOException )
 	}
 }
 
-size_t InputBuffer::getBytesRemaining()
+size_t InputBuffer::getBytesRemaining() const
 {
 	return this->dataLength - this->readMarker;
 }
