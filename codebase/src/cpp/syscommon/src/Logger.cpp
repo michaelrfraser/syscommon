@@ -15,6 +15,7 @@
 #include "syscommon/util/Logger.h"
 
 #include <cstdio>
+#include <ctime>
 #include "syscommon/util/StringUtils.h"
 
 #pragma warning( disable : 4996 )
@@ -91,7 +92,7 @@ void Logger::fatal( const tchar* format, ... )
 		// start the var-arg stuff
 		va_list args;
 		va_start( args, format );
-		log( TEXT("FATAL"), format, args );
+		log( TEXT("[FATAL]"), format, args );
 		// do the varargs cleanup
 		va_end( args );
 	}
@@ -104,7 +105,7 @@ void Logger::error( const tchar* format, ... )
 		// start the var-arg stuff
 		va_list args;
 		va_start( args, format );
-		log( TEXT("ERROR"), format, args );
+		log( TEXT("[ERROR]"), format, args );
 		// do the varargs cleanup
 		va_end( args );
 	}
@@ -117,7 +118,7 @@ void Logger::warn( const tchar* format, ... )
 		// start the var-arg stuff
 		va_list args;
 		va_start( args, format );
-		log( TEXT("WARN"), format, args );
+		log( TEXT(" [WARN]"), format, args );
 		// do the varargs cleanup
 		va_end( args );
 	}
@@ -130,7 +131,7 @@ void Logger::info( const tchar* format, ... )
 		// start the var-arg stuff
 		va_list args;
 		va_start( args, format );
-		log( TEXT("INFO"), format, args );
+		log( TEXT(" [INFO]"), format, args );
 		// do the varargs cleanup
 		va_end( args );
 	}
@@ -143,7 +144,7 @@ void Logger::debug( const tchar* format, ... )
 		// start the var-arg stuff
 		va_list args;
 		va_start( args, format );
-		log( TEXT("DEBUG"), format, args );
+		log( TEXT("[DEBUG]"), format, args );
 		// do the varargs cleanup
 		va_end( args );
 	}
@@ -156,7 +157,7 @@ void Logger::trace( const tchar* format, ... )
 		// start the var-arg stuff
 		va_list args;
 		va_start( args, format );
-		log( TEXT("TRACE"), format, args );
+		log( TEXT("[TRACE]"), format, args );
 		// do the varargs cleanup
 		va_end( args );
 	}
@@ -167,10 +168,12 @@ void Logger::log( const tchar* level, const tchar* message )
 	lock.lock();
 	if( isStarted() )
 	{
+		String time = StringUtils::formatTime( ::time(NULL), TEXT("%Y-%m-%d %H:%M:%S") );
+
 #ifndef UNICODE
-		fprintf( file, TEXT("[%s] %s\n"), level, message );
+		fprintf( file, TEXT("%s %s %s\n"), time.c_str(), level, message );
 #else
-		fwprintf( file, TEXT("[%ls] %ls\n"), level, message );
+		fwprintf( file, TEXT("$ls %ls %ls\n"), time.c_str(), level, message );
 #endif
 		fflush( file );
 	}
@@ -182,11 +185,13 @@ void Logger::log( const tchar* level, const tchar* format, va_list args )
 	lock.lock();
 	if( isStarted() )
 	{
+		String time = StringUtils::formatTime( ::time(NULL), TEXT("%Y-%m-%d %H:%M:%S") );
+
 #ifndef UNICODE
 		char buffer[MAX_MSG_LENGTH];
 		vsprintf( buffer, format, args );
 
-		fprintf( file, TEXT("[%s] %s\n"), level, buffer );
+		fprintf( file, TEXT("%s %s %s\n"), time.c_str(), level, buffer );
 #else
 		
 #endif

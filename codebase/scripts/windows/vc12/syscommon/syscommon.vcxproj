@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Ansi Debug|Win32">
       <Configuration>Ansi Debug</Configuration>
@@ -35,53 +35,61 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DC105837-27A0-4C61-960A-3831C65C49BD}</ProjectGuid>
-    <RootNamespace>test</RootNamespace>
+    <ProjectGuid>{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}</ProjectGuid>
+    <RootNamespace>syscommon</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -112,108 +120,135 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|Win32'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)d</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|Win32'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)ud</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)u</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommond</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|x64'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommon64d</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|x64'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommonud</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommon64ud</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommon</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|x64'">
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommon64</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommonu</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">
-    <OutDir>$(SolutionDir)..\..\..\dist\vc10\</OutDir>
-    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc10\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)..\..\..\build\$(ProjectName)\vc12\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>syscommon64u</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\dist\vc12\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>syscommond</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>syscommon</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">DEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\dist\vc10;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\win32\vc10</AdditionalLibraryDirectories>
-      <AdditionalDependencies>syscommond.lib;cppunitd.lib;</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <PreprocessorDefinitions>DEBUG;UNICODE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\dist\vc10;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\win32\vc10</AdditionalLibraryDirectories>
-      <AdditionalDependencies>syscommon.lib;cppunit.lib;</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ansi Release|x64'">
     <ClCompile>
@@ -221,15 +256,18 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|Win32'">
     <ClCompile>
@@ -237,15 +275,19 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <PreprocessorDefinitions>UNICODE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">
     <ClCompile>
@@ -253,41 +295,34 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include;$(SolutionDir)..\..\..\lib\cppunit\cppunit-1.12.1\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\cpp\syscommon\include</AdditionalIncludeDirectories>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>IPHLPAPI.lib;wsock32.lib;ADVAPI32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\src\cpp\test\Common.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\StringConnection.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\StringServer.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\InetSocketAddressTest.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\LockTest.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\main.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\MulticastSocketTest.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\SemaphoreTest.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\SocketTest.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\StringUtilsTest.cpp" />
-    <ClCompile Include="..\..\..\..\src\cpp\test\ThreadTest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\src\cpp\test\Common.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\StringConnection.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\StringServer.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\IStringConsumer.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\InetSocketAddressTest.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\LockTest.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\MulticastSocketTest.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\SemaphoreTest.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\SocketTest.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\StringUtilsTest.h" />
-    <ClInclude Include="..\..\..\..\src\cpp\test\ThreadTest.h" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\DatagramPacket.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Event.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\InetSocketAddress.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\InputBuffer.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Lock.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Logger.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\MulticastSocket.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\OutputBuffer.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Platform.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Properties.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Semaphore.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Socket.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\StringUtils.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Thread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

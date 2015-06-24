@@ -71,6 +71,16 @@ The scripts will build 64-bit static libraries for both ANSI and Unicode charact
 sets, placing them in the `codebase\dist` directory.
 
 ## Version History ##
+### Version 0.3.1, 2015-03-17 ###
+**New and Noteworthy**
+- Added `formatTime()` method to `StringUtils` class
+- Added `stringSplit()` method to `StringUtils` class
+
+**Bug Fixes and Improvements**
+- Improvements to the Logger class
+  - The log level marker is now right-aligned
+  - All log messages are now timestamped
+
 ### Version 0.3, 2014-10-21 ###
 **New and Noteworthy**
 - Simplified build system
