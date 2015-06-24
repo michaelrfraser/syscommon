@@ -239,7 +239,7 @@ namespace syscommon
 			 *
 			 * @return The name of this thread
 			 */
-			const tchar* getName();
+			const tchar* getName() const;
 
 			/**
 			 * Interrupts this thread. Any operations within this thread's unit of execution that
@@ -253,7 +253,7 @@ namespace syscommon
 			 *
 			 * @return Whether the current thread is executing.
 			 */
-			bool isAlive();
+			bool isAlive() const;
 
 			/**
 			 * Blocks the current thread indefinately until this thread instance has completed 

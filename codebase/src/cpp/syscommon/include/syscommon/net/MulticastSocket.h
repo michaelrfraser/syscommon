@@ -133,7 +133,7 @@ namespace syscommon
 			 *
 			 * @return true if the socket is succesfuly bound to an address
 			 */
-			bool isBound();
+			bool isBound() const;
 
 			/**
 			 * Receives a datagram packet from this socket. When this method returns, the 

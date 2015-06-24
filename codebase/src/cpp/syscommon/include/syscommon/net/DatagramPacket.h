@@ -162,7 +162,7 @@ namespace syscommon
 			 *
 			 * @return the buffer used to receive or send data
 			 */
-			char* getData();
+			char* getData() const;
 
 			/**
 			 * Returns the offset of the data to be sent or the offset of the
@@ -171,7 +171,7 @@ namespace syscommon
 			 * @return the offset of the data to be sent or the offset of the
 			 * data received.
 			 */
-			int getOffset();
+			int getOffset() const;
 
 			/**
 			 * Returns the length of the data to be sent or the length of the
@@ -180,14 +180,14 @@ namespace syscommon
 			 * @return the length of the data to be sent or the length of the
 			 * data received.
 			 */
-			int getLength();
+			int getLength() const;
 
 			/**
 			 * Returns the original length of the data buffer of this packet
 			 *
 			 * @return the original length of the data buffer of this packet
 			 */
-			int getBufferLength();
+			int getBufferLength() const;
 
 			/**
 			 * Returns the IP address of the machine to which this datagram is being
@@ -196,7 +196,7 @@ namespace syscommon
 			 * @return the IP address of the machine to which this datagram is being
 			 * sent or from which the datagram was received.
 			 */
-			NATIVE_IP_ADDRESS getAddress();
+			NATIVE_IP_ADDRESS getAddress() const;
 
 			/**
 			 * Returns the port number on the remote host to which this datagram is
@@ -205,13 +205,13 @@ namespace syscommon
 			 * @return the port number on the remote host to which this datagram is
 			 * being sent or from which the datagram was received.
 			 */
-			unsigned short getPort();
+			unsigned short getPort() const;
 
 			/**
 			 * Gets the InetSocketAddress of the remote host that this packet is being sent to or 
 			 * is coming from.
 			 */
-			InetSocketAddress getSocketAddress();
+			InetSocketAddress getSocketAddress() const;
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

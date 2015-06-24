@@ -129,12 +129,12 @@ const tchar* InetSocketAddress::getHostAddress()
 	return this->addressString.c_str();
 }
 
-bool InetSocketAddress::isLoopbackAddress()
+bool InetSocketAddress::isLoopbackAddress() const
 {
 	return this->address == INADDR_LOOPBACK;
 }
 
-bool InetSocketAddress::isAnyAddress()
+bool InetSocketAddress::isAnyAddress() const
 {
 	return this->address == INADDR_ANY;
 }
