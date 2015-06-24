@@ -14,6 +14,10 @@
  */
 #include "syscommon/net/InetSocketAddress.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 using namespace syscommon;
 
 //----------------------------------------------------------

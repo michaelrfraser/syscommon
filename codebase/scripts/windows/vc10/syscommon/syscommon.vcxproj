@@ -372,6 +372,9 @@
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\StringUtils.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Thread.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\cpp\syscommon\src\debug.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

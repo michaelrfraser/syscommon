@@ -97,6 +97,7 @@ class SocketTest: public CppUnit::TestFixture
 		CPPUNIT_TEST( testAddressConstructor );
 		CPPUNIT_TEST( testAddressConstructorDeadEndpoint );
 		CPPUNIT_TEST( testAddressConstructorAddrNone );
+		CPPUNIT_TEST( testConnect );
 		CPPUNIT_TEST( testConnectDeadEndpoint );
 		CPPUNIT_TEST( testConnectClosed );
 		CPPUNIT_TEST( testConnectAlreadyConnected );

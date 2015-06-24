@@ -15,6 +15,10 @@
 #include "StringConnection.h"
 #include "syscommon/io/OutputBuffer.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 using namespace syscommon;
 
 //----------------------------------------------------------
@@ -78,7 +82,6 @@ void StringConnection::send( const string& data ) throw ( IOException )
 	}
 }
 
-#include <stdio.h>
 void StringConnection::interrupt()
 {
 	if( this->receiveThread )
@@ -89,9 +92,8 @@ void StringConnection::interrupt()
 		{
 			this->socket->close();
 		}
-		catch( IOException& ioe )
+		catch( IOException& )
 		{
-			printf( "Error on socket interrupt: %s\n", ioe.what() );
 			// Log an error?
 		}
 	}
@@ -110,6 +112,7 @@ void StringConnection::join()
 			// Log an error?
 		}
 
+		delete this->receiveThread;
 		this->receiveThread = NULL;
 		delete this->socket;
 		this->socket = NULL;

@@ -16,6 +16,10 @@
 #include "syscommon/util/StringUtils.h"
 #include <wctype.h>
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 using namespace syscommon;
 
 String StringUtils::longToString( const long value )

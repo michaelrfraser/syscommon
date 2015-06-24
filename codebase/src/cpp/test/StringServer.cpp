@@ -14,6 +14,11 @@
  */
 #include "StringServer.h"
 #include <stdio.h>
+
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 //----------------------------------------------------------
 //                      CONSTRUCTORS
 //----------------------------------------------------------
@@ -61,6 +66,7 @@ void StringServer::stop()
 			(*it++)->interrupt();
 		receiveLock.unlock();
 
+		it = this->clients.begin();
 		while( it != this->clients.end() )
 		{
 			StringConnection* connection = *it++;

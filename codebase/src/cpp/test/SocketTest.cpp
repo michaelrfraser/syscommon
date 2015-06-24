@@ -17,7 +17,12 @@
 #include "syscommon/Platform.h"
 #include "syscommon/net/Socket.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 CPPUNIT_TEST_SUITE_REGISTRATION( SocketTest );
+CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( SocketTest, "SocketTest" );
 
 using namespace std;
 

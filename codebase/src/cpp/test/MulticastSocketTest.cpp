@@ -18,6 +18,9 @@
 #include "syscommon/Platform.h"
 #include "syscommon/net/MulticastSocket.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
 
 CPPUNIT_TEST_SUITE_REGISTRATION( MulticastSocketTest );
 

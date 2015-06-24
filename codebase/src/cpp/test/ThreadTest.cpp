@@ -18,6 +18,10 @@
 #include "syscommon/Platform.h"
 #include "syscommon/concurrent/Thread.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 CPPUNIT_TEST_SUITE_REGISTRATION( ThreadTest );
 
 //----------------------------------------------------------

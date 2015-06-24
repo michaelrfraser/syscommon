@@ -17,6 +17,10 @@
 	#pragma warning(disable: 4996)
 #endif
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 /*
  * Fail the current test with the given message
  */

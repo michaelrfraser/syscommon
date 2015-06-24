@@ -18,6 +18,10 @@
 #include <limits.h>
 #include "syscommon/util/StringUtils.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 using namespace syscommon;
 
 //----------------------------------------------------------
