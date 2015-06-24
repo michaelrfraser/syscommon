@@ -18,6 +18,10 @@
 #include <ctime>
 #include "syscommon/util/StringUtils.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 #pragma warning( disable : 4996 )
 
 using namespace syscommon;

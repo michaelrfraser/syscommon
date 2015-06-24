@@ -21,6 +21,11 @@
 using namespace syscommon;
 
 #ifdef _WIN32
+
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 #include <Iphlpapi.h>
 #include <wincrypt.h>
 const tchar* Platform::DIRECTORY_SEPARATOR = TEXT("\\");

@@ -16,6 +16,10 @@
 
 #include "syscommon/util/StringUtils.h"
 
+#ifdef DEBUG
+#include "debug.h"
+#endif
+
 using namespace std;
 using namespace syscommon;
 

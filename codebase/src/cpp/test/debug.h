@@ -12,36 +12,21 @@
  * enclosed by brackets "[]" replaced with your own identifying information: 
  * Portions Copyright [yyyy] [name of copyright owner]
  */
-#include "syscommon/concurrent/Lock.h"
 
+/**
+ * The contents of this file are only ever included if the DEBUG pre-processor symbol is defined.
+ * This file should only be included in .cpp files, and only after all nominal headers have been
+ * included.
+ */
 #ifdef DEBUG
-#include "debug.h"
+
+	// Redefine new keyword to provide better memory leak reports
+	#if _WIN32 || _WIN64
+		#ifndef DBG_NEW      
+			#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )      
+			#define new DBG_NEW   
+		#endif
+	#endif
+
 #endif
 
-using namespace syscommon;
-
-//----------------------------------------------------------
-//                      CONSTRUCTORS
-//----------------------------------------------------------
-Lock::Lock()
-{
-	Platform::initialiseCriticalSection( mutex );
-}
-
-Lock::~Lock()
-{
-	Platform::destroyCriticalSection( mutex );
-}
-
-//----------------------------------------------------------
-//                    INSTANCE METHODS
-//----------------------------------------------------------
-void Lock::lock()
-{
-	Platform::enterCriticalSection( mutex );
-}
-
-void Lock::unlock()
-{
-	Platform::leaveCriticalSection( mutex );
-}
