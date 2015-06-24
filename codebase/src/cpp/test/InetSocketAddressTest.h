@@ -49,6 +49,8 @@ class InetSocketAddressTest: public CppUnit::TestFixture
 		void testHostPortConstructor();
 		void testGetHostAddress();
 		void testGetHostName();
+		void testLessThan();
+		void testEquality();
 
 	//----------------------------------------------------------
 	//                     STATIC METHODS
@@ -60,7 +62,8 @@ class InetSocketAddressTest: public CppUnit::TestFixture
 		CPPUNIT_TEST( testAddressPortConstructor );
 		CPPUNIT_TEST( testHostPortConstructor );
 		CPPUNIT_TEST( testGetHostAddress );
-		CPPUNIT_TEST( testGetHostName );
+		CPPUNIT_TEST( testLessThan );
+		CPPUNIT_TEST( testEquality );
 	CPPUNIT_TEST_SUITE_END();
 };
 

@@ -367,6 +367,7 @@
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Platform.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Properties.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Semaphore.cpp" />
+    <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\ServerSocket.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Socket.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\StringUtils.cpp" />
     <ClCompile Include="..\..\..\..\src\cpp\syscommon\src\Thread.cpp" />

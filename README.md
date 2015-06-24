@@ -16,7 +16,7 @@ Syscommon currently provides:
 - Properties class with load from file support
 - Logger class with log4j like levels
 - Multicast Socket (UDP) class with wrapped DatagramPacket for input/output
-- Socket (TCP) class
+- Socket (TCP) and ServerSocket classes
 - InetSocketAddress class for easy host/address lookup
 - Hot swappable Unicode support based on #define UNICODE
 - A few string functions to augment std:string (startsWith, endsWith, toUpper, 

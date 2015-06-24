@@ -138,3 +138,18 @@ bool InetSocketAddress::isAnyAddress()
 {
 	return this->address == INADDR_ANY;
 }
+
+bool InetSocketAddress::operator < ( const InetSocketAddress& other ) const
+{
+	if( this->address < other.address )
+		return true;
+	else if( this->address == other.address && this->port < other.port )
+		return true;
+	else
+		return false;
+}
+
+bool InetSocketAddress::operator == ( const InetSocketAddress& other ) const
+{
+	return this->address == other.address && this->port == other.port;
+}

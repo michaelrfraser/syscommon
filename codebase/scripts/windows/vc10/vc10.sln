@@ -37,6 +37,7 @@ Global
 		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Release|x64.ActiveCfg = Unicode Release|x64
 		{8C05D329-0817-4A29-BCFB-18EB2E89728F}.Unicode Release|x64.Build.0 = Unicode Release|x64
 		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Debug|Win32.ActiveCfg = Ansi Debug|Win32
+		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Debug|Win32.Build.0 = Ansi Debug|Win32
 		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Debug|x64.ActiveCfg = Ansi Debug|x64
 		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Release|Win32.ActiveCfg = Ansi Release|Win32
 		{DC105837-27A0-4C61-960A-3831C65C49BD}.Ansi Release|Win32.Build.0 = Ansi Release|Win32

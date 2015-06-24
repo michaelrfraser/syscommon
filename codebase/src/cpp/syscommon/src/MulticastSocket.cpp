@@ -281,6 +281,9 @@ void MulticastSocket::bind( const InetSocketAddress& bindAddress ) throw ( IOExc
 	if( isBound() )
 		throw SocketException( TEXT("Socket is already bound") );
 
+	if( bindAddress.getAddress() == INADDR_NONE )
+		throw SocketException( TEXT("Cannot bind to INADDR_NONE") );
+
 	// Create a socket address struct to hold the interface information
 	sockaddr_in ifaceAddress;
 	::memset( &ifaceAddress, 0, sizeof(sockaddr_in) );

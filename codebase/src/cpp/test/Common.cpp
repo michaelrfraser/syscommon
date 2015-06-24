@@ -67,3 +67,31 @@ void failTestWrongException( const char* expected, std::exception& actual, const
 	         actual.what() );
 	CPPUNIT_FAIL( buffer );
 }
+
+StringServer* quickCreateServer( NATIVE_IP_ADDRESS iface, unsigned short port )
+{
+	StringServer* server = new StringServer( InetSocketAddress(iface, port) );
+	try
+	{
+		server->start();
+	}
+	catch( IOException& ioe )
+	{
+		delete server;
+		server = NULL;
+		failTest( "Unexpected exception while starting server [%s]", ioe.what() );
+	}
+
+	return server;
+}
+
+void quickReleaseServer( StringServer* server )
+{
+	if( server )
+	{
+		if( server->isStarted() )
+			server->stop();
+
+		delete server;
+	}
+}
