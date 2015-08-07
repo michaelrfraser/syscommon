@@ -51,6 +51,7 @@ class SocketTest: public CppUnit::TestFixture
 		void testAddressConstructorDeadEndpoint();
 		void testAddressConstructorAddrNone();
 		void testConnect();
+		void testConnectWithTimeoutSpecified();
 		void testConnectDeadEndpoint();
 		void testConnectRemoteTimeout();
 		void testConnectClosed();
@@ -99,6 +100,7 @@ class SocketTest: public CppUnit::TestFixture
 		CPPUNIT_TEST( testAddressConstructorDeadEndpoint );
 		CPPUNIT_TEST( testAddressConstructorAddrNone );
 		CPPUNIT_TEST( testConnect );
+		CPPUNIT_TEST( testConnectWithTimeoutSpecified );
 		CPPUNIT_TEST( testConnectDeadEndpoint );
 		CPPUNIT_TEST( testConnectRemoteTimeout );
 		CPPUNIT_TEST( testConnectClosed );

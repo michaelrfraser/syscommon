@@ -174,6 +174,20 @@ void SocketTest::testConnect()
 	CPPUNIT_ASSERT( !this->socket->isOutputShutdown() );
 }
 
+void SocketTest::testConnectWithTimeoutSpecified()
+{
+	this->socket = new Socket();
+	CPPUNIT_ASSERT( !socket->isConnected() );
+
+	this->socket->connect( InetSocketAddress(INADDR_LOOPBACK, 1234), 5000 );
+	CPPUNIT_ASSERT( this->socket->isConnected() );
+	CPPUNIT_ASSERT( !this->socket->isClosed() );
+	CPPUNIT_ASSERT( this->socket->getInetAddress() == INADDR_LOOPBACK );
+	CPPUNIT_ASSERT( this->socket->getPort() == 1234 );
+	CPPUNIT_ASSERT( !this->socket->isInputShutdown() );
+	CPPUNIT_ASSERT( !this->socket->isOutputShutdown() );
+}
+
 void SocketTest::testConnectDeadEndpoint()
 {
 	// Stop the server so that its not listening on the specified endpoint

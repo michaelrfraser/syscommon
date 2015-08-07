@@ -199,6 +199,11 @@ void Socket::connect( const InetSocketAddress& endpoint, int timeout ) throw ( I
 
 	// If we get to here we are connected! Set the socket back to non-blocking
 	Platform::setNonBlockingMode( this->nativeSocket, false );
+
+	this->remoteAddress = endpoint.getAddress();
+	this->remotePort = endpoint.getPort();
+	this->inputShutdown = false;
+	this->outputShutdown = false;
 }
 
 bool Socket::isClosed() const
