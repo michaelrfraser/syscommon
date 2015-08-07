@@ -26,6 +26,7 @@ using namespace syscommon;
 #include "debug.h"
 #endif
 
+#include <MSTcpIP.h>
 #include <Iphlpapi.h>
 #include <wincrypt.h>
 const tchar* Platform::DIRECTORY_SEPARATOR = TEXT("\\");
@@ -485,6 +486,12 @@ int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 	return returnSize;
 }
 
+int Platform::setNonBlockingMode( NATIVE_SOCKET socket, bool enable )
+{
+	unsigned long flag = enable ? 1 : 0;
+	return ::ioctlsocket( socket, FIONBIO, &flag );
+}
+
 const int Platform::closeSocket( NATIVE_SOCKET socket )
 {
 	return ::closesocket( socket );
@@ -700,6 +707,12 @@ const tchar* Platform::describeLastSocketError()
 	}
 
 	return error;
+}
+
+bool Platform::isLastSocketErrorSocketConnecting()
+{
+	int lastError = ::WSAGetLastError();
+	return lastError == WSAEWOULDBLOCK;
 }
 
 std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
@@ -1602,6 +1615,18 @@ int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 	return returnSize;
 }
 
+int Platform::setNonBlockingMode( NATIVE_SOCKET socket, bool enable )
+{
+	long mode = ::fcntl( socket, F_GETFL, NULL );
+	if( enable )
+		mode |= O_NONBLOCK;
+	else
+		mode &= ~O_NONBLOCK;
+
+	return ::fcntl( socket, F_SETFL, mode );
+		
+}
+
 const int Platform::closeSocket( NATIVE_SOCKET socket )
 {
 	return ::close( socket );
@@ -1697,6 +1722,11 @@ const tchar* Platform::describeLastSocketError()
 	}
 
 	return error;
+}
+
+bool Platform::isLastSocketErrorSocketConnecting()
+{
+	return errno == EINPROGRESS;
 }
 
 std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()

@@ -65,6 +65,13 @@ namespace syscommon
 			virtual ~SocketException() throw () {}
 	};
 
+	class SocketTimeoutException : public IOException
+	{
+		public:
+			SocketTimeoutException( const tchar* message ) : IOException( message ) {}
+			virtual ~SocketTimeoutException() throw () {}
+	};
+
 	class FileNotFoundException : public IOException
 	{
 		public:

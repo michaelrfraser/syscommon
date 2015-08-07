@@ -129,6 +129,78 @@ void Socket::connect( const InetSocketAddress& endpoint ) throw ( IOException )
 	}
 }
 
+void Socket::connect( const InetSocketAddress& endpoint, int timeout ) throw ( IOException )
+{
+	// If no timeout was specified, then call the non-timeout version of connect
+	if( timeout <= 0 )
+		return connect( endpoint );
+
+	if( isClosed() )
+		throw SocketException( TEXT("Socket is closed") );
+
+	if( isConnected() )
+		throw SocketException( TEXT("Socket is already connected") );
+
+	if( endpoint.getAddress() == INADDR_ANY )
+		throw SocketException( TEXT("Cannot connect to INADDR_NONE/INADDR_ANY") );
+
+	if ( !isCreated() )
+		this->create();
+
+	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
+
+	unsigned short networkOrderPort = htons( endpoint.getPort() );
+	NATIVE_IP_ADDRESS networkOrderAddress = htonl( endpoint.getAddress() );
+
+	sockaddr_in remoteAddress;
+	remoteAddress.sin_family = AF_INET;
+	remoteAddress.sin_addr.s_addr = networkOrderAddress;
+	remoteAddress.sin_port = networkOrderPort;
+
+	// Set non-blocking 
+	Platform::setNonBlockingMode( this->nativeSocket, true );
+	int connectResult = ::connect( this->nativeSocket,
+	                               (sockaddr*)&remoteAddress,
+								   sizeof(sockaddr_in) );
+	if( connectResult == NATIVE_SOCKET_ERROR )
+	{
+		if( Platform::isLastSocketErrorSocketConnecting() )
+		{
+			// The connection is currently in progress, so wait for it to become available
+			// by using select with an appropriate timeout
+			timeval tv;
+			tv.tv_sec = 0;
+			tv.tv_usec = timeout * 1000;
+			fd_set fdset;
+			FD_ZERO( &fdset );
+			FD_SET( this->nativeSocket, &fdset );
+			
+			if( ::select(this->nativeSocket + 1, NULL, &fdset, NULL, &tv) > 0 )
+			{
+				// Do a final check for any error flags in the socket's option field
+				int errorFlag = 0;
+				NATIVE_SOCKET_LEN errorLength = sizeof( errorFlag );
+				::getsockopt( this->nativeSocket, SOL_SOCKET, SO_ERROR, (char*)(&errorFlag), &errorLength );
+				if( errorFlag )
+					throw SocketException( Platform::describeLastSocketError() );
+			}
+			else
+			{
+				// Select failed, so the connection timed out
+				throw SocketTimeoutException( TEXT("Call to connect timed out") );
+			}
+		}
+		else
+		{
+			// Some other connect error
+			throw SocketException( Platform::describeLastSocketError() );
+		}
+	}
+
+	// If we get to here we are connected! Set the socket back to non-blocking
+	Platform::setNonBlockingMode( this->nativeSocket, false );
+}
+
 bool Socket::isClosed() const
 {
 	return this->closed;

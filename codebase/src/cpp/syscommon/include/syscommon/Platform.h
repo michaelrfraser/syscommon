@@ -23,8 +23,11 @@
 	#define NOKERNEL
 	#define NOSOUND
 
+	//#include <WinSock2.h>
+	//#include <Ws2tcpip.h>
 	#include <windows.h>
-	#include <winsock.h>
+	#include <WinSock.h>
+	
 	#include <map>
 
 	#pragma warning( disable : 4290 )
@@ -57,6 +60,7 @@
 	#include <errno.h>
 	#include <semaphore.h>
 	#include <list>
+	#include <sys/select.h>
 
 	// Semaphores
 	#define NATIVE_SEMAPHORE			sem_t*
@@ -260,8 +264,10 @@ namespace syscommon
 									   int addressType, 
 									   tchar* outBuffer, 
 									   int outBufferSize );
+			static int setNonBlockingMode( NATIVE_SOCKET socket, bool enable );
 			static const int closeSocket( NATIVE_SOCKET socket );
 			static const tchar* describeLastSocketError();
+			static bool isLastSocketErrorSocketConnecting();
 			static std::set<NATIVE_IP_ADDRESS> getAvailableNetworkInterfaceAddresses();
 
 			// String helpers
