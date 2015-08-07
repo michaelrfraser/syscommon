@@ -15,6 +15,7 @@
 #include "syscommon/net/Socket.h"
 
 #include <assert.h>
+#include <math.h>
 
 #ifdef DEBUG
 #include "debug.h"
@@ -165,17 +166,22 @@ void Socket::connect( const InetSocketAddress& endpoint, int timeout ) throw ( I
 	if( connectResult == NATIVE_SOCKET_ERROR )
 	{
 		if( Platform::isLastSocketErrorSocketConnecting() )
-		{
+		{				
 			// The connection is currently in progress, so wait for it to become available
 			// by using select with an appropriate timeout
+			
+			// We need to divide the timeout into second and microsecond parts.
+			// Both Windows and Linux can handle timeout values over 1 second worth 
+			// solely in the tv_usec field, however OSX requires that they be split 
+			// up, returning EINVAL if tv_usec is over 1s worth
 			timeval tv;
-			tv.tv_sec = 0;
-			tv.tv_usec = timeout * 1000;
+			tv.tv_sec = (int)::floor(timeout / 1000 );
+			tv.tv_usec = (timeout - (tv.tv_sec * 1000)) * 1000;
 			fd_set fdset;
 			FD_ZERO( &fdset );
 			FD_SET( this->nativeSocket, &fdset );
-			
-			if( ::select(this->nativeSocket + 1, NULL, &fdset, NULL, &tv) > 0 )
+			int selectResult = ::select(this->nativeSocket + 1, NULL, &fdset, NULL, &tv);
+			if( selectResult > 0 )
 			{
 				// Do a final check for any error flags in the socket's option field
 				int errorFlag = 0;
