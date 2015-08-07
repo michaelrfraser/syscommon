@@ -174,12 +174,12 @@ void Socket::connect( const InetSocketAddress& endpoint, int timeout ) throw ( I
 			fd_set fdset;
 			FD_ZERO( &fdset );
 			FD_SET( this->nativeSocket, &fdset );
-		
+			
 			if( ::select(this->nativeSocket + 1, NULL, &fdset, NULL, &tv) > 0 )
 			{
 				// Do a final check for any error flags in the socket's option field
 				int errorFlag = 0;
-				int errorLength = sizeof( errorFlag );
+				NATIVE_SOCKET_LEN errorLength = sizeof( errorFlag );
 				::getsockopt( this->nativeSocket, SOL_SOCKET, SO_ERROR, (char*)(&errorFlag), &errorLength );
 				if( errorFlag )
 					throw SocketException( Platform::describeLastSocketError() );

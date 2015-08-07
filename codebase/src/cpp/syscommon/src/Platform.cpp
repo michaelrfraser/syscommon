@@ -1615,6 +1615,18 @@ int Platform::getHostAddress( NATIVE_IP_ADDRESS address,
 	return returnSize;
 }
 
+int Platform::setNonBlockingMode( NATIVE_SOCKET socket, bool enable )
+{
+	long mode = ::fcntl( socket, F_GETFL, NULL );
+	if( enable )
+		mode |= O_NONBLOCK;
+	else
+		mode &= ~O_NONBLOCK;
+
+	return ::fcntl( socket, F_SETFL, mode );
+		
+}
+
 const int Platform::closeSocket( NATIVE_SOCKET socket )
 {
 	return ::close( socket );
@@ -1710,6 +1722,11 @@ const tchar* Platform::describeLastSocketError()
 	}
 
 	return error;
+}
+
+bool Platform::isLastSocketErrorSocketConnecting()
+{
+	return errno == EINPROGRESS;
 }
 
 std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()

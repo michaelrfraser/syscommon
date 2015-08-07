@@ -65,7 +65,7 @@ namespace syscommon
 			virtual ~SocketException() throw () {}
 	};
 
-	class SocketTimeoutException : IOException
+	class SocketTimeoutException : public IOException
 	{
 		public:
 			SocketTimeoutException( const tchar* message ) : IOException( message ) {}

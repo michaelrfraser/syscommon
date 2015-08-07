@@ -211,7 +211,10 @@ void SocketTest::testConnectRemoteTimeout()
 	this->socket = new Socket();
 	try
 	{
-		this->socket->connect( InetSocketAddress(TEXT("192.168.0.55"), 1234), 1000 );
+		// Ideally we wouldn't be hitting google to test the timeout, however under linux
+		// non-existant local addresses throw an unroutable error rather than timing out. So
+		// we actually need something that actively blocks the connect request
+		this->socket->connect( InetSocketAddress(TEXT("google.com"), 81), 1000 );
 		failTestMissingException( "IOException", "connecting a remote socket with a timeout" );
 	}
 	catch( SocketTimeoutException& )
