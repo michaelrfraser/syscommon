@@ -204,6 +204,27 @@ void SocketTest::testConnectDeadEndpoint()
 	CPPUNIT_ASSERT( this->socket->getPort() == 0 );
 }
 
+void SocketTest::testConnectRemoteTimeout()
+{
+	this->server->stop();
+
+	this->socket = new Socket();
+	try
+	{
+		this->socket->connect( InetSocketAddress(TEXT("192.168.0.55"), 1234), 1000 );
+		failTestMissingException( "IOException", "connecting a remote socket with a timeout" );
+	}
+	catch( SocketTimeoutException& )
+	{
+		// PASS: We expected this exception!
+	}
+	catch( exception& e )
+	{
+		// FAIL: Wrong exception
+		failTestWrongException( "IOException", e, "connecting a remote socket with a timeout" );
+	}
+}
+
 void SocketTest::testConnectClosed()
 {
 	// Construct a connected socket

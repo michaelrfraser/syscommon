@@ -92,6 +92,18 @@ namespace syscommon
 			void connect( const InetSocketAddress& endpoint ) throw ( IOException );
 
 			/**
+			 * Connects this socket to the server with a specified timeout value. A timeout of 
+			 * zero is interpreted as an infinite timeout. The connection will then block until 
+			 * established or an error occurs.
+			 *
+			 * @param	endpoint the InetSocketAddress of the server to connect to
+			 * @param	timeout the timeout value to be used in milliseconds.
+			 * @throws  IOException if an error occurs during the connection
+			 * @throws	SocketTimeoutException if timeout expires before connecting
+			 */
+			void connect( const InetSocketAddress& endpoint, int timeout ) throw ( IOException );
+
+			/**
 			 * Returns the closed state of the socket.
 			 *
 			 * @return true if the socket has been closed
