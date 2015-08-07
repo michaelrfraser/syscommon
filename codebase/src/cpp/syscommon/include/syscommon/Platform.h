@@ -60,6 +60,7 @@
 	#include <errno.h>
 	#include <semaphore.h>
 	#include <list>
+	#include <sys/select.h>
 
 	// Semaphores
 	#define NATIVE_SEMAPHORE			sem_t*
