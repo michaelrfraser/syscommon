@@ -85,7 +85,7 @@ function fail
 {
 	echo
 	echo BUILD FAILED $1
-	exit
+	exit 1
 }
 
 main
