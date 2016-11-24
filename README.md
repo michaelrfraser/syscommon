@@ -1,4 +1,4 @@
-#Welcome to the syscommon Project!
+#Welcome to the syscommon Project! ![Build Status](https://travis-ci.org/michaelrfraser/syscommon.svg?branch=master)
 ## About syscommon
 Syscommon is an extremely lightweight set of utility classes that encapsulate
 commonly used systems programming tools such as Sockets, Threads, Locks etc.
@@ -48,7 +48,7 @@ character sets, placing them in the `codebase\dist` directory.
 Visual Studio solution files are located at `scripts\windows\vc8\vc8.sln` and 
 `scripts\windows\vc10\vc10.sln`.
 
-### Linux ![Build Status](https://travis-ci.org/michaelrfraser/syscommon.svg?branch=master)
+### Linux
 SysCommon can be built via the commandline using the provided build shell script.
 
 ```
