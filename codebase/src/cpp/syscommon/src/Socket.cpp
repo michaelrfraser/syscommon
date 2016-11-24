@@ -175,7 +175,7 @@ void Socket::connect( const InetSocketAddress& endpoint, int timeout ) throw ( I
 			// solely in the tv_usec field, however OSX requires that they be split 
 			// up, returning EINVAL if tv_usec is over 1s worth
 			timeval tv;
-			tv.tv_sec = (int)::floor(timeout / 1000 );
+			tv.tv_sec = (int)::floor((double)timeout / 1000.0 );
 			tv.tv_usec = (timeout - (tv.tv_sec * 1000)) * 1000;
 			fd_set fdset;
 			FD_ZERO( &fdset );
