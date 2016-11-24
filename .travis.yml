@@ -1,8 +1,13 @@
 sudo: false
 language: cpp
+os:
+- linux
+- osx
 install: 
 - cd codebase
-script: 
-- ./scripts/linux64/static.sh
-- ./scripts/linux64/test.sh
+script:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./scripts/linux64/static.sh ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./scripts/linux64/test.sh   ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then ./scripts/macosx/static.sh  ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then ./scripts/macosx/test.sh    ; fi
 - ./dist/test64 out.xml
