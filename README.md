@@ -1,6 +1,5 @@
-#Welcome to the syscommon Project!#
-
-## About syscommon ##
+#Welcome to the syscommon Project!
+## About syscommon
 Syscommon is an extremely lightweight set of utility classes that encapsulate
 commonly used systems programming tools such as Sockets, Threads, Locks etc.
 in an easy to use API.
@@ -24,15 +23,15 @@ Syscommon currently provides:
 
 Syscommon is cross-platform and compiles under Windows, OSX and Linux.
 
-## Licensing ##
+## Licensing
 Syscommon is provided under the Common Development and Distribution License (CDDL).
 
-## Building ##
+## Building
 Syscommon uses a simple build system of batch files/shell scripts. The repository
 contains the relevant scripts to build Syscommon as a static library, which is the
 recommended way to deplay syscommon.
 
-### Windows ###
+### Windows
 Syscommon can be built either via the commandline, or through Visual Studio.
 
 To compile on the command line, navigate to the `codebase\` directory and issue either
@@ -49,7 +48,7 @@ character sets, placing them in the `codebase\dist` directory.
 Visual Studio solution files are located at `scripts\windows\vc8\vc8.sln` and 
 `scripts\windows\vc10\vc10.sln`.
 
-### Linux ###
+### Linux ![Build Status](https://travis-ci.org/michaelrfraser/syscommon.svg?branch=master)
 SysCommon can be built via the commandline using the provided build shell script.
 
 ```
@@ -60,7 +59,7 @@ scripts/linux64/static.sh   # compiles 64-bit versions of the library
 The scripts will build 32-bit and 64-bit static libraries for both ANSI and Unicode 
 character sets, placing them in the `codebase\dist` directory.
 
-### Mac OSX ###
+### macOS
 SysCommon can be built via the commandline using the provided build shell script.
 
 ```
@@ -71,24 +70,4 @@ The scripts will build 64-bit static libraries for both ANSI and Unicode charact
 sets, placing them in the `codebase\dist` directory.
 
 ## Version History ##
-### Version 0.3.1, 2015-03-17 ###
-**New and Noteworthy**
-- Added `formatTime()` method to `StringUtils` class
-- Added `stringSplit()` method to `StringUtils` class
-
-**Bug Fixes and Improvements**
-- Improvements to the Logger class
-  - The log level marker is now right-aligned
-  - All log messages are now timestamped
-
-### Version 0.3, 2014-10-21 ###
-**New and Noteworthy**
-- Simplified build system
-  - Ant has been replaced with batch/shell scripts
-  - UNICODE build is now compiled for all platforms
-- Visual Studio solution files are now shipped for VC8 and VC10
-
-**Bug Fixes**
-- Fixed race condition in the `Thread` class that caused `Thread::currentThread()` to 
-  occasionally return `NULL` for a valid thread.
-- Fixed unit tests for the previous namespace/structure changes.
+See our [Releases](https://github.com/michaelrfraser/syscommon/releases) page for full release history!
