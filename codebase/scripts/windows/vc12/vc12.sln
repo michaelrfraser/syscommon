@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syscommon", "syscommon\syscommon.vcxproj", "{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}"
 EndProject
@@ -9,6 +9,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ansi Debug|Win32 = Ansi Debug|Win32
 		Ansi Debug|x64 = Ansi Debug|x64
+		Ansi Release StaticRT|Win32 = Ansi Release StaticRT|Win32
+		Ansi Release StaticRT|x64 = Ansi Release StaticRT|x64
 		Ansi Release|Win32 = Ansi Release|Win32
 		Ansi Release|x64 = Ansi Release|x64
 		Unicode Debug|Win32 = Unicode Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Debug|Win32.Build.0 = Ansi Debug|Win32
 		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Debug|x64.ActiveCfg = Ansi Debug|x64
 		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Debug|x64.Build.0 = Ansi Debug|x64
+		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release StaticRT|Win32.ActiveCfg = Ansi Release StaticRT|Win32
+		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release StaticRT|Win32.Build.0 = Ansi Release StaticRT|Win32
+		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release StaticRT|x64.ActiveCfg = Ansi Release StaticRT|x64
+		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release StaticRT|x64.Build.0 = Ansi Release StaticRT|x64
 		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release|Win32.ActiveCfg = Ansi Release|Win32
 		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release|Win32.Build.0 = Ansi Release|Win32
 		{2822FAD8-AC27-46D7-BFAE-E521671E2D0C}.Ansi Release|x64.ActiveCfg = Ansi Release|x64
