@@ -5,4 +5,4 @@ install:
 script: 
 - ./scripts/linux64/static.sh
 - ./scripts/linux64/test.sh
-- ./dist/test64
+- ./dist/test64 out.xml
