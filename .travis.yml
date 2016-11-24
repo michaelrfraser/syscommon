@@ -1,2 +1,2 @@
 language: cpp
-script: ./scripts/linux64/static.sh
+script: ./codebase/scripts/linux64/static.sh
