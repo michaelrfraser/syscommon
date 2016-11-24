@@ -742,7 +742,8 @@ std::set<NATIVE_IP_ADDRESS> Platform::getAvailableNetworkInterfaceAddresses()
 		while( currentIface )
 		{
 			// If the current adapter is an ethernet adapter, add it to the set of interfaces
-			if( currentIface->Type == MIB_IF_TYPE_ETHERNET )
+			if( currentIface->Type == MIB_IF_TYPE_ETHERNET || 
+				currentIface->Type == IF_TYPE_IEEE80211 )
 			{
 				syscommon::String platformHostName = 
 					Platform::toPlatformString( currentIface->IpAddressList.IpAddress.String );
