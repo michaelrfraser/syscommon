@@ -278,7 +278,10 @@ int Socket::receive( char* buffer, int length ) throw ( IOException )
 		throw SocketException( TEXT("Socket is not connected") );
 
 	if( isInputShutdown() )
-		throw SocketException( TEXT("Socket input has been shutdown") );	
+		throw SocketException( TEXT("Socket input has been shutdown") );
+
+	if( length < 0 )
+		throw SocketException( TEXT("Negative length") );
 
 	assert( this->nativeSocket != NATIVE_SOCKET_UNINIT );
 
