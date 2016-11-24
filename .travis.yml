@@ -1,2 +1,7 @@
+sudo: false
 language: cpp
-script: cd codebase && ./scripts/linux64/static.sh
+install: 
+- cd codebase
+script: 
+- ./scripts/linux64/static.sh
+
