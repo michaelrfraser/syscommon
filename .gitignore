@@ -19,3 +19,5 @@
 /codebase/scripts/windows/vc12/**/*.user
 /codebase/scripts/windows/vc12/**/*.sdf
 /codebase/scripts/windows/vc12/**/*.suo
+/codebase/scripts/windows/vc14/.vs
+/codebase/scripts/windows/vc14/**/*.VC.db
