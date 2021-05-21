@@ -28,9 +28,9 @@ using namespace syscommon;
 //                    STATIC VARIABLES
 //----------------------------------------------------------
 unsigned long Thread::THREAD_ID_COUNTER = 0;
-Lock Thread::managementLock;
 std::map<unsigned long, Thread*> Thread::threadMap;
 std::map<NATIVE_THREAD, Thread*> Thread::nativeThreadMap;
+Lock Thread::managementLock;
 Thread Thread::mainThread( NULL, TEXT("Main") );
 NATIVE_THREAD Thread::mainThreadHandle = Platform::getCurrentThreadHandle();
 
@@ -101,7 +101,7 @@ Thread::~Thread()
 		Platform::destroyThreadInterrupt( this->interruptEvent );
 
 	Thread::managementLock.lock();
-	this->threadMap.erase( this->syntheticHandle );
+	Thread::threadMap.erase( this->syntheticHandle );
 	Thread::managementLock.unlock();
 }
 

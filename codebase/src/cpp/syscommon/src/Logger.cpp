@@ -177,7 +177,7 @@ void Logger::log( const tchar* level, const tchar* message )
 #ifndef UNICODE
 		fprintf( file, TEXT("%s %s %s\n"), time.c_str(), level, message );
 #else
-		fwprintf( file, TEXT("$ls %ls %ls\n"), time.c_str(), level, message );
+		fwprintf( file, TEXT("%ls %ls %ls\n"), time.c_str(), level, message );
 #endif
 		fflush( file );
 	}
