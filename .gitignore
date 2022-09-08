@@ -8,16 +8,10 @@
 /codebase/dist
 
 # /scripts
-/codebase/scripts/windows/vc8/**/*.ncb
-/codebase/scripts/windows/vc8/**/*.user
-/codebase/scripts/windows/vc8/**/*.suo
-/codebase/scripts/windows/vc10/ipch
-/codebase/scripts/windows/vc10/**/*.user
-/codebase/scripts/windows/vc10/**/*.sdf
-/codebase/scripts/windows/vc10/**/*.suo
-/codebase/scripts/windows/vc12/ipch
-/codebase/scripts/windows/vc12/**/*.user
-/codebase/scripts/windows/vc12/**/*.sdf
-/codebase/scripts/windows/vc12/**/*.suo
-/codebase/scripts/windows/vc14/.vs
-/codebase/scripts/windows/vc14/**/*.VC.db
+**/*.ncb
+**/*.user
+**/*.suo
+**/ipch
+**/*.sdf
+**/*.VC.db
+**/.vs
