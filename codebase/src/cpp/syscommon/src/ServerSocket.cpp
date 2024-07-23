@@ -34,13 +34,13 @@ ServerSocket::ServerSocket()
 	_ServerSocket();
 }
 
-ServerSocket::ServerSocket( unsigned short port ) throw ( IOException )
+ServerSocket::ServerSocket( unsigned short port )
 {
 	_ServerSocket();
 	this->bind( InetSocketAddress(port) );
 }
 
-ServerSocket::ServerSocket( unsigned short port, int backlog ) throw ( IOException )
+ServerSocket::ServerSocket( unsigned short port, int backlog )
 {
 	_ServerSocket();
 	this->bind( InetSocketAddress(port), backlog );
@@ -48,7 +48,7 @@ ServerSocket::ServerSocket( unsigned short port, int backlog ) throw ( IOExcepti
 
 ServerSocket::ServerSocket( unsigned short port, 
 			                int backlog, 
-						    NATIVE_IP_ADDRESS bindAddr) throw ( IOException )
+						    NATIVE_IP_ADDRESS bindAddr)
 {
 	_ServerSocket();
 	this->bind( InetSocketAddress(bindAddr, port), backlog );
@@ -70,14 +70,13 @@ void ServerSocket::_ServerSocket()
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-void ServerSocket::bind( const InetSocketAddress& endpoint ) throw ( IOException )
+void ServerSocket::bind( const InetSocketAddress& endpoint )
 {
 	this->bind( endpoint, DEFAULT_BACKLOG );
 }
 
 void ServerSocket::bind( const InetSocketAddress& endpoint, 
-			             int backlog ) 
-	throw ( IOException )
+			             int backlog )
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -140,7 +139,7 @@ unsigned short ServerSocket::getLocalPort()
 		return 0;
 }
 
-Socket* ServerSocket::accept() throw ( IOException )
+Socket* ServerSocket::accept()
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -163,7 +162,7 @@ Socket* ServerSocket::accept() throw ( IOException )
 	}
 }
 
-void ServerSocket::close() throw ( IOException )
+void ServerSocket::close()
 {
 	NATIVE_SOCKET impl = getImpl();
 	this->closeLock.lock();
@@ -208,7 +207,7 @@ bool ServerSocket::isClosed()
 	return localClosed;
 }
 
-NATIVE_SOCKET ServerSocket::getImpl() throw ( SocketException )
+NATIVE_SOCKET ServerSocket::getImpl()
 {
 	if( this->nativeSocket == NATIVE_SOCKET_UNINIT )
 	{

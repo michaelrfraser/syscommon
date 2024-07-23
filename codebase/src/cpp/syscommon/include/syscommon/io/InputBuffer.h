@@ -48,23 +48,53 @@ namespace syscommon
 		//                    INSTANCE METHODS
 		//----------------------------------------------------------
 		public:
-			unsigned char readUInt8() throw ( IOException );
-			char readInt8() throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			unsigned char readUInt8() noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			char readInt8() noexcept( false );
 
-			unsigned short readUInt16() throw ( IOException );
-			short readInt16() throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			unsigned short readUInt16() noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			short readInt16() noexcept( false );
 
-			unsigned int readUInt32() throw ( IOException );
-			int readInt32() throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			unsigned int readUInt32() noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			int readInt32() noexcept( false );
 
-			unsigned long long readUInt64() throw ( IOException );
-			long long readInt64() throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			unsigned long long readUInt64() noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			long long readInt64() noexcept( false );
 
-			std::string readUTF() throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			std::string readUTF() noexcept( false );
 
 		private:
 			size_t getBytesRemaining() const;
-			void readAndCopy( size_t length, char* dest ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void readAndCopy( size_t length, char* dest ) noexcept( false );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

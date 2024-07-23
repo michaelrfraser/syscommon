@@ -35,7 +35,7 @@ Socket::Socket()
 	_Socket();
 }
 
-Socket::Socket( NATIVE_IP_ADDRESS address, unsigned short port ) throw ( IOException )
+Socket::Socket( NATIVE_IP_ADDRESS address, unsigned short port )
 {	
 	_Socket();
 	InetSocketAddress endpoint( address, port );
@@ -71,7 +71,7 @@ bool Socket::isCreated() const
 	return this->created;
 }
 
-void Socket::create() throw ( SocketException )
+void Socket::create()
 {
 	if( isCreated() )
 		throw SocketException( TEXT("Socket has already been created") );
@@ -90,7 +90,7 @@ bool Socket::isConnected() const
 	return this->remoteAddress != INADDR_NONE;
 }
 
-void Socket::connect( const InetSocketAddress& endpoint ) throw ( IOException )
+void Socket::connect( const InetSocketAddress& endpoint )
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -130,7 +130,7 @@ void Socket::connect( const InetSocketAddress& endpoint ) throw ( IOException )
 	}
 }
 
-void Socket::connect( const InetSocketAddress& endpoint, int timeout ) throw ( IOException )
+void Socket::connect( const InetSocketAddress& endpoint, int timeout )
 {
 	// If no timeout was specified, then call the non-timeout version of connect
 	if( timeout <= 0 )
@@ -217,7 +217,7 @@ bool Socket::isClosed() const
 	return this->closed;
 }
 
-void Socket::close() throw ( IOException )
+void Socket::close()
 {
 	if( !isClosed() )
 	{
@@ -246,7 +246,7 @@ void Socket::close() throw ( IOException )
 	}
 }
 
-int Socket::send( const char* buffer, int length ) throw ( IOException )
+int Socket::send( const char* buffer, int length )
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -269,7 +269,7 @@ int Socket::send( const char* buffer, int length ) throw ( IOException )
 	return result;
 }
 
-int Socket::receive( char* buffer, int length ) throw ( IOException )
+int Socket::receive( char* buffer, int length )
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -312,7 +312,7 @@ bool Socket::isInputShutdown() const
 	return this->inputShutdown;
 }
 
-void Socket::shutdownInput() throw ( IOException )
+void Socket::shutdownInput()
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -337,7 +337,7 @@ bool Socket::isOutputShutdown() const
 	return this->outputShutdown;
 }
 
-void Socket::shutdownOutput() throw ( IOException )
+void Socket::shutdownOutput()
 {
 	if( isClosed() )
 		throw SocketException( TEXT("Socket is closed") );

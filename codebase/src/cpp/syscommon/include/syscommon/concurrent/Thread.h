@@ -264,7 +264,7 @@ namespace syscommon
 			 * @throw InterruptedException if the current thread was interrupted before the join 
 			 * operation could complete
 			 */
-			void join() throw ( InterruptedException );
+			void join() noexcept( false );
 
 			/**
 			 * Blocks the current thread until either this thread instance has completed executing
@@ -279,7 +279,7 @@ namespace syscommon
 			 * @throw InterruptedException if the current thread was interrupted before the join 
 			 * operation could complete
 			 */
-			bool join( unsigned long millis ) throw ( InterruptedException );
+			bool join( unsigned long millis ) noexcept( false );
 
 			/**
 			 * Accepts an IInterruptable visitor, exposing the thread's interrupt handle to the 
@@ -318,9 +318,11 @@ namespace syscommon
 			 *
 			 * Note: This call may be interrupted by other threads.
 			 *
-			 * @return A WaitResult indicating the manner in which the skeep() operation completed.
+			 * @throw InterruptedException
+			 *
+			 * @return A WaitResult indicating the manner in which the sleep() operation completed.
 			 */
-			static void sleep( unsigned long millis ) throw ( InterruptedException );
+			static void sleep( unsigned long millis ) noexcept( false );
 			static void threadEntry( void* threadInstance );
 			
 		private:

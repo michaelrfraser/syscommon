@@ -61,12 +61,12 @@ void Semaphore::_Semaphore( unsigned int permits, const String& name )
 	this->initialised = Platform::initialiseSemaphore( this->nativeSemaphore, permits, name );
 }
 
-void Semaphore::acquire() throw ( InterruptedException )
+void Semaphore::acquire()
 {
 	this->tryAcquire( NATIVE_INFINITE_WAIT );
 }
 
-bool Semaphore::tryAcquire( unsigned long timeoutMillis ) throw ( InterruptedException )
+bool Semaphore::tryAcquire( unsigned long timeoutMillis )
 {
 	bool acquired = false;
 	if ( this->initialised )

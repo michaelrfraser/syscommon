@@ -45,47 +45,47 @@ OutputBuffer::~OutputBuffer()
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-void OutputBuffer::writeUInt8( unsigned char value ) throw ( IOException )
+void OutputBuffer::writeUInt8( unsigned char value )
 {
 	this->write( sizeof(unsigned char), (char*)&value );
 }
 
-void OutputBuffer::writeInt8( char value ) throw ( IOException )
+void OutputBuffer::writeInt8( char value )
 {
 	this->write( sizeof(char), (char*)&value );
 }
 
-void OutputBuffer::writeUInt16( unsigned short value ) throw ( IOException )
+void OutputBuffer::writeUInt16( unsigned short value )
 {
 	this->write( sizeof(unsigned short), (char*)&value );
 }
 
-void OutputBuffer::writeInt16( short value ) throw ( IOException )
+void OutputBuffer::writeInt16( short value )
 {
 	this->write( sizeof(short), (char*)&value );
 }
 
-void OutputBuffer::writeUInt32( unsigned int value ) throw ( IOException )
+void OutputBuffer::writeUInt32( unsigned int value )
 {
 	this->write( sizeof(unsigned int), (char*)&value );
 }
 
-void OutputBuffer::writeInt32( int value ) throw ( IOException )
+void OutputBuffer::writeInt32( int value )
 {
 	this->write( sizeof(int), (char*)&value );
 }
 
-void OutputBuffer::writeUInt64( unsigned long long value ) throw ( IOException )
+void OutputBuffer::writeUInt64( unsigned long long value )
 {
 	this->write( sizeof(unsigned long long), (char*)&value );
 }
 
-void OutputBuffer::writeInt64( long long value ) throw ( IOException )
+void OutputBuffer::writeInt64( long long value )
 {
 	this->write( sizeof(long long), (char*)&value );
 }
 
-void OutputBuffer::writeUTF( const std::string& value ) throw ( IOException )
+void OutputBuffer::writeUTF( const std::string& value )
 {
 	size_t length = value.length();
 	this->writeUInt16( (unsigned short)length );
@@ -119,7 +119,7 @@ size_t OutputBuffer::getBytesRemaining()
 	return this->dataLength - writeMarker;
 }
 
-void OutputBuffer::write( size_t length, const char* source ) throw ( IOException )
+void OutputBuffer::write( size_t length, const char* source )
 {
 	if( this->getBytesRemaining() >= length )
 	{

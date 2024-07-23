@@ -50,7 +50,7 @@ StringConnection::~StringConnection()
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-void StringConnection::start() throw ( IOException )
+void StringConnection::start()
 {
 	if( !this->receiveThread )
 	{
@@ -71,7 +71,7 @@ void StringConnection::start() throw ( IOException )
 	}
 }
 
-void StringConnection::send( const string& data ) throw ( IOException )
+void StringConnection::send( const string& data )
 { 
 	if( this->running )
 	{
@@ -119,7 +119,7 @@ void StringConnection::join()
 	}
 }
 
-void StringConnection::receiveFully( char* buffer, int length ) throw ( IOException )
+void StringConnection::receiveFully( char* buffer, int length )
 {
 	int totalReceived = 0;
 	while( totalReceived < length )

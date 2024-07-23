@@ -945,7 +945,7 @@ void SocketTest::testShutdownOutputAlreadyShutdown()
 	}
 }
 
-void SocketTest::quickStringSend( const string& message ) throw ( IOException )
+void SocketTest::quickStringSend( const string& message )
 {
 	size_t length = message.length();
 	
@@ -953,7 +953,7 @@ void SocketTest::quickStringSend( const string& message ) throw ( IOException )
 	this->socket->send( (char*)message.data(), length );
 }
 
-string SocketTest::quickStringReceive() throw ( IOException )
+string SocketTest::quickStringReceive()
 {
 	// Receive the data length
 	size_t length = 0;

@@ -85,7 +85,7 @@ namespace syscommon
 			 * @throws InterruptedException if the thread was interrupted before the permit could 
 			 * be acquired.
 			 */
-			void acquire() throw ( InterruptedException );
+			void acquire() noexcept( false );
 
 			/**
 			 * Acquires a permit from this semaphore, if one becomes available within the given 
@@ -97,7 +97,7 @@ namespace syscommon
 			 * @throws InterruptedException if the thread was interrupted before the permit could 
 			 * be acquired.
 			 */
-			bool tryAcquire( unsigned long timeoutMillis ) throw ( InterruptedException );
+			bool tryAcquire( unsigned long timeoutMillis ) noexcept( false );
 
 			/**
 			 * Releases a permit, returning it to the semaphore.

@@ -31,7 +31,7 @@ namespace syscommon
 
 			}
 
-			virtual ~Exception() throw ()
+			virtual ~Exception() noexcept
 			{
 
 			}
@@ -41,42 +41,42 @@ namespace syscommon
 	{
 		public:
 			IllegalArgumentException( const tchar* message ) : Exception( message ) {}
-			virtual ~IllegalArgumentException() throw () {}
+			virtual ~IllegalArgumentException() noexcept {}
 	};
 
 	class InterruptedException : public Exception
 	{
 		public:
 			InterruptedException( const tchar* message ) : Exception( message ) {}
-			virtual ~InterruptedException() throw () {}
+			virtual ~InterruptedException() noexcept {}
 	};
 
 	class IOException : public Exception
 	{
 		public:
 			IOException( const tchar* message ) : Exception( message ) {}
-			virtual ~IOException() throw () {}
+			virtual ~IOException() noexcept {}
 	};
 
 	class SocketException : public IOException
 	{
 		public:
 			SocketException( const tchar* message ) : IOException( message ) {}
-			virtual ~SocketException() throw () {}
+			virtual ~SocketException() noexcept {}
 	};
 
 	class SocketTimeoutException : public IOException
 	{
 		public:
 			SocketTimeoutException( const tchar* message ) : IOException( message ) {}
-			virtual ~SocketTimeoutException() throw () {}
+			virtual ~SocketTimeoutException() noexcept {}
 	};
 
 	class FileNotFoundException : public IOException
 	{
 		public:
 			FileNotFoundException( const tchar* message ) : IOException( message ) {}
-			virtual ~FileNotFoundException() throw () {}
+			virtual ~FileNotFoundException() noexcept {}
 	};
 }
 

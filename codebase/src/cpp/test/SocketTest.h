@@ -87,8 +87,14 @@ class SocketTest: public CppUnit::TestFixture
 		void testShutdownOutputAlreadyShutdown();
 
 	private:
-		void quickStringSend( const string& message ) throw ( IOException );
-		string quickStringReceive() throw ( IOException );
+		/**
+		 * @throws IOException
+		 */
+		void quickStringSend( const string& message ) noexcept( false );
+		/**
+		 * @throws IOException
+		 */
+		string quickStringReceive() noexcept( false );
 
 	//----------------------------------------------------------
 	//                     STATIC METHODS
