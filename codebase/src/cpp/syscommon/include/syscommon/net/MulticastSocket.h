@@ -59,67 +59,82 @@ namespace syscommon
 		//                      CONSTRUCTORS
 		//----------------------------------------------------------
 		public:
-			MulticastSocket() throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			MulticastSocket() noexcept( false );
 
 			/**
 			 * Creates a multicast socket and binds it to a specific port.
 			 *
 			 * @param port the port number to bind to
+			 * @throws IOException
 			 */
-			MulticastSocket( unsigned short port ) throw ( IOException );
+			MulticastSocket( unsigned short port ) noexcept( false );
 
 			/**
 			 * Creates a MulticastSocket bound to the specified socket address
+			 *
+			 * @throws IOException
 			 */
-			MulticastSocket( const InetSocketAddress& bindAddress ) throw ( IOException );
+			MulticastSocket( const InetSocketAddress& bindAddress ) noexcept( false );
 
 			virtual ~MulticastSocket();
 
 		private:
 			/**
 			 * Internal constructor helper
+			 *
+			 * @throws IOException
 			 */
-			void _MulticastSocket( const InetSocketAddress& bindAddress ) throw ( IOException );
+			void _MulticastSocket( const InetSocketAddress& bindAddress ) noexcept( false );
 
 		//----------------------------------------------------------
 		//                    INSTANCE METHODS
 		//----------------------------------------------------------
 		public:
-			void setTimeToLive( int ttl ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void setTimeToLive( int ttl ) noexcept( false );
 
 			/**
 			 * Joins a multicast group
 			 *
 			 * @param mcastaddr the multicast address to join
+			 * @throws IOException
 			 */
-			void joinGroup( NATIVE_IP_ADDRESS mcastAddress ) throw ( IOException );
+			void joinGroup( NATIVE_IP_ADDRESS mcastAddress ) noexcept( false );
 
 			/**
 			 * Joins the specified multicast group at the specified interface.
 			 * 
 			 * @param mcastaddr the multicast address to join
 			 * @param netIf the local interface to receive multicast datagram packets
+			 * @throws IOException
 			 */
 			void joinGroup( const InetSocketAddress& mcastAddress, 
-							NATIVE_IP_ADDRESS netIf ) 			
-				throw ( IOException );
+							NATIVE_IP_ADDRESS netIf )
+				noexcept( false );
 
 			/**
 			 * Leaves a multicast group.
 			 * 
 			 * @param mcastaddr the multicast address to leave
+			 * @throws IOException
 			 */
-			void leaveGroup( NATIVE_IP_ADDRESS mcastAddress ) throw ( IOException );
+			void leaveGroup( NATIVE_IP_ADDRESS mcastAddress ) noexcept( false );
 
 			/**
 			 * Leaves a multicast group on a specified local interface.
 			 * 
 			 * @param mcastaddr is the multicast address to leave
 			 * @param netIf the local interface
+			 * @throws IOException
 			 */
 			void leaveGroup( const InetSocketAddress& mcastAddress, 
 							 NATIVE_IP_ADDRESS netIf )
-				throw ( IOException );
+				noexcept( false );
 
 			/**
 			 * Closes this multicast socket.
@@ -149,7 +164,7 @@ namespace syscommon
 			 *
 			 * @throw IOException if the socket was closed before a packet could be received
 			 */
-			void receive( DatagramPacket& packet ) throw ( IOException );
+			void receive( DatagramPacket& packet ) noexcept( false );
 
 			/**
 			 * Sends a datagram packet from this socket. The DatagramPacket includes information 
@@ -160,12 +175,18 @@ namespace syscommon
 			 *
 			 * @throw IOException if an I/O error occurs while sending the packet
 			 */
-			void send( DatagramPacket& packet ) throw ( IOException );
+			void send( DatagramPacket& packet ) noexcept( false );
 
 		private:
 			bool isCreated();
-			void create() throw ( IOException );
-			void bind( const InetSocketAddress& address ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void create() noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			void bind( const InetSocketAddress& address ) noexcept( false );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

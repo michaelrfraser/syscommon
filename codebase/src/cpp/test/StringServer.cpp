@@ -37,7 +37,7 @@ StringServer::~StringServer()
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-void StringServer::start() throw ( IOException )
+void StringServer::start()
 {
 	if( !this->acceptThread )
 	{

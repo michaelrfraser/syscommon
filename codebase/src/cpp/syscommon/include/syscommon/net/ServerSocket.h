@@ -70,7 +70,7 @@ namespace syscommon
 			 *
 			 * @exception  IOException  if an I/O error occurs when opening the socket.
 			 */
-			ServerSocket( unsigned short port ) throw ( IOException );
+			ServerSocket( unsigned short port ) noexcept( false );
 
 			/**
 			 * Creates a server socket and binds it to the specified local port number, with the 
@@ -92,7 +92,7 @@ namespace syscommon
 			 *
 			 * @exception  IOException  if an I/O error occurs when opening the socket.
 			 */
-			ServerSocket( unsigned short port, int backlog ) throw ( IOException );
+			ServerSocket( unsigned short port, int backlog ) noexcept( false );
 
 			/**
 			 * Create a server with the specified port, listen backlog, and local IP address to 
@@ -119,7 +119,8 @@ namespace syscommon
 			 */
 			ServerSocket( unsigned short port, 
 			              int backlog, 
-						  NATIVE_IP_ADDRESS bindAddr ) throw ( IOException );
+						  NATIVE_IP_ADDRESS bindAddr )
+				noexcept( false );
 
 			virtual ~ServerSocket();
 
@@ -142,7 +143,7 @@ namespace syscommon
 			 * @param   endpoint        The IP address & port number to bind to.
 			 * @throws  IOException if the bind operation fails, or if the socket is already bound.
 			 */
-			void bind( const InetSocketAddress& endpoint ) throw ( IOException );
+			void bind( const InetSocketAddress& endpoint ) noexcept( false );
 
 			/**
 			 * Binds the <code>ServerSocket</code> to a specific address (IP address and port 
@@ -160,7 +161,7 @@ namespace syscommon
 			 */
 			void bind( const InetSocketAddress& endpoint, 
 			           int backlog ) 
-				throw ( IOException );
+				noexcept( false );
 
 			/**
 			 * Returns the local address of this server socket.
@@ -195,7 +196,7 @@ namespace syscommon
 			 *
 			 * @return the new Socket
 			 */
-			Socket* accept() throw ( IOException );
+			Socket* accept() noexcept( false );
 
 			/**
 			 * Closes this socket.
@@ -205,7 +206,7 @@ namespace syscommon
 			 *
 			 * @exception  IOException  if an I/O error occurs when closing the socket.
 			 */
-			void close() throw ( IOException );		
+			void close() noexcept( false );
 
 			/**
 			 * Returns the binding state of the ServerSocket.
@@ -222,7 +223,10 @@ namespace syscommon
 			bool isClosed();
 
 		private:
-			NATIVE_SOCKET getImpl() throw ( SocketException );
+			/**
+			 * @throws SocketException
+			 */
+			NATIVE_SOCKET getImpl() noexcept( false );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

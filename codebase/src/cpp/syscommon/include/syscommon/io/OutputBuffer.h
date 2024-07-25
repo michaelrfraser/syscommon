@@ -48,26 +48,56 @@ namespace syscommon
 		//                    INSTANCE METHODS
 		//----------------------------------------------------------
 		public:
-			void writeUInt8( unsigned char value ) throw ( IOException );
-			void writeInt8( char value ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void writeUInt8( unsigned char value ) noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			void writeInt8( char value ) noexcept( false );
 
-			void writeUInt16( unsigned short value ) throw ( IOException );
-			void writeInt16( short value ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void writeUInt16( unsigned short value ) noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			void writeInt16( short value ) noexcept( false );
 
-			void writeUInt32( unsigned int value ) throw ( IOException );
-			void writeInt32( int value ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void writeUInt32( unsigned int value ) noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			void writeInt32( int value ) noexcept( false );
 
-			void writeUInt64( unsigned long long value ) throw ( IOException );
-			void writeInt64( long long value ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void writeUInt64( unsigned long long value ) noexcept( false );
+			/**
+			 * @throws IOException
+			 */
+			void writeInt64( long long value ) noexcept( false );
 
-			void writeUTF( const std::string& value ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void writeUTF( const std::string& value ) noexcept( false );
 
 			size_t getLength();
 			const char* getData();
 
 		private:
 			size_t getBytesRemaining();
-			void write( size_t length, const char* source ) throw ( IOException );
+			/**
+			 * @throws IOException
+			 */
+			void write( size_t length, const char* source ) noexcept( false );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

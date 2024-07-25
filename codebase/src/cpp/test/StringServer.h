@@ -59,7 +59,10 @@ class StringServer : IRunnable, IStringConsumer
 	//                    INSTANCE METHODS
 	//----------------------------------------------------------
 	public:
-		void start() throw ( IOException );
+		/**
+		 * @throws IOException
+		 */
+		void start();
 		void stop();
 
 		bool isStarted() const;

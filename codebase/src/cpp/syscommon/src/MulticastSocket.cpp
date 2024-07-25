@@ -26,19 +26,19 @@ using namespace syscommon;
 //----------------------------------------------------------
 //                      CONSTRUCTORS
 //----------------------------------------------------------
-MulticastSocket::MulticastSocket() throw ( IOException )
+MulticastSocket::MulticastSocket()
 {
 	InetSocketAddress bindAddress( 0 );
 	_MulticastSocket( bindAddress );
 }
 
-MulticastSocket::MulticastSocket( unsigned short port ) throw ( IOException )
+MulticastSocket::MulticastSocket( unsigned short port )
 {
 	InetSocketAddress bindAddress( port );
 	_MulticastSocket( bindAddress );
 }
 
-MulticastSocket::MulticastSocket( const InetSocketAddress& bindAddress ) throw ( IOException )
+MulticastSocket::MulticastSocket( const InetSocketAddress& bindAddress )
 {
 	_MulticastSocket( bindAddress );
 }
@@ -49,8 +49,7 @@ MulticastSocket::~MulticastSocket()
 	Platform::cleanupSocketFramework();
 }
 
-void MulticastSocket::_MulticastSocket( const InetSocketAddress& bindAddress )  
-	throw ( IOException )
+void MulticastSocket::_MulticastSocket( const InetSocketAddress& bindAddress )
 {
 	// Uninitialised in ~MulticastSocket
 	Platform::initialiseSocketFramework();
@@ -62,7 +61,7 @@ void MulticastSocket::_MulticastSocket( const InetSocketAddress& bindAddress )
 	bind( bindAddress );
 }
 
-void MulticastSocket::setTimeToLive( int ttl ) throw ( IOException )
+void MulticastSocket::setTimeToLive( int ttl )
 {
 	if( !isCreated() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -75,15 +74,14 @@ void MulticastSocket::setTimeToLive( int ttl ) throw ( IOException )
 				  sizeof(int) );
 }
 
-void MulticastSocket::joinGroup( NATIVE_IP_ADDRESS mcastAddress )  throw ( IOException )
+void MulticastSocket::joinGroup( NATIVE_IP_ADDRESS mcastAddress )
 {
 	InetSocketAddress address( mcastAddress, 0 );
 	joinGroup( address, INADDR_ANY );
 }
 
 void MulticastSocket::joinGroup( const InetSocketAddress& mcastAddress, 
-								 NATIVE_IP_ADDRESS netIf )  
-	throw ( IOException )
+								 NATIVE_IP_ADDRESS netIf )
 {
 	if( !isCreated() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -107,7 +105,7 @@ void MulticastSocket::joinGroup( const InetSocketAddress& mcastAddress,
 		throw SocketException( Platform::describeLastSocketError() );
 }
 
-void MulticastSocket::leaveGroup( NATIVE_IP_ADDRESS mcastAddress ) throw ( IOException )
+void MulticastSocket::leaveGroup( NATIVE_IP_ADDRESS mcastAddress )
 {
 	InetSocketAddress address( mcastAddress, 0 );
 	leaveGroup( address, INADDR_ANY );
@@ -115,7 +113,6 @@ void MulticastSocket::leaveGroup( NATIVE_IP_ADDRESS mcastAddress ) throw ( IOExc
 
 void MulticastSocket::leaveGroup( const InetSocketAddress& mcastAddress, 
 								  NATIVE_IP_ADDRESS netIf )
-	throw ( IOException )
 {
 	if( !isCreated() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -167,7 +164,7 @@ bool MulticastSocket::isBound() const
 	return this->bound;
 }
 
-void MulticastSocket::receive( DatagramPacket& packet ) throw ( IOException )
+void MulticastSocket::receive( DatagramPacket& packet )
 {
 	if( !isCreated() )
 		throw SocketException( TEXT("Socket is closed") );
@@ -206,7 +203,7 @@ void MulticastSocket::receive( DatagramPacket& packet ) throw ( IOException )
 	}
 }
 
-void MulticastSocket::send( DatagramPacket& packet ) throw ( IOException )
+void MulticastSocket::send( DatagramPacket& packet )
 {
 	if( !isBound() )
 		throw SocketException( TEXT("Socket is not bound") );
@@ -257,7 +254,7 @@ bool MulticastSocket::isCreated()
 	return created;
 }
 
-void MulticastSocket::create() throw ( IOException )
+void MulticastSocket::create()
 {
 	if( isCreated() )
 		throw SocketException( TEXT("Socket already created") );
@@ -277,7 +274,7 @@ void MulticastSocket::create() throw ( IOException )
 }
 
 
-void MulticastSocket::bind( const InetSocketAddress& bindAddress ) throw ( IOException )
+void MulticastSocket::bind( const InetSocketAddress& bindAddress )
 {
 	if( !isCreated() )
 		throw SocketException( TEXT("Socket is closed") );

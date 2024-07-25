@@ -149,7 +149,7 @@ bool Thread::isAlive() const
  * @throw InterruptedException if the current thread was interrupted before the join 
  * operation could complete
  */
-void Thread::join() throw ( InterruptedException )
+void Thread::join()
 {
 	// Join the thread with INFINITE timeout
 	this->join( NATIVE_INFINITE_WAIT );
@@ -165,7 +165,7 @@ void Thread::join() throw ( InterruptedException )
  * @throw InterruptedException if the current thread was interrupted before the join 
  * operation could complete
  */
-bool Thread::join( unsigned long millis ) throw ( InterruptedException )
+bool Thread::join( unsigned long millis )
 {	
 	// The commented code below was how the join was originally done, however it was creating a 
 	// buttload of race conditions, so I've just used an event to signal the join instead
@@ -295,7 +295,7 @@ Thread* Thread::currentThread()
  * @throw InterruptedException if the current thread was interrupted before the sleep
  * operation could complete
  */
-void Thread::sleep( unsigned long millis ) throw ( InterruptedException )
+void Thread::sleep( unsigned long millis )
 {
 	Thread* thisThread = Thread::currentThread();
 	if ( thisThread && thisThread->interruptInitialised )

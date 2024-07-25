@@ -132,7 +132,7 @@ namespace syscommon
 			 *
 			 * @throws IOException if the file was not read successfully
 			 */
-			void loadFromFile( const tchar* filename ) throw ( IOException );
+			void loadFromFile( const tchar* filename ) noexcept( false );
 
 			/**
 			 * @see Properties::loadFromFile(const tchar*)
@@ -142,7 +142,7 @@ namespace syscommon
 			 *
 			 * @return true if the file was read successfully, otherwise false.
 			 */
-			void loadFromFile( const tchar* filename, Logger* logger ) throw ( IOException );
+			void loadFromFile( const tchar* filename, Logger* logger ) noexcept( false );
 
 			/**
 			 * Populates the provided set with the list of property names contained within this

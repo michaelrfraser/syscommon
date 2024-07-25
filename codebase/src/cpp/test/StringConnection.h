@@ -52,14 +52,23 @@ class StringConnection : IRunnable
 	//                    INSTANCE METHODS
 	//----------------------------------------------------------
 	public:
-		void start() throw ( IOException );
-		void send( const string& data ) throw ( IOException );
+		/**
+		 * @throws IOException
+		 */
+		void start();
+		/**
+		 * @throws IOException
+		 */
+		void send( const string& data );
 		void interrupt();
 		void join();
 		bool isRunning() const;
 
 	private:
-		void receiveFully( char* buffer, int length ) throw ( IOException );
+		/**
+		 * @throws IOException
+		 */
+		void receiveFully( char* buffer, int length );
 
 	public:
 		virtual void run();

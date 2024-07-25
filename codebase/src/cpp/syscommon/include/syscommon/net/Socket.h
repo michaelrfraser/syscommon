@@ -62,7 +62,7 @@ namespace syscommon
 			 *
 			 * @throws IOException if an I/O error occurs when creating the socket.
 			 */
-			Socket( NATIVE_IP_ADDRESS address, unsigned short port ) throw ( IOException );
+			Socket( NATIVE_IP_ADDRESS address, unsigned short port ) noexcept( false );
 
 			virtual ~Socket();
 
@@ -89,7 +89,7 @@ namespace syscommon
 			 * @param	endpoint the InetSocketAddress of the server to connect to
 			 * @throws	IOException if an error occurs during the connection
 			 */
-			void connect( const InetSocketAddress& endpoint ) throw ( IOException );
+			void connect( const InetSocketAddress& endpoint ) noexcept( false );
 
 			/**
 			 * Connects this socket to the server with a specified timeout value. A timeout of 
@@ -101,7 +101,7 @@ namespace syscommon
 			 * @throws  IOException if an error occurs during the connection
 			 * @throws	SocketTimeoutException if timeout expires before connecting
 			 */
-			void connect( const InetSocketAddress& endpoint, int timeout ) throw ( IOException );
+			void connect( const InetSocketAddress& endpoint, int timeout ) noexcept( false );
 
 			/**
 			 * Returns the closed state of the socket.
@@ -121,7 +121,7 @@ namespace syscommon
 			 *
 			 * @exception IOException if an I/O error occurs when closing this socket.
 			 */
-			void close() throw ( IOException );
+			void close() noexcept( false );
 			
 			/**
 			 * Sends the bytes contained in the specified buffer to the server this socket is
@@ -135,7 +135,7 @@ namespace syscommon
 			 * @throws IOException if an I/O error occurs while attempting to send the data
 			 * through the socket
 			 */
-			int send( const char* buffer, int length ) throw ( IOException );
+			int send( const char* buffer, int length ) noexcept( false );
 
 			/**
 			 * Receives data from the socket into the provided buffer
@@ -148,7 +148,7 @@ namespace syscommon
 			 * @throws IOException if an I/O error occurs while attempting to send the data through
 			 * the socket
 			 */
-			int receive( char* buffer, int length ) throw ( IOException );
+			int receive( char* buffer, int length ) noexcept( false );
 
 			/**
 			 * Returns the address to which the socket is connected.
@@ -206,7 +206,7 @@ namespace syscommon
 			 *
 			 * @exception IOException if an I/O error occurs when shutting down this socket.
 			 */
-			void shutdownInput() throw ( IOException );
+			void shutdownInput() noexcept( false );
 
 			/**
 			 * Returns whether the write-half of the socket connection is closed.
@@ -225,11 +225,14 @@ namespace syscommon
 			 * @exception IOException if an I/O error occurs when shutting down this
 			 * socket.
 			 */
-			void shutdownOutput() throw ( IOException );
+			void shutdownOutput() noexcept( false );
 
 		private:
 			bool isCreated() const;
-			void create() throw ( SocketException );
+			/**
+			 * @throws SocketException
+			 */
+			void create() noexcept( false );
 
 		//----------------------------------------------------------
 		//                     STATIC METHODS

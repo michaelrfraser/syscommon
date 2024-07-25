@@ -41,7 +41,7 @@ InputBuffer::~InputBuffer()
 //----------------------------------------------------------
 //                    INSTANCE METHODS
 //----------------------------------------------------------
-unsigned char InputBuffer::readUInt8() throw ( IOException )
+unsigned char InputBuffer::readUInt8()
 {
 	char asBytes[sizeof(unsigned char)];
 	this->readAndCopy( sizeof(unsigned char), asBytes );
@@ -49,7 +49,7 @@ unsigned char InputBuffer::readUInt8() throw ( IOException )
 	return *((unsigned char*)asBytes);
 }
 
-char InputBuffer::readInt8() throw ( IOException )
+char InputBuffer::readInt8()
 {
 	char asBytes[sizeof(char)];
 	this->readAndCopy( sizeof(char), asBytes );
@@ -57,7 +57,7 @@ char InputBuffer::readInt8() throw ( IOException )
 	return *((char*)asBytes);
 }
 
-unsigned short InputBuffer::readUInt16() throw ( IOException )
+unsigned short InputBuffer::readUInt16()
 {
 	union 
 	{ 
@@ -70,7 +70,7 @@ unsigned short InputBuffer::readUInt16() throw ( IOException )
 	return unionUInt16.value;
 }
 
-short InputBuffer::readInt16() throw ( IOException )
+short InputBuffer::readInt16()
 {
 	union
 	{
@@ -83,7 +83,7 @@ short InputBuffer::readInt16() throw ( IOException )
 	return unionInt16.value;
 }
 
-unsigned int InputBuffer::readUInt32() throw ( IOException )
+unsigned int InputBuffer::readUInt32()
 {
 	union
 	{
@@ -96,7 +96,7 @@ unsigned int InputBuffer::readUInt32() throw ( IOException )
 	return unionUInt32.value;
 }
 
-int InputBuffer::readInt32() throw ( IOException )
+int InputBuffer::readInt32()
 {
 	union
 	{
@@ -108,7 +108,7 @@ int InputBuffer::readInt32() throw ( IOException )
 	return unionInt32.value;
 }
 
-unsigned long long InputBuffer::readUInt64() throw ( IOException )
+unsigned long long InputBuffer::readUInt64()
 {
 	union
 	{
@@ -120,7 +120,7 @@ unsigned long long InputBuffer::readUInt64() throw ( IOException )
 	return unionUInt64.value;
 }
 
-long long InputBuffer::readInt64() throw ( IOException )
+long long InputBuffer::readInt64()
 {
 	union
 	{
@@ -132,7 +132,7 @@ long long InputBuffer::readInt64() throw ( IOException )
 	return unionInt64.value;
 }
 
-std::string InputBuffer::readUTF() throw ( IOException )
+std::string InputBuffer::readUTF()
 {
 	size_t size = (size_t)readUInt16();
 	if( this->getBytesRemaining() >= size )
@@ -153,7 +153,7 @@ size_t InputBuffer::getBytesRemaining() const
 	return this->dataLength - this->readMarker;
 }
 
-void InputBuffer::readAndCopy( size_t length, char* dest ) throw ( IOException )
+void InputBuffer::readAndCopy( size_t length, char* dest )
 {
 	if( this->getBytesRemaining() >= length )
 	{

@@ -92,12 +92,12 @@ void Properties::putAll( const Properties& other )
 	}
 }
 
-void Properties::loadFromFile( const tchar* filename ) throw ( IOException )
+void Properties::loadFromFile( const tchar* filename )
 {
 	return loadFromFile( filename, NULL );
 }
 
-void Properties::loadFromFile( const tchar* filename, Logger* logger ) throw ( IOException )
+void Properties::loadFromFile( const tchar* filename, Logger* logger )
 {
 	if( !Platform::fileExists(filename) )
 		throw FileNotFoundException( TEXT("File does not exist") );
